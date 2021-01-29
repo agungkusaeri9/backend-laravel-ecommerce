@@ -10,3 +10,5 @@ Route::resource('products', 'ProductController');
 Route::resource('product-galleries', 'ProductGalleryController');
 Route::resource('shipments', 'ShipmentController');
 Route::resource('transactions', 'TransactionController');
+Route::resource('carts', 'CartController');
+Route::resource('store', 'StoreController');

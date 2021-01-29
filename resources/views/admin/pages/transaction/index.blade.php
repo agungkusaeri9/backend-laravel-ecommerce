@@ -24,7 +24,6 @@
                                 <th>Email</th>
                                 <th>No Hp</th>
                                 <th>Alamat</th>
-                                <th>Keterangan</th>
                                 <th>Total</th>
                                 <th>Status</th>
                                 <th width=100>Aksi</th>
@@ -38,7 +37,6 @@
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->phone_number }}</td>
                                     <td>{{ $item->address }}</td>
-                                    <td>{{ $item->information }}</td>
                                     <td>Rp. {{ number_format( $item->transaction_total ) }}</td>
                                     <td>
                                         @if ($item->status->id == 1)

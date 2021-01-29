@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductCategory;
+use App\ProductGallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -52,11 +53,18 @@ class ProductController extends Controller
             'desc' => ['required','min:10'],
             'price' => ['required','numeric'],
             'qty' => ['required','numeric'],
+            'photo' => ['required','image','mimes:jpg,png,jpeg']
         ]);
         $data = $request->all();
 
         $data['slug'] = Str::slug($request->name);
-        Product::create($data);
+        $product = Product::create($data);
+
+        $gallery = new ProductGallery;
+        $gallery->product_id = $product->id;
+        $gallery->photo = $request->file('photo')->store('storage/product/');
+        $gallery->is_default = 1;
+        $gallery->save();
 
         return redirect()->route('admin.products.index')->with('success','Produk berhasil ditambahkan!');
     }

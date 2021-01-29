@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/product/{product:slug}', 'ProductController@show')->name('product.show');
+Route::get('/kategori/{category:slug}', 'ProductController@category')->name('product.category');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/cart', 'CartController@index')->name('cart.index');
+    Route::post('/cart/{product:slug}', 'CartController@store')->name('cart.store');
+    Route::delete('/cart/{cart:id}', 'CartController@destroy')->name('cart.destroy');
+    Route::get('/checkout/{cart:id}', 'TransactionController@checkout')->name('checkout');
+    Route::post('/checkout/{cart:id}', 'TransactionController@store')->name('transaction.store');
+
+    Route::get('/transactions', 'TransactionController@index')->name('transaction.index');
+
+});

@@ -7,7 +7,7 @@
                 <h6 class="text-primary font-weight-bold">Edit Kategori Produk {{ $productCategory->name }}</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.product-categories.update', $productCategory->id) }}" method="post">
+                <form action="{{ route('admin.product-categories.update', $productCategory->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
                     <div class="form-group">
@@ -18,6 +18,20 @@
                                 {{ $message }}
                             </div>
                         @enderror
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <img src="{{ $productCategory->icon() }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-lg-9">
+                            <label for="icon">Icon</label>
+                            <input type="file" name="icon" class="form-control @error('icon') is-invalid @enderror">
+                            @error('icon')
+                                <div class="invalid-feedback d-inline">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                     </div>
                     <div class="form-group d-flex justify-content-between">
                         <a href="{{ route('admin.product-categories.index') }}" class="btn btn-warning">Kembali</a>

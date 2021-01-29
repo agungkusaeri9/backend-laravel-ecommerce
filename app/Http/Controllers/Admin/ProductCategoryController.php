@@ -44,11 +44,18 @@ class ProductCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required']
+            'name' => ['required'],
+            'icon' => ['image','mimes:jpg,jpeg,png'],
         ]);
+        if($request->hasFile('icon')){
+            $icon = $request->file('icon')->store('product-category');
+        }else{
+            $icon = NULL;
+        }
         ProductCategory::create([
             'name' => $request->name,
-            'slug' => Str::slug($request->name)
+            'slug' => Str::slug($request->name),
+            'icon' => $icon
         ]);
 
         return redirect()->route('admin.product-categories.index')->with('success','Kategori berhasil ditambahkan!');
@@ -89,11 +96,21 @@ class ProductCategoryController extends Controller
     public function update(Request $request, ProductCategory $productCategory)
     {
         $request->validate([
-            'name' => ['required']
+            'name' => ['required'],
+            'icon' => ['image','mimes:jpg,jpeg,png'],
         ]);
+        if($request->hasFile('icon')){
+            if($productCategory->icon !== NULL){
+                unlink('storage/' . $productCategory->icon);
+            }
+            $icon = $request->file('icon')->store('product-category');
+        }else{
+            $icon = NULL;
+        }
         $productCategory->update([
             'name' => $request->name,
-            'slug' => Str::slug($request->name)
+            'slug' => Str::slug($request->name),
+            'icon' => $icon
         ]);
 
         return redirect()->route('admin.product-categories.index')->with('success','Kategori berhasil diubah!');
@@ -107,6 +124,9 @@ class ProductCategoryController extends Controller
      */
     public function destroy(ProductCategory $productCategory)
     {
+        if($productCategory->icon !== NULL){
+            unlink('storage/' . $productCategory->icon);
+        }
         $productCategory->delete();
         return redirect()->route('admin.product-categories.index')->with('success','Kategori berhasil dihapus!');
     }

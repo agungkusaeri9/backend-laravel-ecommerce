@@ -16,6 +16,10 @@ class ProductGallery extends Model
 
     public function photo()
     {
-        return asset('storage/' . $this->photo);
+        if(substr($this->photo,0,4) == "http"){
+            return $this->photo;
+        }else{
+            return asset('storage/' . $this->photo);
+        }
     }
 }

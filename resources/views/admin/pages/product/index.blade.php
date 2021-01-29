@@ -12,7 +12,7 @@
     <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between">
-                <h6 class="text-primary font-weight-bold">Data Kategori Produk</h6>
+                <h6 class="text-primary font-weight-bold">Data Produk</h6>
                 <a href="{{ route('admin.products.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
@@ -23,7 +23,6 @@
                                 <th width=10>#</th>
                                 <th>Nama</th>
                                 <th>Kategori</th>
-                                <th>Deskripsi</th>
                                 <th>Harga</th>
                                 <th>Stok</th>
                                 <th width=100>Aksi</th>
@@ -35,7 +34,6 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->category->name }}</td>
-                                    <td>{{ $item->desc }}</td>
                                     <td>Rp. {{ number_format($item->price) }}</td>
                                     <td>{{ $item->qty }}</td>
                                     <td>

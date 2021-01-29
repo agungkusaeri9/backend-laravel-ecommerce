@@ -16,11 +16,12 @@
                 <a href="{{ route('admin.product-categories.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
-                <div class="table responsive">
+                <div class="table-responsive">
                     <table class="table table-bordered table-hover" id="data">
                         <thead>
                             <tr>
                                 <th width=10>#</th>
+                                <th>Icon</th>
                                 <th>Nama</th>
                                 <th>Slug</th>
                                 <th width=80>Aksi</th>
@@ -30,6 +31,9 @@
                             @foreach ($product_categories as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        <img src="{{ $item->icon() }}" alt="" class="img-fluid" height="150" width="200">
+                                    </td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->slug }}</td>
                                     <td>

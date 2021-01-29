@@ -7,13 +7,22 @@
                 <h6 class="text-primary font-weight-bold">Tambah Kategori Produk</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.product-categories.store') }}" method="post">
+                <form action="{{ route('admin.product-categories.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
                         @error('name')
                             <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="icon">Icon</label>
+                        <input type="file" name="icon" class="form-control @error('icon') is-invalid @enderror">
+                        @error('icon')
+                            <div class="invalid-feedback d-inline">
                                 {{ $message }}
                             </div>
                         @enderror

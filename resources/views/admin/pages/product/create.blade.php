@@ -7,8 +7,17 @@
                 <h6 class="text-primary font-weight-bold">Tambah Produk</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.products.store') }}" method="post">
+                <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
+                    <div class="form-group">
+                        <label for="photo">Foro Produk</label>
+                        <input type="file" name="photo" class="form-control @error('name') is-invalid @enderror">
+                        @error('photo')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">

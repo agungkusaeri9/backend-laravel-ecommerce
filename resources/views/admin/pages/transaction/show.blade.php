@@ -1,7 +1,7 @@
 @extends('admin.templates.default')
 @section('content')
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between">
                 <h6 class="text-primary font-weight-bold">Detail Transaksi "{{ $transaction->uuid }}"</h6>
@@ -67,12 +67,16 @@
                                         <th>Nama</th>
                                         <th>Kategori</th>
                                         <th>Harga</th>
+                                        <th>Jumlah</th>
+                                        <th>Ket</th>
                                     </tr>
                                     @foreach ($transaction->details as $item)
                                     <tr>
                                         <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->product->category->name }}</td>
                                         <td>Rp. {{ number_format($item->product->price) }}</td>
+                                        <td>{{ $item->product_total }}</td>
+                                        <td>{{ $item->inf }}</td>
                                     </tr>
                                     @endforeach
                                 </table>

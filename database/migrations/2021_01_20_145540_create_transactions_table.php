@@ -21,7 +21,6 @@ class CreateTransactionsTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone_number');
             $table->text('address');
-            $table->string('information');
             $table->string('transaction_total');
             $table->integer('transaction_status');
             $table->integer('shipment_id')->nullable();
