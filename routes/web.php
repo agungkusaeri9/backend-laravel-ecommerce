@@ -31,5 +31,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/checkout/{cart:id}', 'TransactionController@store')->name('transaction.store');
 
     Route::get('/transactions', 'TransactionController@index')->name('transaction.index');
+    Route::get('/transactions/{transaction:uuid}', 'TransactionController@confirmation')->name('transaction.confirmation');
 
 });

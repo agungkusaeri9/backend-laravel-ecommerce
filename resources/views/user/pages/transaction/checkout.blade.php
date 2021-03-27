@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="phone_number">No. Hp</label>
-                    <input type="text" placeholder="Nomor Hp" name="phone_number" class="form-control @error('phone_number') is-invalid @enderror" value="{{ auth()->user()->phone_number }}">
+                    <input type="text" placeholder="Nomor Hp" name="phone_number" class="form-control @error('phone_number') is-invalid @enderror" value="{{ old('phone_number') ?? auth()->user()->phone_number }}">
                     @error('phone_number')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <label for="address">Alamat</label>
-                    <textarea name="address" id="address" cols="30" rows="5" class="form-control @error('address') is-invalid @enderror">{{ auth()->user()->address }}</textarea>
+                    <textarea name="address" id="address" cols="30" rows="5" class="form-control @error('address') is-invalid @enderror">{{ old('address') ?? auth()->user()->address }}</textarea>
                     @error('address')
                         <div class="invalid-feedback">
                             {{ $message }}

@@ -23,6 +23,13 @@ class TransactionController extends Controller
 
     public function store(Request $request, Cart $cart)
     {
+        request()->validate([
+            'name' => ['required'],
+            'phone_number' => ['required'],
+            'address' => ['required'],
+
+        ]);
+
         $transaction = Transaction::create([
             'uuid' => Str::random(5),
             'user_id' => $cart->user_id,
@@ -61,6 +68,14 @@ class TransactionController extends Controller
             'cart' => $cart,
             'payments' => $payments,
             'shipments' => $shipments
+        ]);
+    }
+
+    public function confirmation(Transaction $transaction)
+    {
+        return view('user.pages.transaction.confirmation',[
+            'title' => 'Konfirmasi Pembayaran',
+            'transaction' => $transaction
         ]);
     }
 }
