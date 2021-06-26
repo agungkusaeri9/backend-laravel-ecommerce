@@ -1,10 +1,10 @@
 @extends('admin.templates.default')
 @section('content')
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Edit User {{ $user->username }}</h6>
+                <h6 class="text-primary font-weight-bold">Edit user "{{ $user->username }}"</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.users.update', $user->id) }}" method="post" enctype="multipart/form-data">

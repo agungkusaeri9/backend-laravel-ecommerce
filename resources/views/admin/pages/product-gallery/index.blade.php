@@ -16,6 +16,22 @@
                 <a href="{{ route('admin.product-galleries.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-5">
+                        <form action="{{ route('admin.product-galleries.search') }}" method="post" class="d-inline">
+                            @csrf
+                            <div class="d-flex justify-content-between">
+                                <select name="product" id="product" class="form-control d-inline product">
+                                    <option selected value="">--Cari Berdasarkan Produk--</option>
+                                    @foreach ($products as $product)
+                                        <option @if($product->id == $product_id) selected @endif value="{{ $product->id }}">{{ $product->name }}</option>
+                                    @endforeach
+                                </select>
+                                <button class="btn btn-sm btn-primary d-inline ml-2 px-3">Cari</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="table responsive">
                     <table class="table table-bordered table-hover" id="data">
                         <thead>
@@ -75,4 +91,24 @@
     var oTable = $('#data').DataTable()
 })
 </script>
+@push('afterStyles')
+<link rel="stylesheet" href="{{ asset('assets/select2/select2.min.css') }}">
+<style>
+.select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 37px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
+</style>
+@endpush
+@push('afterScripts')
+<script src="{{ asset('assets/select2/select2.min.js') }}"></script>
+<script>
+    $('.product').select2()
+</script>
+@endpush
 @endpush

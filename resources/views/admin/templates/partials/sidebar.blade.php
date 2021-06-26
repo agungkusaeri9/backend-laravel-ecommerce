@@ -31,9 +31,9 @@
         <div id="masterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('admin.users.index') }}">Data User</a>
-                <a class="collapse-item" href="{{ route('admin.store.index') }}">Profile Toko</a>
+                <a class="collapse-item" href="{{ route('admin.store.index') }}">Profil Toko</a>
                 <a class="collapse-item" href="{{ route('admin.payments.index') }}">Metode Pembayaran</a>
-                <a class="collapse-item" href="{{ route('admin.shipments.index') }}">Jasa Pengantar</a>
+                <a class="collapse-item" href="{{ route('admin.shipments.index') }}">Kurir</a>
             </div>
         </div>
     </li>
@@ -64,19 +64,6 @@
         <div id="transaction" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('admin.transactions.index') }}">Transaksi Masuk</a>
-            </div>
-        </div>
-    </li>
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed pt-0" href="#" data-toggle="collapse" data-target="#carts"
-            aria-expanded="true" aria-controls="carts">
-            <i class="fas fa-fw fa-file"></i>
-            <span>Keranjang</span>
-        </a>
-        <div id="carts" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('admin.carts.index') }}">Keranjang</a>
             </div>
         </div>
     </li>

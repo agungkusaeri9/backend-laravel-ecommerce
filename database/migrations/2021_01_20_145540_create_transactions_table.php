@@ -16,16 +16,17 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('uuid');
-            $table->integer('user_id');
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone_number');
             $table->text('address');
-            $table->string('transaction_total');
-            $table->integer('transaction_status');
+            $table->bigInteger('transaction_total');
+            $table->string('transaction_status');
             $table->integer('shipment_id')->nullable();
             $table->integer('payment_id');
             $table->string('receipt_number')->nullable();
+            $table->string('bukti_pembayaran')->nullable();
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

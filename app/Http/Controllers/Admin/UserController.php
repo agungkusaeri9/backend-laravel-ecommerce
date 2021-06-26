@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -109,7 +110,7 @@ class UserController extends Controller
         $data = $request->all();
         if($request->hasFile('avatar')){
             if($user->avatar !== NULL){
-                unlink('storage/' . $user->avatar);
+                Storage::disk('public')->delete($user->avatar);
             }
             $data['avatar'] = $request->file('avatar')->store('user');
         }else{

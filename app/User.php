@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','username','avatar','phone_number','role','gender'
+        'name', 'email', 'password','username','avatar','phone_number','role','gender','address'
     ];
 
     /**
@@ -44,5 +45,14 @@ class User extends Authenticatable
         }else{
             return asset('assets/img/profile-user.png');
         }
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class,'user_id','id');
+    }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class,'user_id','id');
     }
 }

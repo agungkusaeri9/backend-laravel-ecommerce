@@ -21,7 +21,7 @@
                         <thead>
                             <tr>
                                 <th width=10>#</th>
-                                <th>Icon</th>
+                                <th>Gambar</th>
                                 <th>Nama</th>
                                 <th>Slug</th>
                                 <th width=80>Aksi</th>
@@ -32,7 +32,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <img src="{{ $item->icon() }}" alt="" class="img-fluid" height="150" width="200">
+                                        <img src="{{ $item->icon() }}" alt="" class="img-fluid" height="100" width="100">
                                     </td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->slug }}</td>

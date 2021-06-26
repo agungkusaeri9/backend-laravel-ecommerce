@@ -1,29 +1,27 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
     @include('user.templates.partials.head')
-  </head>
-  <body>
+</head>
 
-    <div id="app">
-
-         <!-- navbar -->
-        @include('user.templates.partials.navbar')
-        <!-- end navbar -->
-
-        <!-- content -->
-        <div class="container mt-3 mb-5" style="min-height:500px;">
-            @yield('content')
-        </div>
-        <!-- akhir content -->
-
-
-        <!-- footer -->
-        @include('user.templates.partials.footer')
-        <!-- footer -->
-
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
     </div>
 
+    <!-- Header Section Begin -->
+    @include('user.templates.partials.header')
+    <!-- Header End -->
+
+    @yield('content')
+
+    <!-- Footer Section Begin -->
+    @include('user.templates.partials.footer')
+    <!-- Footer Section End -->
+    
     @include('user.templates.partials.scripts')
-  </body>
+</body>
+
 </html>

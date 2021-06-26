@@ -1,7 +1,7 @@
 @extends('admin.templates.default')
 @section('content')
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header">
                 <h6 class="text-primary font-weight-bold">Edit Kategori Produk {{ $productCategory->name }}</h6>
@@ -24,9 +24,9 @@
                             <img src="{{ $productCategory->icon() }}" class="img-fluid" alt="">
                         </div>
                         <div class="col-lg-9">
-                            <label for="icon">Icon</label>
-                            <input type="file" name="icon" class="form-control @error('icon') is-invalid @enderror">
-                            @error('icon')
+                            <label for="gambar">Gambar</label>
+                            <input type="file" name="gambar" class="form-control @error('gambar') is-invalid @enderror">
+                            @error('gambar')
                                 <div class="invalid-feedback d-inline">
                                     {{ $message }}
                                 </div>

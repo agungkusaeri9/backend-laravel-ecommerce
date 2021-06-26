@@ -17,9 +17,9 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->integer('user_id')->nullable();
             $table->integer('product_id');
-            $table->integer('product_total');
-            $table->bigInteger('price_total');
-            $table->text('inf');
+            $table->integer('amount');
+            $table->bigInteger('price');
+            $table->text('notes');
             $table->timestamps();
         });
     }

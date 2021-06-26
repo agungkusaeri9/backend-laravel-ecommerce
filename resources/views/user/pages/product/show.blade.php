@@ -1,40 +1,77 @@
 @extends('user.templates.default')
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
-        <h5 class="text-dark-font-weight-bold">Detail Produk "{{ $product->name }}"</h5>
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
+                    <a href="">Product</a>
+                    <span>{{ $product->name }}</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-body">
+<!-- Breadcrumb Section Begin -->
+<!-- Product Shop Section Begin -->
+<section class="product-shop spad page-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-lg-12 mt-2 mb-4">
-                        <h5 class="text-dark font-weight-bold">{{ $product->name }}</h5>
-                    </div>
-                    <div class="col-lg-12">
-                        <img src="{{ $product->gallery->first()->photo() }}" alt="{{ $product->name }}" class="img-fluid w-100" style="max-height: 400px">
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="row mt-4">
-                            <div class="col-lg-12">
-                                <h6 class="text-dark font-weight-bold">Deskripsi</h6>
+                    <div class="col-lg-6">
+                        <div class="product-pic-zoom">
+                            <img class="product-big-img" src="{{ $product->gallery[0]->photo() }}" alt="" />
+                        </div>
+                        <div class="product-thumbs">
+                            <div class="product-thumbs-track ps-slider owl-carousel">
+                                @foreach ($product->gallery as $gallery)
+                                <div class="pt" data-imgbigurl="{{ $gallery->photo() }}">
+                                    <img src="{{ $gallery->photo() }}" alt="" class="@if($product->gallery[0]->photo === $gallery->photo) active @endif"/>
+                                </div>
+                                @endforeach
                             </div>
-                            <div class="col-lg-12">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="product-details">
+                            <div class="pd-title">
+                                <span>{{ $product->category->name }}</span>
+                                <h3>{{ $product->name }}</h3>
+                            </div>
+                            <div class="pd-desc" style="min-height: 305px">
                                 <p>
                                     {!! $product->desc !!}
                                 </p>
+                                <h4>Rp. {{ number_format($product->price) }}</h4>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <h6 class="font-weight-bold">
-                                    Stok
-                                </h6>
-                            </div>
-                            <div class="col-lg-6">
-                                {{ $product->qty }}
+                            <div class="form">
+                                <form action="{{ route('cart.store') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="price" value="{{ $product->price }}">
+                                    <div class="form-group">
+                                        <label for="">Jumlah</label>
+                                        <input type="number" name="amount" class="form-control @error('amount') is-invalid @enderror w-50" value="{{ old('amount') }}">
+                                        @error('amount')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Keterangan</label>
+                                        <textarea name="notes" id="notes" cols="30" rows="3" class="form-control @error('notes') is-invalid @enderror" placeholder="Misalnya: Ukuran L, Warna dan lainnya.">{{ old('notes') }}</textarea>
+                                        @error('notes')
+                                            <div class="invalid-feedback d-inline">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <button class="primary-btn btn pd-cart">Add To Cart</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -42,42 +79,42 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-body"> 
-                <div class="row mt-2 mb-2">
-                    <div class="col-lg font-weight-bold">Harga</div>
-                    <div class="col-lg font-italic">Rp. {{ number_format($product->price) }}</div>
+</section>
+<!-- Product Shop Section End -->
+<div class="related-products spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Related Products</h2>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <form action="{{ route('cart.store', $product->slug) }}" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <label for="">Jumlah</label>
-                                <input type="number" name="product_total" value="1" style="width:15%;">
-                                @if(session('error'))
-                                    <div class="invalid-feedback d-block">
-                                        {{session('error') }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="inf" class="text-dark font-weight-bold">Keterangan</label>
-                                <textarea name="inf" id="" class="w-100 form-control" rows="2" placeholder="contoh: ukuran 42"></textarea>
-                                @error('inf')
-                                <div class="invalid-feedback d-inline">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-sm btn-primary btn-block" @if($product->qty < 1) disabled @endif>Add To Cart</button>
-                            </div>
-                        </form>
+            </div>
+        </div>
+        <div class="row">
+            @foreach ($product_related as $related)
+            <div class="col-lg-3 col-sm-6">
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <img src="{{ $related->gallery[0]->photo() }}" alt="" />
+                        <ul>
+                            <li class="w-icon active">
+                                <a href="#"><i class="icon_bag_alt"></i></a>
+                            </li>
+                            <li class="quick-view"><a href="{{ route('product.show', $related->slug) }}">+ Quick View</a></li>
+                        </ul>
+                    </div>
+                    <div class="pi-text">
+                        <div class="catagory-name">{{ $related->category->name }}</div>
+                        <a href="#">
+                            <h5>{{ $related->name }}</h5>
+                        </a>
+                        <div class="product-price">
+                            Rp. {{ number_format($related->price) }}
+                        </div>
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 @extends('admin.templates.default')
 @section('content')
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header">
                 <h6 class="text-primary font-weight-bold">Edit Transaksi {{ $transaction->uuid }}</h6>
@@ -77,19 +77,6 @@
                         <label for="receipt_number">No Resi</label>
                         <input type="text" name="receipt_number" class="form-control @error('receipt_number') is-invalid @enderror" value="{{ $transaction->receipt_number ?? old('receipt_number') }}">
                         @error('receipt_number')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="transaction_status">Status</label>
-                        <select name="transaction_status" id="" class="form-control">
-                            @foreach ($transaction_status as $item)
-                                <option @if($item->id == $transaction->status->id) selected @endif value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('transaction_status')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

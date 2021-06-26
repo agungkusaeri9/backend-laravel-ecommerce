@@ -1,10 +1,10 @@
 @extends('admin.templates.default')
 @section('content')
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Tambah Metode Pembayaran</h6>
+                <h6 class="text-primary font-weight-bold">Tambah Foto Produk</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.product-galleries.store') }}" method="post" enctype="multipart/form-data">
@@ -23,8 +23,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="photo">Photo</label>
-                        <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
+                        <label for="photo">Foto</label>
+                        <input type="file" name="photo[]" multiple class="form-control @error('photo') is-invalid @enderror">
                         @error('photo')
                             <div class="invalid-feedback d-inline">
                                 {{ $message }}
@@ -54,3 +54,23 @@
     </div>
 </div>
 @endsection
+@push('afterStyles')
+<link rel="stylesheet" href="{{ asset('assets/select2/select2.min.css') }}">
+<style>
+.select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 35px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
+</style>
+@endpush
+@push('afterScripts')
+<script src="{{ asset('assets/select2/select2.min.js') }}"></script>
+<script>
+    $('#product_id').select2()
+</script>
+@endpush

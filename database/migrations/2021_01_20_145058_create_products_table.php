@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->longText('desc');
             $table->integer('price');
             $table->integer('qty');
+            $table->integer('weight')->default(500);
             $table->timestamps();
         });
     }

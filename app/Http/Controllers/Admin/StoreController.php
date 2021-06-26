@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
 {
@@ -16,27 +17,11 @@ class StoreController extends Controller
     public function index()
     {
         $store = Store::first();
-        if(!$store){
-            return view('admin.pages.store.create',[
-                'title' => 'Buat Toko'
-            ]);
-        }else{
-            return view('admin.pages.store.index',[
-                'title' => 'Profile Toko',
-                'store' => $store
-            ]);
-        }
+        return view('admin.pages.store.create',[
+            'title' => 'Profile Toko',
+            'store' => $store
+        ]);
         
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -50,82 +35,27 @@ class StoreController extends Controller
         $request->validate([
             'name' => ['required'],
             'desc' => ['required'],
+            'province' => ['required'],
+            'city' => ['required'],
             'address' => ['required'],
-            'photo' => ['image','mimes:jpg.jpeg,png'],
-        ]);
-        $data = $request->all();
-        if($request->hasFile('photo')){
-            $data['photo'] = $request->file('photo')->store('store/');
-        }else{
-            $data['photo'] = NULL;
-        }
-        Store::create($data);
-
-        return redirect()->route('admin.store.index')->with('success','Toko berhasil dibuat!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Store $store)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Store $store)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
-    {
-        $request->validate([
-            'name' => ['required'],
-            'desc' => ['required'],
-            'address' => ['required'],
-            'photo' => ['image','mimes:jpg.jpeg,png'],
+            'logo' => ['image','mimes:jpg,jpeg,png'],
         ]);
         $store = Store::first();
-
         $data = $request->all();
-        if($request->hasFile('photo')){
-            if($store->photo !== NULL){
-                unlink('storage/' . $store->photo);
+        if($store){
+            if(request()->file('logo')){
+                $data['logo'] = request()->file('logo')->store('store','public');
+                Storage::disk('public')->delete($store->logo);
+            }else{
+                $data['logo'] = $store->logo;
             }
-            $data['photo'] = $request->file('photo')->store('store/');
+            $store->update($data);
         }else{
-            $data['photo'] = NULL;
+            $data['logo'] = request()->file('logo')->store('store','public');
+            Store::create($data);
         }
-        $store->update($data);
 
-        return redirect()->route('admin.store.index')->with('success','Profile Toko berhasil diubah!');
-
+        return redirect()->route('admin.store.index')->with('success','Toko berhasil diupdate!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Store $store)
-    {
-        //
-    }
 }

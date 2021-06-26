@@ -53,8 +53,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['in:user']
+            'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
     }
 
@@ -67,12 +66,21 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $rand = rand(1,1000);
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'username' => Str::snake($data['name'] . $rand),
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'role' => 'user'
+            'password' => Hash::make($data['password'])
         ]);
+        return $user->assignRole('user');
+    }
+
+    protected function authenticated($user)
+    {
+        if(auth()->user()->roles->pluck('name')->first() === 'admin'){
+            return redirect()->route('admin.dashboard');
+        }else{
+            return redirect()->route('home');
+        }
     }
 }

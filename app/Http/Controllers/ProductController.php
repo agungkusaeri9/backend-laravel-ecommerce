@@ -2,28 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\Product;
-use App\ProductCategory;
+use App\Store;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function category(ProductCategory $category)
+    public $store;
+    public function __construct(Store $store)
     {
-        $products = Product::orderBy('created_at', 'desc')->where('product_category', $category->id)->paginate(12);
-        $categories = ProductCategory::orderBy('name','asc')->get();
-        return view('user.pages.product.index',[
-            'title' => 'Selamat datang di Toko Kami',
-            'products' => $products,
-            'categories' => $categories
-        ]);
+        $this->store = Store::first();
     }
 
-    public function show(Product $product)
+    public function show($slug)
     {
+        $product = Product::where('slug', $slug)->first();
+        $related = Product::where('product_category', $product->product_category)->limit(4)->get();
         return view('user.pages.product.show',[
-            'title' => 'Detail Product ' . $product->name,
+            'title' => $product->name,
             'product' => $product,
+            'store' => $this->store,
+            'product_related' => $related,
+            'cart_count' => Cart::where('user_id', auth()->id())->count(),
         ]);
     }
 }

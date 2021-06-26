@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductGallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductGalleryController extends Controller
 {
@@ -16,10 +17,18 @@ class ProductGalleryController extends Controller
      */
     public function index()
     {
-        $productGalleries = ProductGallery::orderBy('product_id','desc')->get();
+        $product_id = request('product');
+        if($product_id){
+            $productGalleries = ProductGallery::where('product_id',$product_id)->get();
+        }else{
+            $productGalleries = ProductGallery::orderBy('product_id','desc')->get();
+        }
+        $products = Product::orderBy('name','ASC')->get();
         return view('admin.pages.product-gallery.index',[
             'title' => 'Galeri Produk',
-            'productGalleries' => $productGalleries
+            'productGalleries' => $productGalleries,
+            'products' => $products,
+            'product_id' => $product_id
         ]);
     }
 
@@ -47,14 +56,23 @@ class ProductGalleryController extends Controller
     {
         $request->validate([
             'product_id' => ['required'],
-            'photo' => ['required','image','mimes:jpg,jpeg,png']
+            'photo' => ['required']
         ]);
-        $photo = $request->file('photo')->store('product');
-        ProductGallery::create([
-            'product_id' => $request->product_id,
-            'photo' => $photo,
-            'is_default' => $request->is_default
-        ]);
+        $photo = request()->file('photo');
+        if(count($photo) > 1){
+            $is_default = 0;
+        }else{
+            $is_default = request('is_default');
+        }
+        foreach($photo as $ph)
+        {
+            $name = $ph->store('product','public');
+            $gallery = new ProductGallery;
+            $gallery->product_id = request('product_id');
+            $gallery->photo = $name;
+            $gallery->is_default = $is_default;
+            $gallery->save();
+        }
 
         return redirect()->route('admin.product-galleries.index')->with('success','Foto Produk berhasil ditambahkan!');
     }
@@ -100,13 +118,13 @@ class ProductGalleryController extends Controller
             'photo' => ['image','mimes:jpg,jpeg,png']
         ]);
         if($request->hasFile('photo')){
-            unlink('storage/' . $productGallery->photo);
+            Storage::disk('public')->delete($productGallery->photo);
             $photo = $request->file('photo')->store('product');
         }else{
             $photo = $productGallery->photo;
         }
         $productGallery->update([
-            'product_id' => $request->product_id,
+            'product_id' => $productGallery->product_id,
             'photo' => $photo,
             'is_default' => $request->is_default
         ]);

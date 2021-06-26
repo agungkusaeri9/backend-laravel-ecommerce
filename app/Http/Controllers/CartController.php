@@ -3,47 +3,70 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
-use App\Product;
+use App\City;
+use App\Payment;
+use App\Province;
+use App\Store;
+use App\Transaction;
 use Illuminate\Http\Request;
+use Kavist\RajaOngkir\Facades\RajaOngkir;
 
 class CartController extends Controller
 {
+    public $store;
+    public function __construct(Store $store)
+    {
+        $this->store = Store::first();
+    }
+
     public function index()
     {
-        $carts = Cart::where('user_id', auth()->id())->get();
-        return view('user.pages.cart.index',[
-            'title' => 'Keranjang Anda',
-            'carts' => $carts
-        ]);
-    }
-    public function store(Product $product, Request $request)
-    {
-        $request->validate([
-            'inf' => ['required']
-        ]);
-        if($request->product_total <= $product->product_total){
-            return redirect()->back()->with('error','Jumlah melebihi stok!');
-        }elseif($product->qty < 1){
-            return redirect()->back()->with('error','Stok tidak tersedia');
+        $carts = Cart::with('product.gallery')->where('user_id', auth()->id())->get();
+        $provinces = Province::all();
+        $cities = City::all();
+        $transaction_latest = Transaction::orderBy('id','DESC')->limit(1)->first();
+        if($transaction_latest){
+            $trx = 'TRX' . str_pad($transaction_latest->id + 1,5,"0", STR_PAD_LEFT);
+        }else{
+            $trx = 'TRX' . str_pad(1,5,"0", STR_PAD_LEFT);
         }
+        $payments = Payment::orderBy('name','ASC')->get();
+        return view('user.pages.cart.index',[
+            'title' => 'Keranjang anda',
+            'carts' => $carts,
+            'store' => $this->store,
+            'provinces' => $provinces,
+            'cities' => $cities,
+            'cart_count' => Cart::where('user_id', auth()->id())->count(),
+            'trx' => $trx,
+            'payments' => $payments
+        ]);
+    }
 
-        $product->decrement('qty',$request->product_total);
-
-        Cart::create([
-            'user_id' => auth()->id(),
-            'product_id' => $product->id,
-            'product_total' => $request->product_total,
-            'inf' => $request->inf,
-            'price_total' => $request->product_total * $product->price
+    public function store()
+    {
+        request()->validate([
+            'product_id' => ['required','numeric'],
+            'amount' => ['required','numeric'],
+            'price' => ['required'],
+            'notes' => ['required']
         ]);
 
-        return redirect()->route('cart.index')->with('success','Produk ditambahkan ke dalam keranjang!');
+        $price = request('amount') * request('price');
+
+        auth()->user()->carts()->create([
+            'product_id' => request('product_id'),
+            'amount' => request('amount'),
+            'price' => $price,
+            'notes' => request('notes')
+        ]);
+
+        return redirect()->route('cart.index');
     }
-    public function destroy(Cart $cart)
+
+    public function destroy($id)
     {
-        
-        $cart->product->increment('qty', $cart->product_total);
-        $cart->delete();
-        return redirect()->route('cart.index')->with('success','Produk dihapus dari keranjang!');
+        Cart::destroy($id);
+        return redirect()->back()->with('success', 'Item berhasil dihapus dari keranjang');
     }
 }

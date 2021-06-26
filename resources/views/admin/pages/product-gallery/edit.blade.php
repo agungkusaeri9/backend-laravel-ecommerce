@@ -1,7 +1,7 @@
 @extends('admin.templates.default')
 @section('content')
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header">
                 <h6 class="text-primary font-weight-bold">Edit Foto "{{ $productGallery->product->name }}"</h6>
@@ -12,16 +12,7 @@
                     @method('patch')
                     <div class="form-group">
                         <label for="product_id">Nama Produk</label>
-                        <select name="product_id" id="product_id" class="form-control @error('product_id') is-invalid @enderror">
-                            @foreach ($products as $item)
-                                <option @if($item->id == $productGallery->product_id) selected @endif value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('name')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                        <input type="text" name="product_id" class="form-control" value="{{ $productGallery->product->name }}" readonly>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3">

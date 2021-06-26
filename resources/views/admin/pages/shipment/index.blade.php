@@ -12,7 +12,7 @@
     <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between">
-                <h6 class="text-primary font-weight-bold">Data User</h6>
+                <h6 class="text-primary font-weight-bold">Data Kurir</h6>
                 <a href="{{ route('admin.shipments.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">

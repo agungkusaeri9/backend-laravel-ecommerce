@@ -7,6 +7,7 @@ use App\Product;
 use App\ProductCategory;
 use App\ProductGallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -53,18 +54,29 @@ class ProductController extends Controller
             'desc' => ['required','min:10'],
             'price' => ['required','numeric'],
             'qty' => ['required','numeric'],
-            'photo' => ['required','image','mimes:jpg,png,jpeg']
+            'weight' => ['required','numeric'],
+            'photo' => ['required']
         ]);
         $data = $request->all();
+        $prod = Product::where('name', request('name'))->first();
+        if($prod){
+            $data['slug'] = request('slug') . '-' . Str::random(5);
+        }else{
+            $data['slug'] = Str::slug($request->name);
+        }
 
-        $data['slug'] = Str::slug($request->name);
         $product = Product::create($data);
 
-        $gallery = new ProductGallery;
-        $gallery->product_id = $product->id;
-        $gallery->photo = $request->file('photo')->store('storage/product/');
-        $gallery->is_default = 1;
-        $gallery->save();
+        $photo = request()->file('photo');
+        foreach($photo as $ph)
+        {
+            $name = $ph->store('product','public');
+            $gallery = new ProductGallery;
+            $gallery->product_id = $product->id;
+            $gallery->photo = $name;
+            $gallery->is_default = 0;
+            $gallery->save();
+        }
 
         return redirect()->route('admin.products.index')->with('success','Produk berhasil ditambahkan!');
     }
@@ -113,6 +125,7 @@ class ProductController extends Controller
             'product_category' => ['required'],
             'desc' => ['required','min:10'],
             'price' => ['required','numeric'],
+            'weight' => ['required','numeric'],
             'qty' => ['required','numeric'],
         ]);
         $data = $request->all();
@@ -131,6 +144,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        
+        $gallery = ProductGallery::where('product_id', $product->id)->get();
+        foreach($gallery as $gal){
+            Storage::disk('public')->delete($gal->photo);
+        }
         $product->delete();
         return redirect()->route('admin.products.index')->with('success','Produk berhasil diubah!');
     }

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Payment;
 use App\Shipment;
 use App\Transaction;
-use App\TransactionStatus;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -18,7 +17,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::orderBy('created_at','desc')->get();
+        $transactions = Transaction::with('details.product.category')->orderBy('id','desc')->get();
         return view('admin.pages.transaction.index',[
             'title' => 'Data Transaksi',
             'transactions' => $transactions
@@ -55,7 +54,7 @@ class TransactionController extends Controller
     public function show(Transaction $transaction)
     {
         return view('admin.pages.transaction.show',[
-            'title' => 'Data Transaksi',
+            'title' => 'Detail Transaksi',
             'transaction' => $transaction
         ]);
     }
@@ -68,13 +67,11 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        $transaction_status = TransactionStatus::all();
         $payments = Payment::all();
         $shipments = Shipment::all();
         return view('admin.pages.transaction.edit',[
             'title' => 'Edit Transaksi ' . $transaction->uuid,
             'transaction' => $transaction,
-            'transaction_status' => $transaction_status,
             'payments' => $payments,
             'shipments' => $shipments
         ]);
@@ -94,7 +91,7 @@ class TransactionController extends Controller
             'phone_number' => ['required'],
             'address' => ['required'],
             'shipment_id' => ['required'],
-            'transaction_status' => ['required'],
+            'payment_id' => ['required'],
         ]);
 
         $data = $request->all();
@@ -114,5 +111,18 @@ class TransactionController extends Controller
     {
         $transaction->delete();
         return redirect()->route('admin.transactions.index')->with('success','Transaksi berhasil dihapus!');
+    }
+
+    public function set($id)
+    {
+        request()->validate([
+            'status' => ['required','in:SUCCESS,PENDING,DELIVERY,FAILED']
+        ]);
+
+        $transaction = Transaction::findOrFail($id);
+        $transaction->transaction_status = request('status');
+        $transaction->save();
+
+        return redirect()->back()->with('success','Status berhasil diupdate');
     }
 }

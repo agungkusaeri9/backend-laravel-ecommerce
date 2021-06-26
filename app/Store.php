@@ -8,10 +8,10 @@ class Store extends Model
 {
     protected $guarded = [];
 
-    public function photo()
+    public function logo()
     {
-        if($this->photo !== NULL){
-            return asset('storage/' . $this->photo);
+        if($this->logo !== NULL){
+            return asset('storage/' . $this->logo);
         }else{
             return asset('assets/img/toko.jpg');
         }

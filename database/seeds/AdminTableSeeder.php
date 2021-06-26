@@ -13,16 +13,16 @@ class AdminTableSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        $admin = User::create([
             'name' => 'Agung Kusaeri',
             'username' => 'agungkusaeri17',
-            'email' => 'Agungkusaeri@gmail.com',
+            'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
             'password' => bcrypt('admin'),
             'phone_number' => '081929912312',
-            'role' => 'admin',
             'remember_token' => Str::random(50),
             'avatar' => NULL
         ]);
+        $admin->assignRole('admin');
     }
 }

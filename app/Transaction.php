@@ -9,10 +9,6 @@ class Transaction extends Model
     protected $table ='transactions';
     protected $guarded = ['id'];
 
-    public function status()
-    {
-        return $this->belongsTo(TransactionStatus::class,'transaction_status');
-    }
     public function shipment()
     {
         return $this->belongsTo(Shipment::class);

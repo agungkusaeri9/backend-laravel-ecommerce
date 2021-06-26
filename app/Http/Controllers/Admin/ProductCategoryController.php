@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductCategoryController extends Controller
@@ -45,31 +46,16 @@ class ProductCategoryController extends Controller
     {
         $request->validate([
             'name' => ['required'],
-            'icon' => ['image','mimes:jpg,jpeg,png'],
+            'gambar' => ['required','image','mimes:jpg,jpeg,png'],
         ]);
-        if($request->hasFile('icon')){
-            $icon = $request->file('icon')->store('product-category');
-        }else{
-            $icon = NULL;
-        }
+        $gambar = $request->file('gambar')->store('product-category','public');
         ProductCategory::create([
-            'name' => $request->name,
+            'name' => Str::title($request->name),
             'slug' => Str::slug($request->name),
-            'icon' => $icon
+            'icon' => $gambar
         ]);
 
         return redirect()->route('admin.product-categories.index')->with('success','Kategori berhasil ditambahkan!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ProductCategory  $productCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProductCategory $productCategory)
-    {
-        //
     }
 
     /**
@@ -97,20 +83,18 @@ class ProductCategoryController extends Controller
     {
         $request->validate([
             'name' => ['required'],
-            'icon' => ['image','mimes:jpg,jpeg,png'],
+            'gambar' => ['image','mimes:jpg,jpeg,png'],
         ]);
-        if($request->hasFile('icon')){
-            if($productCategory->icon !== NULL){
-                unlink('storage/' . $productCategory->icon);
-            }
-            $icon = $request->file('icon')->store('product-category');
+        if($request->hasFile('gambar')){
+            Storage::disk('public')->delete($productCategory->icon);
+            $gambar = $request->file('gambar')->store('product-category','public');
         }else{
-            $icon = NULL;
+            $gambar = $productCategory->icon;
         }
         $productCategory->update([
-            'name' => $request->name,
+            'name' => Str::title($request->name),
             'slug' => Str::slug($request->name),
-            'icon' => $icon
+            'icon' => $gambar
         ]);
 
         return redirect()->route('admin.product-categories.index')->with('success','Kategori berhasil diubah!');
@@ -124,10 +108,8 @@ class ProductCategoryController extends Controller
      */
     public function destroy(ProductCategory $productCategory)
     {
-        if($productCategory->icon !== NULL){
-            unlink('storage/' . $productCategory->icon);
-        }
         $productCategory->delete();
+        Storage::disk('public')->delete($productCategory->icon);
         return redirect()->route('admin.product-categories.index')->with('success','Kategori berhasil dihapus!');
     }
 }

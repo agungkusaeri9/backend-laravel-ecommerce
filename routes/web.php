@@ -13,24 +13,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/product/{product:slug}', 'ProductController@show')->name('product.show');
-Route::get('/kategori/{category:slug}', 'ProductController@category')->name('product.category');
-Route::group(['middleware' => 'auth'], function () {
+Route::get('/product/{slug}', 'ProductController@show')->name('product.show');
+Route::middleware(['auth'])->group(function () {
     Route::get('/cart', 'CartController@index')->name('cart.index');
-    Route::post('/cart/{product:slug}', 'CartController@store')->name('cart.store');
-    Route::delete('/cart/{cart:id}', 'CartController@destroy')->name('cart.destroy');
-    Route::get('/checkout/{cart:id}', 'TransactionController@checkout')->name('checkout');
-    Route::post('/checkout/{cart:id}', 'TransactionController@store')->name('transaction.store');
-
-    Route::get('/transactions', 'TransactionController@index')->name('transaction.index');
-    Route::get('/transactions/{transaction:uuid}', 'TransactionController@confirmation')->name('transaction.confirmation');
-
+    Route::post('/cart', 'CartController@store')->name('cart.store');
+    Route::delete('/cart/{id}', 'CartController@destroy')->name('cart.destroy');
+    Route::get('province/{id}/city', 'CekOngkirController@getCity')->name('getCity');
+    Route::get('get-payments/{id}', 'HomeController@getPayment')->name('getPayment');
+    Route::post('/cekongkir', 'CekOngkirController@cekOngkir')->name('cekOngkir'); 
+    Route::post('/checkout', 'CheckoutController')->name('checkout'); 
+    Route::get('/success', function(){
+        if(session('success')){
+            return view('user.pages.success');
+        }else{
+            return redirect()->route('home');
+        }
+    })->name('transactions.success'); 
 });
