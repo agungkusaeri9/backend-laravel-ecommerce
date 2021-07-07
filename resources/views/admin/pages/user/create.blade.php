@@ -82,8 +82,9 @@
                         <label for="name">Role</label>
                         <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
                             <option value="" selected disabled>--Role--</option>
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->name }}">{{ $role->name }}</option>
+                            @endforeach
                         </select>
                         @error('name')
                             <div class="invalid-feedback">

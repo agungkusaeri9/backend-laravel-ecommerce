@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\City;
 use App\Http\Controllers\Controller;
+use App\Province;
 use App\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,9 +19,11 @@ class StoreController extends Controller
     public function index()
     {
         $store = Store::first();
+        $cities = City::all();
         return view('admin.pages.store.create',[
             'title' => 'Profile Toko',
-            'store' => $store
+            'store' => $store,
+            'cities' => $cities
         ]);
         
     }
@@ -35,7 +39,6 @@ class StoreController extends Controller
         $request->validate([
             'name' => ['required'],
             'desc' => ['required'],
-            'province' => ['required'],
             'city' => ['required'],
             'address' => ['required'],
             'logo' => ['image','mimes:jpg,jpeg,png'],
@@ -57,5 +60,4 @@ class StoreController extends Controller
 
         return redirect()->route('admin.store.index')->with('success','Toko berhasil diupdate!');
     }
-
 }

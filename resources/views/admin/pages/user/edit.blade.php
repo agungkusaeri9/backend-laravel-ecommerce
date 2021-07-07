@@ -83,8 +83,9 @@
                         <label for="name">Role</label>
                         <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
                             <option value="" selected disabled>--Role--</option>
-                            <option @if($user->role === 'admin') selected @endif value="admin">Admin</option>
-                            <option @if($user->role === 'user') selected @endif value="user">User</option>
+                            @foreach ($roles as $role)
+                                <option @if($role->name === $user->roles->pluck('name')->first()) selected @endif value="{{ $role->name }}">{{ $role->name }}</option>
+                            @endforeach
                         </select>
                         @error('name')
                             <div class="invalid-feedback">

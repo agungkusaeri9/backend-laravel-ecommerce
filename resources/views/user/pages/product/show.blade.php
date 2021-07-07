@@ -1,5 +1,8 @@
 @extends('user.templates.default')
 @section('content')
+<div class="container">
+    @include('user.templates.partials.alert')
+</div>
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
     <div class="container">
@@ -7,7 +10,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-text product-more">
                     <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
-                    <a href="">Product</a>
+                    <a href="{{ route('product.index') }}">Product</a>
                     <span>{{ $product->name }}</span>
                 </div>
             </div>
@@ -45,6 +48,7 @@
                                 <p>
                                     {!! $product->desc !!}
                                 </p>
+                                <p class="font-weight-bold">Quantity : {{ $product->qty }}</p>
                                 <h4>Rp. {{ number_format($product->price) }}</h4>
                             </div>
                             <div class="form">
@@ -53,8 +57,8 @@
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="price" value="{{ $product->price }}">
                                     <div class="form-group">
-                                        <label for="">Jumlah</label>
-                                        <input type="number" name="amount" class="form-control @error('amount') is-invalid @enderror w-50" value="{{ old('amount') }}">
+                                        <label for="">Amount</label>
+                                        <input type="number" name="amount" class="form-control @error('amount') is-invalid @enderror" value="{{ 1 ?? old('amount') }}" style="width: 60px;">
                                         @error('amount')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -62,8 +66,8 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Keterangan</label>
-                                        <textarea name="notes" id="notes" cols="30" rows="3" class="form-control @error('notes') is-invalid @enderror" placeholder="Misalnya: Ukuran L, Warna dan lainnya.">{{ old('notes') }}</textarea>
+                                        <label for="">Infromation</label>
+                                        <textarea name="notes" id="notes" cols="30" rows="3" class="form-control @error('notes') is-invalid @enderror" placeholder="Example. Size L, Red Color, or Etc">{{ old('notes') }}</textarea>
                                         @error('notes')
                                             <div class="invalid-feedback d-inline">
                                                 {{ $message }}

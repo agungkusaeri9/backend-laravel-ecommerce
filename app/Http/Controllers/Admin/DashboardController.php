@@ -14,7 +14,9 @@ class DashboardController extends Controller
         $users = User::count();
         $products = Product::count();
         $transactions = Transaction::count();
-        $income = Transaction::where('transaction_status', 'SUCCESS')->sum('transaction_total');
+        $shipping_costs = Transaction::where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('shipping_cost');
+        $income = Transaction::where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('transaction_total') - $shipping_costs;
+        $transaction_total = Transaction::where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('transaction_total');
         $pie = [
             'success' => Transaction::where('transaction_status', 'SUCCESS')->count(),
             'delivery' => Transaction::where('transaction_status', 'DELIVERY')->count(),
@@ -29,7 +31,9 @@ class DashboardController extends Controller
             'transactions' => $transactions,
             'income' => $income,
             'pie' => $pie,
-            'transaction_latest' => $transaction_latest
+            'transaction_latest' => $transaction_latest,
+            'shipping_costs' => $shipping_costs,
+            'transaction_total' => $transaction_total
         ]);
     }
 }

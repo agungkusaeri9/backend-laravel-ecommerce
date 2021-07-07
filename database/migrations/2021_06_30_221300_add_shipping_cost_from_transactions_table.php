@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentsTable extends Migration
+class AddShippingCostFromTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('number');
-            $table->text('desc');
-            $table->timestamps();
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->bigInteger('shipping_cost')->after('transaction_total');
         });
     }
 
@@ -29,6 +25,8 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->dropColumn('shipping_cost');
+        });
     }
 }

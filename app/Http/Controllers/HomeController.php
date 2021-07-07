@@ -18,11 +18,11 @@ class HomeController extends Controller
     }
     public function index(ProductCategory $category)
     {
-        $latest = Product::with('category','gallery')->orderBy('created_at', 'desc')->limit(9)->get();
+        $latest = Product::with('category','gallery')->orderBy('created_at', 'desc')->limit(16)->get();
         $categories = ProductCategory::orderBy('name','asc')->limit(6)->get();
         $banner = Product::with('category','gallery')->inRandomOrder()->limit(5)->get();
         $teraliris = Product::with('category','gallery')->inRandomOrder()->limit(5)->get();
-        return view('user.pages.index',[
+        return view('user.pages.home',[
             'title' => 'Selamat datang di Toko Kami',
             'products_latest' => $latest,
             'categories' => $categories,
@@ -33,10 +33,11 @@ class HomeController extends Controller
         ]);
     }
 
-    public function getPayment($id)
+    public function getPayment($name)
     {
-        $payment = Payment::where('id', $id)->first();
+        $payment = Payment::where('name', $name)->first();
 
         return response()->json($payment);
     }
+
 }

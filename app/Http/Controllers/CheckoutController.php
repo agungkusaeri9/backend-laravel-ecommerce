@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\Product;
 use App\Transaction;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,8 @@ class CheckoutController extends Controller
             'address' => ['required'],
             'phone_number' => ['required'],
             'email' => ['required'],
-            'ongkir' => ['required'],
+            'shipping_cost' => ['required'],
+            'courier' => ['required'],
         ]);
 
         $carts = Cart::where('user_id', auth()->id())->get();
@@ -39,8 +41,9 @@ class CheckoutController extends Controller
             'address' => request('address'),
             'transaction_total' => request('transaction_total'),
             'transaction_status' => 'PENDING',
-            'shipment_id' => 1,
-            'payment_id' => request('payment_id')
+            'courier' => request('courier'),
+            'shipping_cost' => request('shipping_cost'),
+            'payment' => request('payment')
         ]);
 
         foreach($carts as $cart){
@@ -49,10 +52,11 @@ class CheckoutController extends Controller
                 'amount' => $cart->amount,
                 'notes' => $cart->notes
             ]);
+            $cart->product->decrement('qty', $cart->amount);
         }
 
         auth()->user()->carts()->delete();
 
-        return redirect()->route('transactions.success')->with('success', 'Silakan tunggu update terbaru dari kami via email yang sudah Anda daftarkan sebelumnya.');
+        return redirect()->route('transactions.success')->with('transaction_id', $transaction->id);
     }
 }

@@ -22,50 +22,56 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="cart-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Gambar</th>
-                                        <th class="p-name text-center">Nama Produk</th>
-                                        <th>Harga</th>
-                                        <th>Jumlah</th>
-                                        <th>Total Harga</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($carts as $cart)
-                                    <tr>
-                                        <td class="cart-pic first-row">
-                                            <img src="{{ $cart->product->gallery[0]->photo() }}" />
-                                        </td>
-                                        <td class="cart-title first-row text-center">
-                                            <h5>{{ $cart->product->name }}</h5>
-                                        </td>
-                                        <td class="p-price first-row">Rp. {{ number_format($cart->product->price) }}</td>
-                                        <td>{{ $cart->amount }}</td>
-                                        <td>
-                                            Rp. {{ number_format($cart->price) }}
-                                        </td>
-                                        <td class="delete-item">
-                                            <form action="{{ route('cart.destroy', $cart->id) }}" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin ingin menghapus item ini dari keranjang?')">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center">
-                                            Keranjang Kodong
-                                        </td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th class="p-name text-center">Product Name</th>
+                                            <th>Price</th>
+                                            <th>Amount</th>
+                                            <th>Price Total</th>
+                                            <th>Notes</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($carts as $cart)
+                                        <tr>
+                                            <td class="cart-pic first-row">
+                                                <img src="{{ $cart->product->gallery[0]->photo() }}" />
+                                            </td>
+                                            <td class="cart-title first-row text-center">
+                                                <h5>{{ $cart->product->name }}</h5>
+                                            </td>
+                                            <td>Rp. {{ number_format($cart->product->price) }}</td>
+                                            <td>{{ $cart->amount }}</td>
+                                            <td class="p-price first-row">
+                                                Rp. {{ number_format($cart->price) }}
+                                            </td>
+                                            <td>
+                                                {{ $cart->notes }}
+                                            </td>
+                                            <td class="delete-item">
+                                                <form action="{{ route('cart.destroy', $cart->id) }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin ingin menghapus item ini dari keranjang?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="6" class="text-center">
+                                                Keranjang Kodong
+                                            </td>
+                                        </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-8">
@@ -76,9 +82,9 @@
                             <form method="post" id="formInformation">
                                 @csrf
                                 <input type="number" id="inp_sub_total" value="{{ $carts->sum('price') }}" class="d-none">
-                                <input type="hidden" id="inp_payment_id" name="payment_id" class="d-none">
+                                <input type="hidden" id="inp_payment" name="payment" class="d-none">
                                 <input type="hidden" id="inp_total_biaya" name="transaction_total">
-                                <input type="hidden" id="inp_ongkir" name="ongkir">
+                                <input type="hidden" id="inp_ongkir" name="shipping_cost">
                                 <div class="form-group">
                                     <label for="namaLengkap">Nama lengkap</label>
                                     <input type="text" class="form-control" id="namaLengkap" aria-describedby="namaHelp" placeholder="Masukan Nama" value="{{ auth()->user()->name }}" name="name">
@@ -107,17 +113,25 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="payment_id">Metode Pembayaran</label>
-                                    <select name="payment_id" id="payment_id" class="form-control">
+                                    <label for="alamatLengkap">Alamat Lengkap</label>
+                                    <textarea class="form-control" id="alamatLengkap" rows="3" name="address">{{ auth()->user()->address }}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="payment">Metode Pembayaran</label>
+                                    <select name="payment" id="payment" class="form-control">
                                         <option value="">--Metode Pembayaran--</option>
                                         @foreach ($payments as $payment)
-                                            <option value="{{ $payment->id }}">{{ $payment->name }}</option>
+                                            <option value="{{ $payment->name }}">{{ $payment->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="alamatLengkap">Alamat Lengkap</label>
-                                    <textarea class="form-control" id="alamatLengkap" rows="3" name="address">{{ auth()->user()->address }}</textarea>
+                                    <label for="courier">Jasa Pengiriman</label>
+                                    <select name="courier" id="courier" class="form-control">
+                                        @foreach ($couriers as $courier)
+                                            <option value="{{ $courier->code }}">{{ $courier->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </form>
                         </div>
@@ -167,7 +181,7 @@
                     dateType: 'JSON',
                     success: function(data){
                         $('select[name="city_destination"]').empty();
-                        
+                        $('select[name="city_destination"]').append('<option>--Pilih Kota--</option>')
                         $.each(data, function(key, value){
                             $('select[name="city_destination"]').append(new Option(value,key));
                         });
@@ -197,17 +211,17 @@
             })
         })
 
-        $('#payment_id').on('change', function(){
-            let paymentId = $(this).val();
+        $('#payment').on('change', function(){
+            let paymentName = $(this).val();
             $.ajax({
-                url: '/get-payments/' + paymentId,
+                url: '/get-payments/' + paymentName,
                 type: "GET",
                 dateType: 'JSON',
                 success: function(data){
                     $('#pembayaran').html(data['name']);
                     $('#nomor').html(data['number']);
                     $('#desc').html(data['desc']);
-                    $('#inp_payment_id').val(data['id']);
+                    $('#inp_payment').val(data['id']);
                 }
             })
         })

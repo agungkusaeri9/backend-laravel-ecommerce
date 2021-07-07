@@ -1,10 +1,10 @@
-<footer class="footer-section">
+<footer class="footer-section mt-4">
     <div class="container">
         <div class="row">
             <div class="col-lg-5">
                 <div class="footer-left">
-                    <div class="footer-logo">
-                        <a href="#"><img src="{{ asset('assets/user/img/logo_website_shayna_white.png') }}" alt="" /></a>
+                    <div class="footer-logo text-light" style="font-family: 'Righteous', cursive; font-size:40px">
+                        {{ $store->name }}
                     </div>
                     <ul>
                         <li>{{ $store->address }}</li>

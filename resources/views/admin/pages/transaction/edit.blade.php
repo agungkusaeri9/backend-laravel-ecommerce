@@ -47,10 +47,10 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="payment_id">Pembayaran</label>
-                        <select name="payment_id" id="" class="form-control">
+                        <label for="payment">Pembayaran</label>
+                        <select name="payment" id="" class="form-control">
                             @foreach ($payments as $item)
-                                <option @if($item->id == $transaction->payment_id) selected @endif value="{{ $item->id }}">{{ $item->name }}</option>
+                                <option @if($item->name == $transaction->payment) selected @endif value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                         @error('transaction_status')
@@ -60,11 +60,11 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="shipment_id">Jasa Pengiriman</label>
-                        <select name="shipment_id" id="" class="form-control">
-                            <option value="" selected>--Jasa Pengiriman--</option>
-                            @foreach ($shipments as $item)
-                                <option @if($item->id == $transaction->shipment_id) selected @endif value="{{ $item->id }}">{{ $item->name }}</option>
+                        <label for="courier">Jasa Pengiriman</label>
+                        <select name="courier" id="" class="form-control">
+                            <option value="">--Jasa Pengiriman--</option>
+                            @foreach ($couriers as $courier)
+                                <option @if($courier->code == $transaction->courier) selected @endif value="{{ $courier->code }}">{{ $courier->name }}</option>
                             @endforeach
                         </select>
                         @error('transaction_status')

@@ -24,7 +24,8 @@
                         <th>#</th>
                         <th>Nama</th>
                         <th>Jumlah</th>
-                        <th>Harga</th>
+                        <th>Harga Awal</th>
+                        <th>Harga Akhir</th>
                     </tr>
                     @foreach ($transaction->details as $detail)
                     <tr>
@@ -32,6 +33,7 @@
                         <td>{{ $detail->product->name }}</td>
                         <td>{{ $detail->amount }}</td>
                         <td>Rp. {{ number_format($detail->product->price) }}</td>
+                        <td>Rp. {{ number_format($detail->product->price * $detail->amount) }}</td>
                     </tr>
                     @endforeach
                 </table>
@@ -39,11 +41,37 @@
         </tr>
         <tr>
             <th>Pembayaran</th>
-            <td>{{ $transaction->payment->name }}</td>
+            <td>{{ $transaction->payment }}</td>
         </tr>
         <tr>
             <th>Kurir</th>
-            <td>{{ $transaction->shipment->name }}</td>
+            <td>{{ $transaction->courier }}</td>
+        </tr>
+        <tr>
+            <th>Receipt Number</th>
+            <td>{{ $transaction->receipt_number }}</td>
+        </tr>
+        <tr>
+            <th>Price Total</th>
+            <td>Rp. {{ number_format($price_total) }}</td>
+        </tr>
+        <tr>
+            <th>Ongkos Kirim</th>
+            <td>Rp. {{ number_format($transaction->shipping_cost) }}</td>
+        </tr>
+        <tr>
+            <th>Total Bayar</th>
+            <td>Rp. {{ number_format($transaction->transaction_total) }}</td>
+        </tr>
+        <tr>
+            <th>Bukti Pembayaran</th>
+            <td>
+                @if ($transaction->proof_of_payment !== NULL)
+                <a href="{{ route('admin.transactions.download', $transaction->id) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Download</a>
+                @else 
+                Not Uploaded
+                @endif
+            </td>
         </tr>
         <tr>
             <th>Status</th>
@@ -56,10 +84,6 @@
                 <span class="badge badge-danger">FAILED</span>
                 @endif
             </td>
-        </tr>
-        <tr>
-            <th>Total Bayar</th>
-            <td>Rp. {{ number_format($transaction->transaction_total) }}</td>
         </tr>
         <tr>
             <th>Aksi</th>

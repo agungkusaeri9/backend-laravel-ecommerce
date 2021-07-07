@@ -12,5 +12,7 @@ Route::post('product-galleries/search', 'ProductGalleryController@index')->name(
 Route::resource('shipments', 'ShipmentController');
 Route::resource('transactions', 'TransactionController');
 Route::get('/transactions/{id}/set', 'TransactionController@set')->name('transactions.set');
+Route::get('/transactions/{id}/download', 'TransactionController@download')->name('transactions.download');
 Route::get('/store', 'StoreController@index')->name('store.index');
 Route::post('/store', 'StoreController@store')->name('store.store');
+Route::get('/store/province/{id}/city', 'StoreController@getCity')->name('store.get-city');

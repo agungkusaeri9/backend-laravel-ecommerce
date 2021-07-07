@@ -130,7 +130,6 @@
         var uuid = button.data('uuid');
         modal.find('.modal-title').html('Transaction Detail ' + uuid);
         modal.find('.modal-body').load(url)
-       
     })
 </script>
 @endpush

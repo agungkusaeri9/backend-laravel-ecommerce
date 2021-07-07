@@ -37,7 +37,7 @@
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone_number }}</td>
-                                    <td>{{ $user->role }}</td>
+                                    <td>{{ $user->roles->pluck('name')->first() }}</td>
                                     <td>
                                         <a href="{{ route('admin.users.edit',$user->id) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
                                         <form action="{{ route('admin.users.destroy',$user->id) }}" method="post" class="d-inline">

@@ -533,11 +533,11 @@ ol {
     position: relative;
 }
 
-.inner-header .nav-right li.cart-icon:hover .cart-hover {
+/* .inner-header .nav-right li.cart-icon:hover .cart-hover {
     opacity: 1;
     visibility: visible;
     top: 60px;
-}
+} */
 
 .inner-header .nav-right li.cart-icon a {
     color: #252525;
@@ -564,11 +564,11 @@ ol {
     position: absolute;
     right: -70px;
     top: 100px;
-    width: 350px;
+    width: 200px;
     background: #ffffff;
     z-index: 99;
     text-align: left;
-    padding: 30px;
+    padding: 20px;
     opacity: 0;
     visibility: hidden;
     -webkit-box-shadow: 0 13px 32px rgba(51, 51, 51, 0.1);
@@ -1171,7 +1171,11 @@ ol {
     opacity: 1;
 }
 
+
 .product-item:hover .pi-pic ul {
+    bottom: 0;
+}
+.product-item:hover .pi-pic ul li button {
     bottom: 0;
 }
 
@@ -4355,5 +4359,27 @@ ol {
     .benefit-items .single-benefit {
         padding-left: 15px;
         padding-right: 15px;
+    }
+}
+
+/* css tambahan */
+.section-title{
+    font-family: 'Righteous', cursive;
+    text-transform: uppercase;
+    font-size: 60px;
+}
+.page-title{
+    font-family: 'Righteous', cursive;
+    text-transform: uppercase;
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+@media only screen and (max-width: 479px) {
+    .category-item img#category-img{
+        max-height: 100px !important;
+    }
+    h2.section-title{
+        font-size: 10px !important;
     }
 }

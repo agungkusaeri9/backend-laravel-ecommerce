@@ -22,8 +22,8 @@ class CreateTransactionsTable extends Migration
             $table->text('address');
             $table->bigInteger('transaction_total');
             $table->string('transaction_status');
-            $table->integer('shipment_id')->nullable();
-            $table->integer('payment_id');
+            $table->string('courier');
+            $table->string('payment');
             $table->string('receipt_number')->nullable();
             $table->string('bukti_pembayaran')->nullable();
             $table->integer('user_id');

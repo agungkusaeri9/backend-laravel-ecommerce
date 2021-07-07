@@ -20,7 +20,7 @@
 </section>
 
 {{-- kategori --}}
-<section id="section-title">
+<section class="mb-5">
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-12">
@@ -30,9 +30,9 @@
         <div class="row text-center">
             @foreach ($categories as $category)
             <div class="col-4 col-md-2">
-                <a href="">
+                <a href="{{ route('product.category', $category->slug) }}">
                     <div class="category-item mb-2">
-                        <img src="{{ $category->icon() }}" alt="" style="height:180px" class="w-100">
+                        <img src="{{ $category->icon() }}" alt="{{ $category->name }}" class="w-100" id="category-img">
                         <h5 class="text-uppercase mt-2">{{ $category->name }}</h5>
                     </div>
                 </a>
@@ -42,7 +42,7 @@
     </div>
 </section>
 {{-- akhir kategori --}}
-<section id="section-title">
+<section class="mb-5">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -57,8 +57,13 @@
                         <div class="pi-pic">
                             <img src="{{ $terlaris->gallery[0]->photo() }}" alt="" />
                             <ul>
-                                <li class="w-icon active">
-                                    <a href="#"><i class="icon_bag_alt"></i></a>
+                                <li class="w-icon active" onclick="addToCart()">
+                                    <a href="javascript:void(0)"><i class="icon_bag_alt"></i></a>
+                                    <form action="{{ route('cart.store') }}" method="post" class="d-none" id="form-add-to-cart">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $terlaris->id }}">
+                                        <input type="hidden" name="price" value="{{ $terlaris->price }}">
+                                    </form>
                                 </li>
                                 <li class="quick-view"><a href="{{ route('product.show', $terlaris->slug) }}">+ Quick View</a></li>
                             </ul>
@@ -91,13 +96,18 @@
         </div>
         <div class="row">
             @foreach ($products_latest as $product)
-                <div class="col-md-4">
+                <div class="col-6 col-md-3">
                     <div class="product-item">
                         <div class="pi-pic">
                             <img src="{{ $product->gallery[0]->photo() }}" alt="" />
                             <ul>
-                                <li class="w-icon active">
-                                    <a href="#"><i class="icon_bag_alt"></i></a>
+                                <li class="w-icon active" onclick="addToCart()">
+                                    <a href="javascript:void(0)"><i class="icon_bag_alt"></i></a>
+                                    <form action="{{ route('cart.store') }}" method="post" class="d-none" id="form-add-to-cart">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $terlaris->id }}">
+                                        <input type="hidden" name="price" value="{{ $terlaris->price }}">
+                                    </form>
                                 </li>
                                 <li class="quick-view"><a href="{{ route('product.show', $product->slug) }}">+ Quick View</a></li>
                             </ul>
@@ -119,13 +129,10 @@
 </section>
 
 @endsection
-@push('afterStyles')
-<style>
-    .section-title{
-        font-family: 'Righteous', cursive;
-        margin-top: 80px;
-        margin-bottom: 40px;
-        text-transform: uppercase;
+@push('afterScripts')
+<script>
+    function addToCart(){
+        $('#form-add-to-cart').submit();
     }
-</style>
+</script>
 @endpush

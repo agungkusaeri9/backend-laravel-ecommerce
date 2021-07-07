@@ -54,17 +54,13 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="province">Provinsi</label>
-                        <input type="text" name="province" id="province" class="form-control @error('province') is-invalid @enderror" value="{{ $store->province ?? old('province') }}">
-                        @error('province')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="city">Kabupate/Kota</label>
-                        <input type="text" name="city" id="city" class="form-control @error('city') is-invalid @enderror" value="{{ $store->city ?? old('city') }}">
+                        <label for="city">Kota</label>
+                        <select name="city" id="city" class="form-control">
+                            <option value="" disabled selected>--Pilih Kota--</option>
+                            @foreach ($cities as $city)
+                                <option @if($city->city_id === $store->city) selected @endif value="{{ $city->city_id }}">{{ $city->city_name }}</option>
+                            @endforeach
+                        </select>
                         @error('city')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -124,11 +120,24 @@
 </div>
 @endsection
 @push('afterStyles')
-<script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('assets/select2/select2.min.css') }}">
+<style>
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+    .select2-container .select2-selection--single {
+        height: 35px !important;
+    }
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+    </style>
 @endpush
 @push('afterScripts')
-
+<script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('assets/select2/select2.min.js') }}"></script>
 <script>
     CKEDITOR.replace('desc');
+    $('#city').select2();
 </script>
 @endpush

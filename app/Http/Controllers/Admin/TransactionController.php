@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Courier;
 use App\Http\Controllers\Controller;
 use App\Payment;
 use App\Shipment;
 use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class TransactionController extends Controller
 {
@@ -24,14 +27,18 @@ class TransactionController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function download($id)
     {
-        //
+        $item = Transaction::findOrFail($id);
+        $mimes = Str::after($item->proof_of_payment, '.');
+        $filePath = public_path('storage/') . $item->proof_of_payment;
+    	$headers = ['Content-Type:' . $mimes];
+    	$fileName = 'proof-payment-uuid' . '-' . $item->uuid . '.' . $mimes;
+
+        if(!file_exists($filePath)){
+            return redirect()->back()->with('gagal','Downloading Failed.');
+        }
+        return response()->download($filePath, $fileName, $headers);
     }
 
     /**
@@ -52,10 +59,17 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Transaction $transaction)
-    {
+    {   
+        $price_total = 0;
+        foreach($transaction->details as $details){
+            $product_price = $details->product->price;
+            $product_amount = $details->amount;
+            $price_total = $price_total + ($product_price * $product_amount);
+        }
         return view('admin.pages.transaction.show',[
             'title' => 'Detail Transaksi',
-            'transaction' => $transaction
+            'transaction' => $transaction,
+            'price_total' => $price_total
         ]);
     }
 
@@ -68,12 +82,12 @@ class TransactionController extends Controller
     public function edit(Transaction $transaction)
     {
         $payments = Payment::all();
-        $shipments = Shipment::all();
+        $couriers = Courier::all();
         return view('admin.pages.transaction.edit',[
             'title' => 'Edit Transaksi ' . $transaction->uuid,
             'transaction' => $transaction,
             'payments' => $payments,
-            'shipments' => $shipments
+            'couriers' => $couriers
         ]);
     }
 
@@ -90,8 +104,8 @@ class TransactionController extends Controller
             'name' => ['required'],
             'phone_number' => ['required'],
             'address' => ['required'],
-            'shipment_id' => ['required'],
-            'payment_id' => ['required'],
+            'courier' => ['required'],
+            'payment' => ['required'],
         ]);
 
         $data = $request->all();
@@ -110,7 +124,8 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction)
     {
         $transaction->delete();
-        return redirect()->route('admin.transactions.index')->with('success','Transaksi berhasil dihapus!');
+        Storage::disk('public')->delete($transaction->proof_of_payment);
+        return redirect()->route('admin.transactions.index')->with('success','Transaction has been deleted!');
     }
 
     public function set($id)

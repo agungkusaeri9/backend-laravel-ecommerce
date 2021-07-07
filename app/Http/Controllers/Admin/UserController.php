@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -31,8 +32,10 @@ class UserController extends Controller
      */
     public function create()
     {
+        $roles = Role::all();
         return view('admin.pages.user.create',[
-            'title' => 'Tambah User'
+            'title' => 'Add New User',
+            'roles' => $roles
         ]);
     }
 
@@ -49,65 +52,41 @@ class UserController extends Controller
             'username' => ['required','unique:users,username','alpha_num','alpha_dash'],
             'email' => ['required','email','unique:users,email'],
             'password' => ['required','min:5'],
-            'phone_number' => ['required'],
-            'role' => ['required','in:admin,user'],
+            'role' => ['required'],
             'avatar' => ['image','mimes:jpg,jpeg,png'],
         ]);
-        $data = $request->all();
+        $data = $request->except('role');
         if($request->hasFile('avatar')){
             $data['avatar'] = $request->file('avatar')->store('user');
         }else{
             $data['avatar'] = NULL;
         }
         $data['username'] = $request->username . rand(1,100);
-        User::create($data);
-
+        $user = User::create($data);
+        $user->assignRole(request('role'));
         return redirect()->route('admin.users.index')->with('success','User berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function edit(User $user)
     {
+        $roles = Role::all();
         return view('admin.pages.user.edit',[
             'title' => 'Edit User ' . $user->name,
-            'user' => $user
+            'user' => $user,
+            'roles' => $roles 
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, User $user)
     {
         $request->validate([
             'name' => ['required'],
             'username' => ['required',Rule::unique('users','username')->ignore($user->id),'alpha_num','alpha_dash'],
             'email' => ['required','email',Rule::unique('users','email')->ignore($user->id)],
-            'phone_number' => ['required'],
-            'role' => ['required','in:admin,user'],
+            'role' => ['required'],
             'avatar' => ['image','mimes:jpg,jpeg,png'],
         ]);
-        $data = $request->all();
+        $data = $request->except('role');
         if($request->hasFile('avatar')){
             if($user->avatar !== NULL){
                 Storage::disk('public')->delete($user->avatar);
@@ -128,6 +107,7 @@ class UserController extends Controller
         }
         
         $user->update($data);
+        $user->syncRoles(request('role'));
 
         return redirect()->route('admin.users.index')->with('success','User berhasil ditambahkan!');
     }

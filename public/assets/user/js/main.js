@@ -59,7 +59,7 @@
         loop: true,
         margin: 25,
         nav: true,
-        items: 4,
+        items: 3,
         dots: true,
         navText: ['<i class="ti-angle-left"></i>', '<i class="ti-angle-right"></i>'],
         smartSpeed: 1200,
@@ -67,7 +67,7 @@
         autoplay: true,
         responsive: {
             0: {
-                items: 1,
+                items: 2,
             },
             576: {
                 items: 2,
@@ -76,7 +76,7 @@
                 items: 2,
             },
             1200: {
-                items: 3,
+                items: 4,
             }
         }
     });
@@ -112,7 +112,7 @@
         loop: false,
         margin: 10,
         nav: true,
-        items: 3,
+        items: 4,
         dots: false,
         navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
         smartSpeed: 1200,
@@ -120,34 +120,34 @@
         autoplay: true,
     });
 
-    /*------------------
-        CountDown
-    --------------------*/
-    // For demo preview
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+    // /*------------------
+    //     CountDown
+    // --------------------*/
+    // // For demo preview
+    // var today = new Date();
+    // var dd = String(today.getDate()).padStart(2, '0');
+    // var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    // var yyyy = today.getFullYear();
 
-    if (mm == 12) {
-        mm = '01';
-        yyyy = yyyy + 1;
-    } else {
-        mm = parseInt(mm) + 1;
-        mm = String(mm).padStart(2, '0');
-    }
-    var timerdate = mm + '/' + dd + '/' + yyyy;
-    // For demo preview end
+    // if (mm == 12) {
+    //     mm = '01';
+    //     yyyy = yyyy + 1;
+    // } else {
+    //     mm = parseInt(mm) + 1;
+    //     mm = String(mm).padStart(2, '0');
+    // }
+    // var timerdate = mm + '/' + dd + '/' + yyyy;
+    // // For demo preview end
 
-    console.log(timerdate);
+    // console.log(timerdate);
 
 
     // Use this for real timer date
     /* var timerdate = "2020/01/01"; */
 
-    $("#countdown").countdown(timerdate, function (event) {
-        $(this).html(event.strftime("<div class='cd-item'><span>%D</span> <p>Days</p> </div>" + "<div class='cd-item'><span>%H</span> <p>Hrs</p> </div>" + "<div class='cd-item'><span>%M</span> <p>Mins</p> </div>" + "<div class='cd-item'><span>%S</span> <p>Secs</p> </div>"));
-    });
+    // $("#countdown").countdown(timerdate, function (event) {
+    //     $(this).html(event.strftime("<div class='cd-item'><span>%D</span> <p>Days</p> </div>" + "<div class='cd-item'><span>%H</span> <p>Hrs</p> </div>" + "<div class='cd-item'><span>%M</span> <p>Mins</p> </div>" + "<div class='cd-item'><span>%S</span> <p>Secs</p> </div>"));
+    // });
 
 
     /*----------------------------------------------------

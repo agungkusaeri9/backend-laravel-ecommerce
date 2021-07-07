@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use App\City;
+use App\Courier;
 use App\Payment;
+use App\Product;
 use App\Province;
 use App\Store;
 use App\Transaction;
@@ -30,6 +32,7 @@ class CartController extends Controller
         }else{
             $trx = 'TRX' . str_pad(1,5,"0", STR_PAD_LEFT);
         }
+        $couriers = Courier::all();
         $payments = Payment::orderBy('name','ASC')->get();
         return view('user.pages.cart.index',[
             'title' => 'Keranjang anda',
@@ -39,28 +42,34 @@ class CartController extends Controller
             'cities' => $cities,
             'cart_count' => Cart::where('user_id', auth()->id())->count(),
             'trx' => $trx,
-            'payments' => $payments
+            'payments' => $payments,
+            'couriers' => $couriers
         ]);
     }
 
     public function store()
     {
-        request()->validate([
-            'product_id' => ['required','numeric'],
-            'amount' => ['required','numeric'],
-            'price' => ['required'],
-            'notes' => ['required']
-        ]);
-
-        $price = request('amount') * request('price');
-
+        $product = Product::findOrFail(request('product_id'));
+        if($product->qty == 0){
+            return redirect()->back()->with('failed', 'Out Of Stock');
+        }elseif($product->qty < request('amount'))
+        {
+            return redirect()->back()->with('failed', 'Quantity is too much compared to product stock');
+        }
+        if(request('amount') && request('notes')){
+            $amount = request('amount');
+            $notes = request('notes');
+        }else{
+            $amount = 1;
+            $notes = 'random';
+        }
+        $price = $amount * request('price');
         auth()->user()->carts()->create([
             'product_id' => request('product_id'),
-            'amount' => request('amount'),
+            'amount' => $amount,
             'price' => $price,
-            'notes' => request('notes')
+            'notes' => $notes
         ]);
-
         return redirect()->route('cart.index');
     }
 

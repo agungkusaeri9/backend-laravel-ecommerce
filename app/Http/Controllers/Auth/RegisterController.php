@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -25,12 +26,12 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // /**
+    //  * Where to redirect users after registration.
+    //  *
+    //  * @var string
+    //  */
+    // protected $redirectTo = RouteServiceProvider::USER;
 
     /**
      * Create a new controller instance.
@@ -73,14 +74,5 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password'])
         ]);
         return $user->assignRole('user');
-    }
-
-    protected function authenticated($user)
-    {
-        if(auth()->user()->roles->pluck('name')->first() === 'admin'){
-            return redirect()->route('admin.dashboard');
-        }else{
-            return redirect()->route('home');
-        }
     }
 }

@@ -1,4 +1,4 @@
-@if (session('success'))
+@if (session('transaction_id'))
 <!DOCTYPE html>
 <html lang="id">
 
@@ -16,12 +16,12 @@
         <div class="col col-lg-4 text-center">
             <img src="{{ asset('assets/user/img/success-buy.png') }}" alt="" width="294">
             <h3 class="mt-4">
-                Sukses Terbayar!
+                Success!
             </h3>
             <p class="mt-2">
-                {{ session('success') }}
+                Please check your email or whatsapp number for payment information and upload proof of payment in the transactions menu
             </p>
-            <a href="{{ route('home') }}" class="primary-btn pd-cart mt-3">Back to Home</a>
+            <a href="{{ route('transactions.show', session('transaction_id')) }}" class="primary-btn pd-cart mt-3">Back to Transactions</a>
         </div>
     </div>
     
