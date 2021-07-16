@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('number');
-            $table->text('desc');
+            $table->string('desc');
             $table->timestamps();
         });
     }

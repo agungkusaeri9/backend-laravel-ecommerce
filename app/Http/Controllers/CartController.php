@@ -51,10 +51,10 @@ class CartController extends Controller
     {
         $product = Product::findOrFail(request('product_id'));
         if($product->qty == 0){
-            return redirect()->back()->with('failed', 'Out Of Stock');
+            return redirect()->back()->with('failed', 'Stok produk habis');
         }elseif($product->qty < request('amount'))
         {
-            return redirect()->back()->with('failed', 'Quantity is too much compared to product stock');
+            return redirect()->back()->with('failed', 'Jumlah pesanan idak boleh melebihi stok yang tersedia');
         }
         if(request('amount') && request('notes')){
             $amount = request('amount');

@@ -17,20 +17,8 @@ class ProductCategoryTableSeeder extends Seeder
             'slug' => 'baju'
         ]);
         ProductCategory::create([
-            'name' => 'Celana',
-            'slug' => 'celana'
-        ]);
-        ProductCategory::create([
-            'name' => 'Topi',
-            'slug' => 'topi'
-        ]);
-        ProductCategory::create([
-            'name' => 'Sepatu',
-            'slug' => 'sepatu'
-        ]);
-        ProductCategory::create([
-            'name' => 'Sandal',
-            'slug' => 'sandal'
+            'name' => 'Hijab',
+            'slug' => 'hijab'
         ]);
     }
 }

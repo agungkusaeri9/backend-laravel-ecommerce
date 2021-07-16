@@ -15,22 +15,22 @@ class PaymentTableSeeder extends Seeder
         Payment::create([
             'name' => 'Dana',
             'number' => '081919956872',
-            'desc' => 'a/n Agung Kusaeri'
+            'desc' => 'Agung Kusaeri'
         ]);
         Payment::create([
             'name' => 'Link Aja',
             'number' => '081919956872',
-            'desc' => 'a/n Agung Kusaeri'
+            'desc' => 'Agung Kusaeri'
         ]);
         Payment::create([
             'name' => 'Gopay',
             'number' => '081919956872',
-            'desc' => 'a/n Agung Kusaeri'
+            'desc' => 'Agung Kusaeri'
         ]);
         Payment::create([
             'name' => 'Bank Mandiri',
             'number' => '1759000012312',
-            'desc' => 'a/n Agung Kusaeri'
+            'desc' => 'Agung Kusaeri'
         ]);
     }
 }

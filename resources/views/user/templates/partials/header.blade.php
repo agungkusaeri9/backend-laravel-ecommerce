@@ -9,8 +9,7 @@
                     <i class=" fa fa-phone"></i> {{ $store->phone_number }}
                 </div>
             </div>
-            <div class="float-right d-flex navbar-top-right collapse navbar-collapse">
-                <a href="{{ route('home') }}" class="nav-link align-self-center d-inline text-dark font-weight-bold">Home</a>
+            {{-- <div class="ht-right">
                 <a href="{{ route('product.index') }}" class="nav-link align-self-center d-inline text-dark font-weight-bold">Product</a>
                 <a href="{{ route('contact') }}" class="nav-link align-self-center d-inline text-dark font-weight-bold">Contact Us</a>
                 <a href="{{ route('about') }}" class="nav-link align-self-center d-inline text-dark font-weight-bold">About Us</a>
@@ -23,7 +22,7 @@
                 @else
                 <a href="{{ route('login') }}" class="nav-link align-self-center d-inline text-dark font-weight-bold">Login</a>
                 @endauth
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="container">
@@ -36,21 +35,17 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-7 col-md-7"></div>
+                <div class="col-lg-7 col-md-7">
+                    <form action="{{ route('products.search') }}" method="get" class=" align-self-center">
+                        <div class="form-group">
+                            <input type="text" placeholder="Cari Barang Kesukaan Anda" class="form-control search d-block" style="height: 40px;" name="name" value="{{ request('name') ?? '' }}">
+                        </div>
+                    </form>
+                </div>
                 <div class="col-lg-3 text-right col-md-3">
                     <ul class="nav-right">
                         <li class="cart-icon">
-                            @auth
-                            <a href="{{ route('account.show') }}">{{ auth()->user()->name }}</a>
-                            <div class="cart-hover">
-                                <div class="select-items">
-                                    <a href="" class="text-dark d-block mb-1">My Profile</a>
-                                    <a href="" class="text-dark d-block">Transactions</a>
-                                </div>
-                            </div>
-                            @else
-                            <a href="{{ route('account.show') }}">Account</a>
-                            @endauth
+                            <a href="{{ route('account.show') }}">{{ auth()->user()->name ?? 'Akun Saya' }}</a>
                             <a href="{{ route('cart.index') }}">
                                 <i class="icon_bag_alt"></i>
                                 <span>{{ $cart_count }}</span>
@@ -62,11 +57,3 @@
         </div>
     </div>
 </header>
-@push('afterScript')
-{{-- <script>
-    $('#logout').on('click', function(e){
-        e.preventDefault();
-        $('form-logout').submit();
-    })
-</script> --}}
-@endpush

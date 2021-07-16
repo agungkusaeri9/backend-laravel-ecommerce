@@ -19,9 +19,9 @@
                 Success!
             </h3>
             <p class="mt-2">
-                Please check your email or whatsapp number for payment information and upload proof of payment in the transactions menu
+                Silahkan lakukan pembayaran dan jangan lupa upload bukti pembayarannya agar cepat diproses.
             </p>
-            <a href="{{ route('transactions.show', session('transaction_id')) }}" class="primary-btn pd-cart mt-3">Back to Transactions</a>
+            <a href="{{ route('transactions.show', session('transaction_id')) }}" class="primary-btn pd-cart mt-3">Kembali Ke Pesanan</a>
         </div>
     </div>
     

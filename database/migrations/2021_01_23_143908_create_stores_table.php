@@ -24,6 +24,8 @@ class CreateStoresTable extends Migration
             $table->text('address');
             $table->string('facebook_link');
             $table->string('instagram_link');
+            $table->string('tele_token')->nullable();
+            $table->string('group_chatId')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
         });

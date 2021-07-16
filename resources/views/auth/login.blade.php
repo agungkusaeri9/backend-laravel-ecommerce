@@ -51,10 +51,10 @@
                                 </form>
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="#">Forgot Password?</a>
+                                    <a class="small" href="#">Lupa Password?</a>
                                 </div>
                                 <div class="text-center">
-                                    <a class="small" href="{{ route('register') }}">Create an Account!</a>
+                                    <a class="small" href="{{ route('register') }}">Buat Akun Baru</a>
                                 </div>
                             </div>
                         </div>

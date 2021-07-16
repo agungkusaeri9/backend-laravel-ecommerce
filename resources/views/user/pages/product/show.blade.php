@@ -10,7 +10,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-text product-more">
                     <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
-                    <a href="{{ route('product.index') }}">Product</a>
+                    <a href="{{ route('product.index') }}">Produk</a>
                     <span>{{ $product->name }}</span>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="product-pic-zoom">
-                            <img class="product-big-img" src="{{ $product->gallery[0]->photo() }}" alt="" />
+                            <img class="product-big-img" src="{{ $product->gallery[0]->photo() }}" alt="{{ $product->name }}" />
                         </div>
                         <div class="product-thumbs">
                             <div class="product-thumbs-track ps-slider owl-carousel">
@@ -48,7 +48,7 @@
                                 <p>
                                     {!! $product->desc !!}
                                 </p>
-                                <p class="font-weight-bold">Quantity : {{ $product->qty }}</p>
+                                <p class="font-weight-bold">Stok : {{ $product->qty }}</p>
                                 <h4>Rp. {{ number_format($product->price) }}</h4>
                             </div>
                             <div class="form">
@@ -57,7 +57,7 @@
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="price" value="{{ $product->price }}">
                                     <div class="form-group">
-                                        <label for="">Amount</label>
+                                        <label for="">Jumlah</label>
                                         <input type="number" name="amount" class="form-control @error('amount') is-invalid @enderror" value="{{ 1 ?? old('amount') }}" style="width: 60px;">
                                         @error('amount')
                                             <div class="invalid-feedback">
@@ -66,15 +66,15 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Infromation</label>
-                                        <textarea name="notes" id="notes" cols="30" rows="3" class="form-control @error('notes') is-invalid @enderror" placeholder="Example. Size L, Red Color, or Etc">{{ old('notes') }}</textarea>
+                                        <label for="">Keterangan</label>
+                                        <textarea name="notes" id="notes" cols="30" rows="3" class="form-control @error('notes') is-invalid @enderror" placeholder="Cth. Ukuran L, Warna Merah">{{ old('notes') }}</textarea>
                                         @error('notes')
                                             <div class="invalid-feedback d-inline">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
-                                    <button class="primary-btn btn pd-cart">Add To Cart</button>
+                                    <button class="primary-btn btn pd-cart">Tambah Keranjang</button>
                                 </form>
                             </div>
                         </div>
@@ -90,13 +90,13 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h2>Related Products</h2>
+                    <h2>Produk Lainnya</h2>
                 </div>
             </div>
         </div>
         <div class="row">
             @foreach ($product_related as $related)
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-3 col-6">
                 <div class="product-item">
                     <div class="pi-pic">
                         <img src="{{ $related->gallery[0]->photo() }}" alt="" />

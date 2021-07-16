@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\RegisterNewUser;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -64,6 +65,7 @@ class UserController extends Controller
         $data['username'] = $request->username . rand(1,100);
         $user = User::create($data);
         $user->assignRole(request('role'));
+
         return redirect()->route('admin.users.index')->with('success','User berhasil ditambahkan!');
     }
 

@@ -26,13 +26,13 @@
                                 <table class="table table-sm table-borderless">
                                     <thead>
                                         <tr>
-                                            <th>Image</th>
-                                            <th class="p-name text-center">Product Name</th>
-                                            <th>Price</th>
-                                            <th>Amount</th>
-                                            <th>Price Total</th>
-                                            <th>Notes</th>
-                                            <th>Action</th>
+                                            <th>Gambar</th>
+                                            <th class="p-name text-center">Nama</th>
+                                            <th>Harga</th>
+                                            <th>Jumlah</th>
+                                            <th>Total</th>
+                                            <th>Keterangan</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -65,7 +65,7 @@
                                         @empty
                                         <tr>
                                             <td colspan="6" class="text-center">
-                                                Keranjang Kodong
+                                                Keranjang Kosong
                                             </td>
                                         </tr>
                                         @endforelse
@@ -94,7 +94,7 @@
                                     <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Masukan Email" value="{{ auth()->user()->email }}" name="email">
                                 </div>
                                 <div class="form-group">
-                                    <label for="namaLengkap">No. HP</label>
+                                    <label for="namaLengkap">Nomor HP</label>
                                     <input type="text" class="form-control" id="noHP" aria-describedby="noHPHelp" placeholder="Masukan No. HP" value="{{ auth()->user()->phone_number }}" name="phone_number">
                                 </div>
                                 <div class="form-group">
@@ -143,7 +143,7 @@
                     <div class="col-lg-12">
                         <div class="proceed-checkout">
                             <ul>
-                                <li class="subtotal">ID Transaction <span>{{ $trx }}</span></li>
+                                <li class="subtotal">ID Transaksi <span>{{ $trx }}</span></li>
                                 <li class="subtotal mt-3">Subtotal <span id="sub_total">{{ number_format($carts->sum('price')) }}</span></li>
                                 <li class="subtotal mt-3">Ongkos Kirim <span id="ongkir"></span></li>
                                 <li class="subtotal mt-3">Total Biaya <span id="total_biaya"></span></li>

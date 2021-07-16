@@ -27,8 +27,22 @@ class ProductController extends Controller
         }else{
             $category = NULL;
             $products = Product::with('category','gallery')->latest()->simplePaginate(12);
-            $title = 'All Products';
+            $title = 'Semua Produk';
         }
+        return view('user.pages.product.index',[
+            'title' => $title,
+            'products' => $products,
+            'store' => $this->store,
+            'cart_count' => Cart::where('user_id', auth()->id())->count(),
+            'category' => $category
+        ]);
+    }
+
+    public function search()
+    {
+        $category = NULL;
+        $products = Product::with('category','gallery')->orWhere('name', 'like', '%' . request('name') . '%')->paginate(15);
+        $title = 'Semua Produk';
         return view('user.pages.product.index',[
             'title' => $title,
             'products' => $products,
@@ -49,10 +63,5 @@ class ProductController extends Controller
             'product_related' => $related,
             'cart_count' => Cart::where('user_id', auth()->id())->count(),
         ]);
-    }
-
-    public function category($slug)
-    {
-        dd('ok');
     }
 }

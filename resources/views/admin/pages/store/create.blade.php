@@ -94,6 +94,24 @@
                             </div>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="tele_token">Telegram Token</label>
+                        <input type="text" name="tele_token" id="tele_token" class="form-control @error('tele_token') is-invalid @enderror" value="{{ $store->tele_token ?? old('tele_token') }}">
+                        @error('tele_token')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="group_chatId">Telegram Group Chat ID</label>
+                        <input type="text" name="group_chatId" id="group_chatId" class="form-control @error('group_chatId') is-invalid @enderror" value="{{ $store->group_chatId ?? old('group_chatId') }}">
+                        @error('group_chatId')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
                             @if ($store)

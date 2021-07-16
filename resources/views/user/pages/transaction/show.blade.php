@@ -12,11 +12,11 @@
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <tr>
-                                <th>UUID</th>
+                                <th>#</th>
                                 <td>{{ $transaction->uuid }}</td>
                             </tr>
                             <tr>
-                                <th>Name</th>
+                                <th>Nama</th>
                                 <td>{{ $transaction->name }}</td>
                             </tr>
                             <tr>
@@ -24,74 +24,74 @@
                                 <td>{{ $transaction->email }}</td>
                             </tr>
                             <tr>
-                                <th>Address</th>
+                                <th>Alamat</th>
                                 <td>{{ $transaction->address }}</td>
                             </tr>
                             <tr>
-                                <th>Product</th>
+                                <th>Produk</th>
                                 <td>
                                     <table class="table table-bordered">
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Qty</th>
-                                            <th>Price</th>
-                                            <th>Price Total</th>
+                                            <th>Nama</th>
+                                            <th>Jumlah</th>
+                                            <th>Harga</th>
+                                            <th>Harga Total</th>
                                         </tr>
                                         @foreach ($transaction->details as $detail)
                                         <tr>
                                             <td>{{ $detail->product->name }}</td>
                                             <td>{{ $detail->amount }}</td>
-                                            <td>Rp. {{ number_format($detail->product->price) }}</td>
-                                            <td>Rp. {{ number_format($detail->product->price * $detail->amount) }}</td>
+                                            <td>{{ number_format($detail->product->price) }}</td>
+                                            <td>{{ number_format($detail->product->price * $detail->amount) }}</td>
                                         </tr>
                                         @endforeach
                                         <tr>
-                                            <td class="text-center font-weight-bold" colspan="3">Total</td>
-                                            <td>Rp. {{ number_format($price_total) }}</td>
+                                            <td class="text-center font-weight-bold" colspan="2">Total</td>
+                                            <td colspan="2" class="text-center font-weight-bold">Rp. {{ number_format($price_total) }}</td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
                             <tr>
-                                <th>Payment</th>
+                                <th>Pembayaran</th>
                                 <td>
                                     <table class="table table-borderless">
                                         <tr>
-                                            <th>Name</th>
+                                            <th>Nama</th>
                                             <td>{{ $payment->name }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Number</th>
+                                            <th>Nomor</th>
                                             <td>{{ $payment->number }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Desc</th>
+                                            <th>Penerima</th>
                                             <td>{{ $payment->desc }}</td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
                             <tr>
-                                <th>Courier</th>
+                                <th>Kurir</th>
                                 <td>{{ $transaction->courier }}</td>
                             </tr>
                             <tr>
-                                <th>Receipt Number</th>
+                                <th>Nomor Resi</th>
                                 <td>{{ $transaction->receipt_number }}</td>
                             </tr>
                             <tr>
-                                <th>Shipping Cost</th>
+                                <th>Biaya Pengiriman</th>
                                 <td>Rp. {{ number_format($transaction->shipping_cost) }}</td>
                             </tr>
                             <tr>
-                                <th>Total Pay</th>
+                                <th>Total Bayar</th>
                                 <td>Rp. {{ number_format($transaction->transaction_total) }}</td>
                             </tr>
                             <tr>
-                                <th>Proof Of Payment</th>
+                                <th>Bukti Pembayaran</th>
                                 <td>
                                     @if ($transaction->proof_of_payment !== NULL)
-                                    <span class="badge badge-success">Has been uploaded</span>
+                                    <span class="badge badge-success">Berhasil Diupload</span>
                                     @else 
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUpload" id="btnUpload">
                                        <i class="fas fa-upload"></i> Upload
@@ -125,7 +125,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Upload Proof Of Payment</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Upload Bukti Pembayaran</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -135,8 +135,13 @@
             <div class="modal-body">
                 <input type="hidden" value="{{ $transaction->uuid }}" name="uuid">
                 <div class="form-group">
-                    <label for="image">Image</label>
-                    <input type="file" name="image" class="form-control">
+                    <label for="image">Bukti Pembayaran (Gambar)</label>
+                    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
+                    @error('image')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
             </div>
             <div class="modal-footer">

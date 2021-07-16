@@ -17,7 +17,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Name</th>
+                                <th>Nama</th>
                                 <td>{{ auth()->user()->name }}</td>
                             </tr>
                             <tr>
@@ -29,15 +29,15 @@
                                 <td>{{ auth()->user()->email }}</td>
                             </tr>
                             <tr>
-                                <th>Gender</th>
+                                <th>Jenis Kelamin</th>
                                 <td>{{ auth()->user()->gender }}</td>
                             </tr>
                             <tr>
-                                <th>Phone Number</th>
+                                <th>Nomor Hp</th>
                                 <td>{{ auth()->user()->phone_number }}</td>
                             </tr>
                             <tr>
-                                <th>Address</th>
+                                <th>Alamat</th>
                                 <td>{{ auth()->user()->address }}</td>
                             </tr>
                             <tr>
@@ -67,11 +67,11 @@
                 @csrf
                 @method('patch')
                 <div class="form-group">
-                    <label for="avatar">Avatar</label>
+                    <label for="avatar">Foto</label>
                     <input type="file" name="avatar" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name">Nama</label>
                     <input type="text" class="form-control" name="name" value="{{ auth()->user()->name }}">
                 </div>
                 <div class="form-group">
@@ -83,11 +83,11 @@
                     <input type="email" class="form-control" name="email" value="{{ auth()->user()->email }}"readonly>
                 </div>
                 <div class="form-group">
-                    <label for="phone_number">Phone Number</label>
+                    <label for="phone_number">Nomor Hp</label>
                     <input type="text" class="form-control" name="phone_number" value="{{ auth()->user()->phone_number }}">
                 </div>
                 <div class="form-group">
-                    <label for="gender">Gender</label><br>
+                    <label for="gender">Jenis Kelamin</label><br>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="gender" id="laki-laki" value="laki-laki" @if(auth()->user()->gender === 'laki-laki') checked @endif>
                         <label class="form-check-label" for="laki-laki">Laki-laki</label>
@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="addredd">Address</label>
+                    <label for="addredd">Alamat</label>
                     <textarea name="address" id="address" cols="30" rows="3" class="form-control">{{ auth()->user()->address }}</textarea>
                 </div>
             </div>

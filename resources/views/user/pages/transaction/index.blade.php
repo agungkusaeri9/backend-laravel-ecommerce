@@ -13,12 +13,12 @@
                         <table class="table table-borderless table-hover">
                             <thead>
                                 <tr>
-                                    <th>#UUID</th>
-                                    <th>Name</th>
-                                    <th>Phone Number</th>
-                                    <th>Address</th>
-                                    <th>Transaction Total</th>
-                                    <th>Transaction Status</th>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Nomor Hp</th>
+                                    <th>Alamat</th>
+                                    <th>Jumlah</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             {{-- <tbody> --}}

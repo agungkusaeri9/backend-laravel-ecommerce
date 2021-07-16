@@ -5,15 +5,15 @@
         <div class="row">
             <div class="col-md-12">
                 @if ($category)
-                <h2 class="section-title">Category {{ $category ->name}}</h2>
+                <h2 class="section-title">Kategori {{ $category ->name}}</h2>
                 @else
-                <h2 class="section-title">All Product</h2>
+                <h2 class="section-title">Semua Produk</h2>
                 @endif
                 <hr>
             </div>
         </div>
         <div class="row">
-            @foreach ($products as $product)
+            @forelse ($products as $product)
             <div class="col-6 col-md-4">
                 <div class="product-item">
                     <div class="pi-pic">
@@ -41,7 +41,13 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <p class="text-center">Produk "{{ request('name') }}" tidak ada</p>
+                </div>
+            </div>
+            @endforelse
         </div>
         <div class="row mt-2 mb-4">
             <div class="col-md-12">

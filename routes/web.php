@@ -1,6 +1,9 @@
 <?php
 
+use App\Notifications\Admin\NewCheckout;
+use App\Notifications\RegisterNewUser;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +23,7 @@ Route::get('/contact', 'ContactController')->name('contact');
 Route::get('/about', 'AboutController')->name('about');
 Route::prefix('products')->group(function () {
     Route::get('', 'ProductController@index')->name('product.index');
+    Route::get('/search', 'ProductController@search')->name('products.search');
     Route::get('{slug}', 'ProductController@show')->name('product.show');
     Route::get('category/{slug}', 'ProductController@index')->name('product.category');
 });

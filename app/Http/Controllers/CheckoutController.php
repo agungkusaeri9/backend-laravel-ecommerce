@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\Notifications\Admin\NewCheckout;
 use App\Product;
 use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 
 class CheckoutController extends Controller
 {
@@ -54,6 +56,8 @@ class CheckoutController extends Controller
             ]);
             $cart->product->decrement('qty', $cart->amount);
         }
+
+        $transaction->notify(new NewCheckout);
 
         auth()->user()->carts()->delete();
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\Notifications\Admin\ProofUpload;
 use App\Payment;
 use App\Store;
 use App\Transaction;
@@ -34,7 +35,7 @@ class TransactionController extends Controller
         }
         $payment = Payment::where('name', $transaction->payment)->first();
         return view('user.pages.transaction.show',[
-            'title' => 'Detail Transaction ' . $transaction->uuid,
+            'title' => 'Detail transaksi ' . Str::lower($transaction->uuid),
             'store' => Store::first(),
             'cart_count' => Cart::where('user_id', auth()->id())->count(),
             'transaction' => $transaction,
@@ -58,6 +59,8 @@ class TransactionController extends Controller
         $transaction = Transaction::where('uuid', request('uuid'))->first();
         $transaction->proof_of_payment = $name;
         $transaction->save();
+
+        $transaction->notify(new ProofUpload);
 
         return redirect()->back()->with('success', 'Proof Of Payment has been uploaded');
     }

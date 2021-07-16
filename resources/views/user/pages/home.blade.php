@@ -32,7 +32,7 @@
             <div class="col-4 col-md-2">
                 <a href="{{ route('product.category', $category->slug) }}">
                     <div class="category-item mb-2">
-                        <img src="{{ $category->icon() }}" alt="{{ $category->name }}" class="w-100" id="category-img">
+                        <img src="{{ $category->icon() }}" alt="{{ $category->name }}" id="category-img">
                         <h5 class="text-uppercase mt-2">{{ $category->name }}</h5>
                     </div>
                 </a>
@@ -65,7 +65,7 @@
                                         <input type="hidden" name="price" value="{{ $terlaris->price }}">
                                     </form>
                                 </li>
-                                <li class="quick-view"><a href="{{ route('product.show', $terlaris->slug) }}">+ Quick View</a></li>
+                                <li class="quick-view"><a href="{{ route('product.show', $terlaris->slug) }}">+ Detail</a></li>
                             </ul>
                         </div>
                         <div class="pi-text">
@@ -109,7 +109,7 @@
                                         <input type="hidden" name="price" value="{{ $terlaris->price }}">
                                     </form>
                                 </li>
-                                <li class="quick-view"><a href="{{ route('product.show', $product->slug) }}">+ Quick View</a></li>
+                                <li class="quick-view"><a href="{{ route('product.show', $product->slug) }}">+ Detail</a></li>
                             </ul>
                         </div>
                         <div class="pi-text">
@@ -129,6 +129,18 @@
 </section>
 
 @endsection
+@push('afterStyles')
+{{-- <style>
+    .category-item{
+        overflow: hidden;
+        position: relative;
+    }
+    #category-img{
+        min-width: 100%;
+        height: 350px;
+    }
+</style> --}}
+@endpush
 @push('afterScripts')
 <script>
     function addToCart(){
