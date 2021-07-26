@@ -1,8 +1,8 @@
 <div class="table-responsive">
-    <table class="table table-bordered">
+    <table class="table table-sm table-bordered">
         <tr>
             <th>UUID</th>
-            <td>{{ $transaction->name }}</td>
+            <td>{{ $transaction->uuid }}</td>
         </tr>
         <tr>
             <th>Nama</th>
@@ -19,24 +19,24 @@
         <tr>
             <th>Produk</th>
             <td>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>#</th>
-                        <th>Nama</th>
-                        <th>Jumlah</th>
-                        <th>Harga Awal</th>
-                        <th>Harga Akhir</th>
-                    </tr>
-                    @foreach ($transaction->details as $detail)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $detail->product->name }}</td>
-                        <td>{{ $detail->amount }}</td>
-                        <td>Rp. {{ number_format($detail->product->price) }}</td>
-                        <td>Rp. {{ number_format($detail->product->price * $detail->amount) }}</td>
-                    </tr>
-                    @endforeach
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <tr>
+                            <th>Nama</th>
+                            <th>Jumlah</th>
+                            <th>Harga Awal</th>
+                            <th>Harga Akhir</th>
+                        </tr>
+                        @foreach ($transaction->details as $detail)
+                        <tr>
+                            <td>{{ $detail->product->name }}</td>
+                            <td>{{ $detail->amount }}</td>
+                            <td>{{ number_format($detail->product->price) }}</td>
+                            <td>{{ number_format($detail->product->price * $detail->amount) }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
             </td>
         </tr>
         <tr>
@@ -48,11 +48,11 @@
             <td>{{ $transaction->courier }}</td>
         </tr>
         <tr>
-            <th>Receipt Number</th>
+            <th>Nomor Resi</th>
             <td>{{ $transaction->receipt_number }}</td>
         </tr>
         <tr>
-            <th>Price Total</th>
+            <th>Sub Total</th>
             <td>Rp. {{ number_format($price_total) }}</td>
         </tr>
         <tr>
@@ -60,7 +60,7 @@
             <td>Rp. {{ number_format($transaction->shipping_cost) }}</td>
         </tr>
         <tr>
-            <th>Total Bayar</th>
+            <th>Total</th>
             <td>Rp. {{ number_format($transaction->transaction_total) }}</td>
         </tr>
         <tr>
@@ -72,6 +72,10 @@
                 Not Uploaded
                 @endif
             </td>
+        </tr>
+        <tr>
+            <th>Waktu</th>
+            <td>{{ $transaction->created_at->translatedFormat('d/m/Y H:i:s') }}</td>
         </tr>
         <tr>
             <th>Status</th>

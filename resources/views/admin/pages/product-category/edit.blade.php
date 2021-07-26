@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Edit Kategori Produk {{ $productCategory->name }}</h6>
+                <h6 class="text-primary font-weight-bold">Edit Kategori Produk</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.product-categories.update', $productCategory->id) }}" method="post" enctype="multipart/form-data">

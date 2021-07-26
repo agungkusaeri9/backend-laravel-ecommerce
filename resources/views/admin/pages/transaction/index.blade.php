@@ -15,8 +15,8 @@
                 <h6 class="text-primary font-weight-bold">Data Transaksi</h6>
             </div>
             <div class="card-body">
-                <div class="table responsive">
-                    <table class="table table-bordered table-hover" id="data">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-sm nowrap" id="data">
                         <thead>
                             <tr>
                                 <th width=10>#</th>
@@ -118,7 +118,9 @@
 
 <script>
     $(function(){
-    var oTable = $('#data').DataTable()
+    var oTable = $('#data').DataTable({
+        ordering: false
+    })
 })
 </script>
 <script>

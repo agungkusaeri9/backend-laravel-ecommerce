@@ -30,7 +30,6 @@ class DashboardController extends Controller
         $yesterday = Carbon::yesterday();
         $income = [
             'today' => DB::table('transactions')->whereDate('created_at',$today)->where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('transaction_total'),
-            'yesterday' => DB::table('transactions')->whereDate('created_at',$yesterday)->where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('transaction_total'),
             'total' => Transaction::where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('transaction_total') - $shipping_costs
         ];
         // dd($today);

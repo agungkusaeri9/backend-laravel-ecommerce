@@ -1,6 +1,6 @@
 <meta charset="UTF-8" />
-<meta name="description" content="Shayna Template" />
-<meta name="keywords" content="Shayna, unica, creative, html" />
+<meta name="description" content="{{ $store->meta_description ?? 'Nita Store' }}" />
+<meta name="keywords" content="{{ $store->meta_keyword ?? 'Toko Online, online shop, belanja' }}" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <title>{{ $title ?? 'Putri Store' }}</title>

@@ -17,10 +17,10 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="data">
+                    <table class="table table-bordered table-striped table-sm nowrap" id="data">
                         <thead>
                             <tr>
-                                <th width=10>#</th>
+                                <th width="20" class="text-center">#</th>
                                 <th>Gambar</th>
                                 <th>Nama</th>
                                 <th>Slug</th>
@@ -30,7 +30,7 @@
                         <tbody>
                             @foreach ($product_categories as $item)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>
                                         <img src="{{ $item->icon() }}" alt="" class="img-fluid" height="100" width="100">
                                     </td>
@@ -66,7 +66,9 @@
 
 <script>
     $(function(){
-    var oTable = $('#data').DataTable()
+    var oTable = $('#data').DataTable({
+        ordering: false
+    })
 })
 </script>
 @endpush

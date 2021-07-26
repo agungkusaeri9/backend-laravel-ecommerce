@@ -1,11 +1,11 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-shopping-cart"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">OLSHOP</div>
+        <div class="sidebar-brand-text mx-3">{{ \App\Store::first()->name ?? 'Web Shop' }}</div>
     </a>
 
     <!-- Divider -->
@@ -33,7 +33,6 @@
                 <a class="collapse-item" href="{{ route('admin.users.index') }}">Data User</a>
                 <a class="collapse-item" href="{{ route('admin.store.index') }}">Profil Toko</a>
                 <a class="collapse-item" href="{{ route('admin.payments.index') }}">Metode Pembayaran</a>
-                <a class="collapse-item" href="{{ route('admin.shipments.index') }}">Kurir</a>
             </div>
         </div>
     </li>

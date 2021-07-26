@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('name','asc')->get();
+        $users = User::whereNotIn('id',[auth()->id()])->orderBy('name','asc')->get();
         return view('admin.pages.user.index',[
             'title' => 'Data User',
             'users' => $users
@@ -111,7 +111,7 @@ class UserController extends Controller
         $user->update($data);
         $user->syncRoles(request('role'));
 
-        return redirect()->route('admin.users.index')->with('success','User berhasil ditambahkan!');
+        return redirect()->route('admin.users.index')->with('success','User berhasil iupdate!');
     }
 
     /**
@@ -123,9 +123,9 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if($user->avatar !== NULL){
-            unlink('storage/' . $user->avatar);
+            Storage::disk('public')->delete($user->avatar);
         }
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success','User berhasil ditambahkan!');
+        return redirect()->route('admin.users.index')->with('success','User berhasil dihapus!');
     }
 }

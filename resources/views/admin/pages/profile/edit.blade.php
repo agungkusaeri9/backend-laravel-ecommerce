@@ -1,13 +1,13 @@
 @extends('admin.templates.default')
 @section('content')
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Edit User</h6>
+                <h6 class="text-primary font-weight-bold">Edit Profil</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.users.update', $user->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.profile.update') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
                     <div class="form-group">
@@ -74,20 +74,6 @@
                         <label for="address">Alamat</label>
                         <textarea name="address" id="address" cols="30" rows="5" class="form-control">{{ $user->address ?? old('address') }}</textarea>
                         @error('address')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Role</label>
-                        <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
-                            <option value="" selected disabled>--Role--</option>
-                            @foreach ($roles as $role)
-                                <option @if($role->name === $user->roles->pluck('name')->first()) selected @endif value="{{ $role->name }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('name')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

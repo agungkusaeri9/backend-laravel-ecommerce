@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Edit Produk {{ $product->name }}</h6>
+                <h6 class="text-primary font-weight-bold">Edit Produk</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.products.update', $product->id) }}" method="post">

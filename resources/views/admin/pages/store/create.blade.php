@@ -112,6 +112,24 @@
                             </div>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="meta_keyword">Meta Keyword</label>
+                        <input type="text" name="meta_keyword" id="meta_keyword" class="form-control @error('meta_keyword') is-invalid @enderror" value="{{ $store->meta_keyword ?? old('meta_keyword') }}">
+                        @error('meta_keyword')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="meta_description">Meta Deskripsi</label>
+                        <textarea name="meta_description" id="meta_description" cols="30" rows="5" class="form-control @error('meta_description') is-invalid @enderror">{{ $store->meta_description ??  old('meta_description') }}</textarea>
+                        @error('meta_description')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
                             @if ($store)

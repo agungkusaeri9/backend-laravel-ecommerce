@@ -19,10 +19,39 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('created_at','desc')->get();
+        $from_price = request('from_price');
+        $to_price = request('to_price');
+        $category = request('category');
+        if($from_price && !$to_price){
+            $products = Product::with('category')->where('price',$from_price)->get();
+        }else{
+            if($from_price && $to_price){
+                if($category){
+                    $products = Product::with('category')->where('product_category', $category)->whereBetween('price',[$from_price,$to_price])->get();
+                }else{
+                    $products = Product::with('category')->whereBetween('price',[$from_price,$to_price])->get();
+                }
+            }else{
+                if($category){
+                    $products = Product::where('product_category', $category)->orderBy('created_at','desc')->get();
+                }else{
+                    $products = Product::with('category')->orderBy('created_at','desc')->get();
+                }
+            }
+        }
+        // if($from_price && $to_price){
+        //     $products = Product::with('category')->whereBetween('price',[$from_price,$to_price])->get();
+        // }else{
+        //     $products = Product::with('category')->orderBy('created_at','desc')->get();
+        // }
+        // if($category){
+        //     $products = Product::where('category_id', $category)->get();
+        // }
+        $categories = ProductCategory::orderby('name','ASC')->get();
         return view('admin.pages.product.index',[
             'title' => 'Data Produk',
-            'products' => $products
+            'products' => $products,
+            'categories' => $categories
         ]);
     }
 
@@ -152,4 +181,5 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('admin.products.index')->with('success','Produk berhasil diubah!');
     }
+
 }

@@ -29,24 +29,6 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Pendapatan Kemarin</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. {{ number_format($income['yesterday']) }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa fa-money-bill-alt fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Pendapatan Bersih</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. {{ number_format($income['total']) }}</div>
                     </div>
@@ -164,38 +146,40 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>No. HP</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($transaction_latest as $item)
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered table-striped">
+                        <thead>
                             <tr>
-                                <td>{{ $item->uuid }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->phone_number }}</td>
-                                <td>{{ number_format($item->transaction_total) }}</td>
-                                <td>
-                                    @if ($item->transaction_status == 'SUCCESS')
-                                    <span class="badge badge-success">SUCCESS</span>
-                                    @elseif ($item->transaction_status == 'PENDING')
-                                    <span class="badge badge-warning">PENDING</span>
-                                    @elseif ($item->transaction_status == 'DELIVERY')
-                                    <span class="badge badge-info">DELIVERY</span>
-                                    @elseif ($item->transaction_status == 'FAILED')
-                                    <span class="badge badge-danger">FAILED</span>
-                                    @endif
-                                </td>
+                                <th>#</th>
+                                <th>Nama</th>
+                                <th>No. HP</th>
+                                <th>Total</th>
+                                <th>Status</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($transaction_latest as $item)
+                                <tr>
+                                    <td>{{ $item->uuid }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->phone_number }}</td>
+                                    <td>{{ number_format($item->transaction_total) }}</td>
+                                    <td>
+                                        @if ($item->transaction_status == 'SUCCESS')
+                                        <span class="badge badge-success">SUCCESS</span>
+                                        @elseif ($item->transaction_status == 'PENDING')
+                                        <span class="badge badge-warning">PENDING</span>
+                                        @elseif ($item->transaction_status == 'DELIVERY')
+                                        <span class="badge badge-info">DELIVERY</span>
+                                        @elseif ($item->transaction_status == 'FAILED')
+                                        <span class="badge badge-danger">FAILED</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Edit Metode Pembayaran {{ $payment->name }}</h6>
+                <h6 class="text-primary font-weight-bold">Edit Metode Pembayaran</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.payments.update', $payment->id) }}" method="post">

@@ -16,23 +16,23 @@
                 <a href="{{ route('admin.users.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
-                <div class="table responsive">
-                    <table class="table table-bordered table-hover" id="data">
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered table-striped nowrap" id="data">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th class="text-center">#</th>
                                 <th>Nama</th>
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>No Hp</th>
                                 <th>Role</th>
-                                <th>Aksi</th>
+                                <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->email }}</td>
@@ -68,7 +68,10 @@
 
 <script>
     $(function(){
-    var oTable = $('#data').DataTable()
+    var oTable = $('#data').DataTable({
+        responsive: true,
+        ordering: false
+    })
 })
 </script>
 @endpush

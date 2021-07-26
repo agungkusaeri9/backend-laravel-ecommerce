@@ -16,11 +16,58 @@
                 <a href="{{ route('admin.products.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
-                <div class="table responsive">
-                    <table class="table table-bordered table-hover" id="data">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="{{ route('admin.products.filter') }}" method="post">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label for="from_price" class="col-sm-3 col-form-label">Mulai</label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" name="from_price" class="form-control" placeholder="Harga Awal">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label for="to_price" class="col-sm-3 col-form-label">Sampai</label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" name="to_price" class="form-control" placeholder="Harga Akhir">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group row">
+                                        <label for="kategori" class="col-sm-3 col-form-label">Kategori</label>
+                                        <div class="col-sm-9">
+                                            <select name="category" id="category" name="category" class="form-control">
+                                                <option value="">--Semua--</option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary">Cari</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered table-striped nowrap" id="data">
                         <thead>
                             <tr>
-                                <th width=10>#</th>
+                                <th width="20" class="text-center">#</th>
                                 <th>Nama</th>
                                 <th>Kategori</th>
                                 <th>Berat (g)</th>
@@ -32,7 +79,7 @@
                         <tbody>
                             @foreach ($products as $item)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->category->name }}</td>
                                     <td>{{ $item->weight }}</td>
@@ -69,7 +116,9 @@
 
 <script>
     $(function(){
-    var oTable = $('#data').DataTable()
+    var oTable = $('#data').DataTable({
+        ordering: false
+    })
 })
 </script>
 @endpush
