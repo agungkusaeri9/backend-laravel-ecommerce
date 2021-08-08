@@ -78,7 +78,7 @@
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card border-left-info shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -147,14 +147,14 @@
             <!-- Card Body -->
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-sm table-bordered table-striped">
+                    <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>#UUID</th>
                                 <th>Nama</th>
                                 <th>No. HP</th>
                                 <th>Total</th>
-                                <th>Status</th>
+                                <th class="text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -164,7 +164,7 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->phone_number }}</td>
                                     <td>{{ number_format($item->transaction_total) }}</td>
-                                    <td>
+                                    <td class="text-center">
                                         @if ($item->transaction_status == 'SUCCESS')
                                         <span class="badge badge-success">SUCCESS</span>
                                         @elseif ($item->transaction_status == 'PENDING')

@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-sm table-bordered">
+    <table class="table table-bordered">
         <tr>
             <th>UUID</th>
             <td>{{ $transaction->uuid }}</td>
@@ -20,7 +20,7 @@
             <th>Produk</th>
             <td>
                 <div class="table-responsive">
-                    <table class="table table-sm table-bordered">
+                    <table class="table table-bordered">
                         <tr>
                             <th>Nama</th>
                             <th>Jumlah</th>
@@ -84,6 +84,8 @@
                 <span class="badge badge-success">SUCCESS</span>
                 @elseif($transaction->transaction_status === 'PENDING')
                 <span class="badge badge-warning">PENDING</span>
+                @elseif($transaction->transaction_status === 'DELIVERY')
+                <span class="badge badge-info">DELIVERY</span>
                 @else
                 <span class="badge badge-danger">FAILED</span>
                 @endif

@@ -129,7 +129,7 @@ class ProductGalleryController extends Controller
             'is_default' => $request->is_default
         ]);
 
-        return redirect()->route('admin.product-galleries.index')->with('success','Foto Produk berhasil ditambahkan!');
+        return redirect()->route('admin.product-galleries.index')->with('success','Foto Produk berhasil diupdate!');
     }
 
     /**

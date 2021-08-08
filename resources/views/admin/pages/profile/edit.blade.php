@@ -1,10 +1,10 @@
 @extends('admin.templates.default')
 @section('content')
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-lg-6">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Edit Profil</h6>
+                <h6 class="text-dark text-center font-weight-bold">Edit Profil</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.profile.update') }}" method="post" enctype="multipart/form-data">
@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
+                        <input type="text" name="password" class="form-control @error('password') is-invalid @enderror">
                         @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -57,8 +57,8 @@
                     </div>
                     <fieldset class="form-group">
                         <div class="row">
-                          <legend class="col-form-label col-sm-2 pt-0">Jenis Kelamin</legend>
-                          <div class="col-sm-10">
+                          <legend class="col-form-label col-sm-3 pt-0">Jenis Kelamin</legend>
+                          <div class="col-sm-9">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="laki-laki" @if($user->gender === 'laki-laki') checked @endif>
                                 <label class="form-check-label" for="inlineRadio1">Laki-laki</label>

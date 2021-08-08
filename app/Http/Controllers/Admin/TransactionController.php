@@ -33,23 +33,12 @@ class TransactionController extends Controller
         $mimes = Str::after($item->proof_of_payment, '.');
         $filePath = public_path('storage/') . $item->proof_of_payment;
     	$headers = ['Content-Type:' . $mimes];
-    	$fileName = 'proof-payment-uuid' . '-' . $item->uuid . '.' . $mimes;
+    	$fileName = 'bukti-pembayaran' . '-' . $item->uuid . '.' . $mimes;
 
         if(!file_exists($filePath)){
             return redirect()->back()->with('gagal','Downloading Failed.');
         }
         return response()->download($filePath, $fileName, $headers);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**

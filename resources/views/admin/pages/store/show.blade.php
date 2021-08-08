@@ -1,18 +1,11 @@
 @extends('admin.templates.default')
 @section('content')
-@if (session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Sukses!</strong> {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-@endif
-<div class="row">
-    <div class="col-lg-12">
+@include('admin.templates.partials.alert')
+<div class="row justify-content-center">
+    <div class="col-lg-6">
         <div class="card shadow h-100">
-            <div class="card-header d-flex justify-content-between">
-                <h6 class="text-primary font-weight-bold">Profil Toko</h6>
+            <div class="card-header">
+                <h6 class="text-dark text-center font-weight-bold">Profil Toko</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.store.store') }}" method="post" enctype="multipart/form-data">

@@ -1,51 +1,40 @@
 @extends('admin.templates.default')
 @section('content')
-@if (session('success'))
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-6">
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Sukses!</strong> {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-    </div>
-</div>
-@endif
-<div class="row">
-    <div class="col-md-6">
+        @include('admin.templates.partials.alert')
         <div class="card">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Profil Saya</h6>
+                <h6 class="text-dark text-center font-weight-bold">Profil Saya</h6>
             </div>
             <div class="card-body">
                 <div class="text-center mb-5">
                     <img src="{{ $user->avatar() }}" alt="" class="img-fluid text-center" style="max-width: 200px;max-height:250px">
                 </div>
 
-                <table class="table table-borderless">
+                <table class="table table-bordered table-striped">
                     <tr>
-                        <th>Nama</th>
+                        <td>Nama</td>
                         <td>{{ $user->name }}</td>
                     </tr>
                     <tr>
-                        <th>Username</th>
+                        <td>Username</td>
                         <td>{{ $user->username }}</td>
                     </tr>
                     <tr>
-                        <th>Email</th>
+                        <td>Email</td>
                         <td>{{ $user->email }}</td>
                     </tr>
                     <tr>
-                        <th>Nomor Hp</th>
+                        <td>Nomor Hp</td>
                         <td>{{ $user->phone_number }}</td>
                     </tr>
                     <tr>
-                        <th>Alamat</th>
+                        <td>Alamat</td>
                         <td>{{ $user->address }}</td>
                     </tr>
                     <tr>
-                        <th>Bergabung</th>
+                        <td>Bergabung</td>
                         <td>{{ $user->created_at->translatedFormat('d/m/Y') }}</td>
                     </tr>
                 </table>

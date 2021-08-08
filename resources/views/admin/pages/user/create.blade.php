@@ -1,10 +1,10 @@
 @extends('admin.templates.default')
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
+<div class="row justify-content-center">
+    <div class="col-lg-6">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Tambah User</h6>
+                <h6 class="text-dark font-weight-bold text-center">Tambah User</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.users.store') }}" method="post" enctype="multipart/form-data">
@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}">
+                        <input type="text" name="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}">
                         @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -56,8 +56,8 @@
                     </div>
                     <fieldset class="form-group">
                         <div class="row">
-                          <legend class="col-form-label col-sm-2 pt-0">Jenis Kelamin</legend>
-                          <div class="col-sm-10">
+                          <legend class="col-form-label col-sm-3 pt-0">Jenis Kelamin</legend>
+                          <div class="col-sm-9">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="laki-laki" checked>
                                 <label class="form-check-label" for="inlineRadio1">Laki-laki</label>
@@ -81,9 +81,8 @@
                     <div class="form-group">
                         <label for="name">Role</label>
                         <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
-                            <option value="" selected disabled>--Role--</option>
                             @foreach ($roles as $role)
-                                <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                <option @if($role->name === 'user') selected @endif value="{{ $role->name }}">{{ $role->name }}</option>
                             @endforeach
                         </select>
                         @error('name')

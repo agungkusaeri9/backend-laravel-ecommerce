@@ -18,9 +18,9 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $store = Store::first();
+        $store = Store::with('city')->first();
         $cities = City::all();
-        return view('admin.pages.store.create',[
+        return view('admin.pages.store.show',[
             'title' => 'Profile Toko',
             'store' => $store,
             'cities' => $cities

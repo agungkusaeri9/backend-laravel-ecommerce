@@ -12,11 +12,11 @@
     <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between">
-                <h6 class="text-primary font-weight-bold">Data Transaksi</h6>
+                <h6 class="text-dark font-weight-bold">Data Transaksi</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-sm nowrap" id="data">
+                    <table class="table table-bordered table-striped nowrap" id="data">
                         <thead>
                             <tr>
                                 <th width=10>#</th>
@@ -118,9 +118,7 @@
 
 <script>
     $(function(){
-    var oTable = $('#data').DataTable({
-        ordering: false
-    })
+    var oTable = $('#data').DataTable();
 })
 </script>
 <script>

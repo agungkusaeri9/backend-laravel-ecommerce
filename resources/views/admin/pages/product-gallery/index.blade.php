@@ -1,18 +1,11 @@
 @extends('admin.templates.default')
 @section('content')
-@if (session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Sukses!</strong> {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-@endif
+@include('admin.templates.partials.alert')
 <div class="row">
     <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between">
-                <h6 class="text-primary font-weight-bold">Galeri Produk</h6>
+                <h6 class="text-dark font-weight-bold">Galeri Produk</h6>
                 <a href="{{ route('admin.product-galleries.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
@@ -32,15 +25,15 @@
                         </form>
                     </div>
                 </div>
-                <div class="table responsive">
-                    <table class="table table-bordered table-hover" id="data">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="data">
                         <thead>
                             <tr>
                                 <th width=10>#</th>
                                 <th>Foto</th>
                                 <th>Nama Produk</th>
                                 <th>Default</th>
-                                <th>Aksi</th>
+                                <th class="text-center" style="min-width: 80px">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,7 +41,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <img src="{{ $item->photo() }}" alt="" class="img-fluid" style="max-height: 200px; max-width:200px;">
+                                        <img src="{{ $item->photo() }}" alt="" class="img-fluid" style="max-height: 100px; max-width:100px;" id="img" data-src="{{ $item->photo() }}" data-name="{{ $item->product->name }}">
                                     </td>
                                     <td>{{ $item->product->name }}</td>
                                     <td>
@@ -75,40 +68,52 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img src="" alt="" class="img-fluid w-100" id="imgModal">
+        </div>
+      </div>
+    </div>
+</div>
 @endsection
 @push('afterStyles')
 <link href="{{ asset('assets/sbadmin2/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('assets/select2/select2.min.css') }}">
 @endpush
 @push('afterScripts')
 <script src="{{ asset('assets/sbadmin2/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/sbadmin2/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-
-<!-- Page level custom scripts -->
-<script src="{{ asset('assets/sbadmin2/js/demo/datatables-demo.js') }}"></script>
-
+<script src="{{ asset('assets/select2/select2.min.js') }}"></script>
+<style>
+    .select2-selection__rendered {
+        line-height: 31px !important;
+    }
+    .select2-container .select2-selection--single {
+        height: 37px !important;
+    }
+    .select2-selection__arrow {
+        height: 34px !important;
+    }
+</style>
 <script>
     $(function(){
-    var oTable = $('#data').DataTable()
-})
+        var oTable = $('#data').DataTable();
+        $('.product').select2();
+        $('body').on('click','#img', function(){
+            let src = $(this).data('src');
+            let name = $(this).data('name');
+            $('#imgModal').attr('src',src);
+            $('.modal-title').text(name);
+            $('#myModal').modal('show');
+        })
+    })
 </script>
-@push('afterStyles')
-<link rel="stylesheet" href="{{ asset('assets/select2/select2.min.css') }}">
-<style>
-.select2-selection__rendered {
-    line-height: 31px !important;
-}
-.select2-container .select2-selection--single {
-    height: 37px !important;
-}
-.select2-selection__arrow {
-    height: 34px !important;
-}
-</style>
-@endpush
-@push('afterScripts')
-<script src="{{ asset('assets/select2/select2.min.js') }}"></script>
-<script>
-    $('.product').select2()
-</script>
-@endpush
 @endpush

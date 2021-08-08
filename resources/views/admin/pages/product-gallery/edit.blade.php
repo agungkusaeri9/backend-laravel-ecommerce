@@ -1,10 +1,10 @@
 @extends('admin.templates.default')
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
+<div class="row justify-content-center">
+    <div class="col-lg-6">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Edit Foto "{{ $productGallery->product->name }}"</h6>
+                <h6 class="text-dark text-center font-weight-bold">Edit Foto</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.product-galleries.update', $productGallery->id) }}" method="post" enctype="multipart/form-data">
@@ -19,7 +19,7 @@
                             <img src="{{ $productGallery->photo() }}" alt="" class="img-fluid">
                         </div>
                         <div class="col-lg-9">
-                            <label for="photo">Photo</label>
+                            <label for="photo">Gambar</label>
                             <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
                             @error('photo')
                                 <div class="invalid-feedback d-inline">
@@ -30,7 +30,7 @@
                     </div>
                     <fieldset class="form-group">
                         <div class="row">
-                          <legend class="col-form-label col-sm-3 pt-0">Jadikan Default</legend>
+                          <legend class="col-form-label col-sm-4 pt-0">Jadikan Default</legend>
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="is_default" id="inlineRadio1" value="1" @if($productGallery->is_default == 1) checked @endif>
                             <label class="form-check-label" for="inlineRadio1">Ya</label>

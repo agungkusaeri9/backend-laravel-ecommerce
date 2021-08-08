@@ -1,23 +1,16 @@
 @extends('admin.templates.default')
 @section('content')
-@if (session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Sukses!</strong> {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-@endif
+@include('admin.templates.partials.alert')
 <div class="row">
     <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between">
-                <h6 class="text-primary font-weight-bold">Metode Pembayaran</h6>
+                <h6 class="text-dark font-weight-bold">Metode Pembayaran</h6>
                 <a href="{{ route('admin.payments.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-sm nowrap" id="data">
+                    <table class="table table-bordered table-striped nowrap" id="data">
                         <thead>
                             <tr>
                                 <th width="20" class="text-center">#</th>
@@ -64,9 +57,7 @@
 
 <script>
     $(function(){
-    var oTable = $('#data').DataTable({
-        ordering: false
-    })
+    var oTable = $('#data').DataTable();
 })
 </script>
 @endpush

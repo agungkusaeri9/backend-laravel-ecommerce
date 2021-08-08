@@ -12,12 +12,12 @@
     <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between">
-                <h6 class="text-primary font-weight-bold">Data User</h6>
+                <h6 class="text-dark font-weight-bold">Data User</h6>
                 <a href="{{ route('admin.users.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-sm table-bordered table-striped nowrap" id="data">
+                    <table class="table table-bordered table-striped nowrap" id="data">
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
@@ -63,14 +63,10 @@
 <script src="{{ asset('assets/sbadmin2/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/sbadmin2/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
-<!-- Page level custom scripts -->
-<script src="{{ asset('assets/sbadmin2/js/demo/datatables-demo.js') }}"></script>
-
 <script>
     $(function(){
     var oTable = $('#data').DataTable({
-        responsive: true,
-        ordering: false
+        responsive: true
     })
 })
 </script>

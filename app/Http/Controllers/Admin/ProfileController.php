@@ -48,7 +48,7 @@ class ProfileController extends Controller
         }else{
             $data['avatar'] = $user->avatar;
         }
-        if($request->has('password')){
+        if(request('password')){
             $data['password'] = bcrypt($request->password);
         }else{
             $data['password'] = $user->password;

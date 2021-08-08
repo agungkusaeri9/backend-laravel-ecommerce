@@ -16,4 +16,8 @@ class Store extends Model
             return asset('assets/img/toko.jpg');
         }
     }
+
+    public function city(){
+        return $this->belongsTo(City::class);
+    }
 }

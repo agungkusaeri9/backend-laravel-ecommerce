@@ -1,10 +1,10 @@
 @extends('admin.templates.default')
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
+<div class="row justify-content-center">
+    <div class="col-lg-6">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Tambah Foto Produk</h6>
+                <h6 class="text-dark text-center font-weight-bold">Tambah Foto Produk</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.product-galleries.store') }}" method="post" enctype="multipart/form-data">
@@ -33,14 +33,14 @@
                     </div>
                     <fieldset class="form-group">
                         <div class="row">
-                          <legend class="col-form-label col-sm-3 pt-0">Jadikan Default</legend>
+                          <legend class="col-form-label col-sm-4 pt-0">Jadikan Default</legend>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="is_default" id="inlineRadio1" value="1">
-                            <label class="form-check-label" for="inlineRadio1">Ya</label>
+                            <input class="form-check-input" type="radio" name="is_default" id="ya" value="1">
+                            <label class="form-check-label" for="ya">Ya</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="is_default" id="inlineRadio2" value="0" checked>
-                            <label class="form-check-label" for="inlineRadio2">Tidak</label>
+                            <input class="form-check-input" type="radio" name="is_default" id="tidak" value="0" checked>
+                            <label class="form-check-label" for="tidak">Tidak</label>
                           </div>
                         </div>
                       </fieldset>

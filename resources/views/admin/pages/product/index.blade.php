@@ -1,18 +1,11 @@
 @extends('admin.templates.default')
 @section('content')
-@if (session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Sukses!</strong> {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-@endif
+@include('admin.templates.partials.alert')
 <div class="row">
     <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between">
-                <h6 class="text-primary font-weight-bold">Data Produk</h6>
+                <h6 class="text-dark font-weight-bold">Data Produk</h6>
                 <a href="{{ route('admin.products.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
@@ -64,7 +57,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-sm table-bordered table-striped nowrap" id="data">
+                    <table class="table table-bordered table-striped wrap" id="data">
                         <thead>
                             <tr>
                                 <th width="20" class="text-center">#</th>
@@ -73,7 +66,7 @@
                                 <th>Berat (g)</th>
                                 <th>Stok</th>
                                 <th>Harga</th>
-                                <th width=100>Aksi</th>
+                                <th class="text-center" style="min-width:110px">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,9 +109,7 @@
 
 <script>
     $(function(){
-    var oTable = $('#data').DataTable({
-        ordering: false
-    })
+    var oTable = $('#data').DataTable();
 })
 </script>
 @endpush

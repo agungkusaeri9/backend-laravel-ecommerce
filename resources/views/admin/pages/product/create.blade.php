@@ -1,10 +1,10 @@
 @extends('admin.templates.default')
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
+<div class="row justify-content-center">
+    <div class="col-lg-6">
         <div class="card shadow">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Tambah Produk</h6>
+                <h6 class="text-dark text-center font-weight-bold">Tambah Produk</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">

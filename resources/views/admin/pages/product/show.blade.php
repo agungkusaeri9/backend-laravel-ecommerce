@@ -4,7 +4,7 @@
     <div class="col-lg-5 mb-3">
         <div class="card">
             <div class="card-header">
-                <h6 class="text-primary font-weight-bold">Foto Produk</h6>
+                <h6 class="text-dark text-center font-weight-bold">Foto Produk</h6>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -27,43 +27,43 @@
     </div>
     <div class="col-lg-7">
         <div class="card shadow">
-            <div class="card-header d-flex justify-content-between">
-                <h6 class="text-primary font-weight-bold">Detail Produk</h6>
+            <div class="card-header">
+                <h6 class="text-dark text-center font-weight-bold">Detail Produk</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-borderless">
+                    <table class="table table-bordered ">
                         <tr>
-                            <th>Nama Produk</th>
+                            <td>Nama Produk</td>
                             <td>{{ $product->name }}</td>
                         </tr>
                         <tr>
-                            <th>Kategori</th>
+                            <td>Kategori</td>
                             <td>{{ $product->category->name }}</td>
                         </tr>
                         <tr>
-                            <th>Deskrpisi</th>
+                            <td>Deskrpisi</td>
                             <td>{!! $product->desc !!}</td>
                         </tr>
                         <tr>
-                            <th>Berat (g)</th>
-                            <td>{{ $product->weight }}</td>
+                            <td>Berat (g)</td>
+                            <td>{{ $product->weight }} g</td>
                         </tr>
                         <tr>
-                            <th>Stok</th>
+                            <td>Stok</td>
                             <td>{{ $product->qty }}</td>
                         </tr>
                         <tr>
-                            <th>Harga</th>
+                            <td>Harga</td>
                             <td>Rp. {{ number_format($product->price) }}</td>
                         </tr>
                         <tr>
-                            <th>Dibuat</th>
+                            <td>Dibuat</td>
                             <td>{{ $product->created_at->translatedFormat('l, d F Y') }}</td>
                         </tr>
                         @if ($product->updated_at)
                         <tr>
-                            <th>Diedit</th>
+                            <td>Diedit</td>
                             <td>{{ $product->updated_at->translatedFormat('l, d F Y') }}</td>
                         </tr>
                         @endif
