@@ -67,6 +67,20 @@
         </div>
     </li>
 
+     <!-- Nav Item - Pages Collapse Menu -->
+     <li class="nav-item">
+        <a class="nav-link collapsed pt-0" href="#" data-toggle="collapse" data-target="#report"
+            aria-expanded="true" aria-controls="report">
+            <i class="fas fa-fw fa-file"></i>
+            <span>Laporan</span>
+        </a>
+        <div id="report" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('admin.report.transactions') }}">Transaksi</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

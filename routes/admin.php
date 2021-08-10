@@ -19,3 +19,7 @@ Route::get('/transactions/{id}/download', 'TransactionController@download')->nam
 Route::get('/store', 'StoreController@index')->name('store.index');
 Route::post('/store', 'StoreController@store')->name('store.store');
 Route::get('/store/province/{id}/city', 'StoreController@getCity')->name('store.get-city');
+
+// report
+Route::get('report/transaction','ReportController@transaction')->name('report.transactions');
+Route::post('report/transaction','ReportController@transaction')->name('report.transactions.filter');
