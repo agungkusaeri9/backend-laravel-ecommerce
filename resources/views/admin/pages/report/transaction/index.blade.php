@@ -9,7 +9,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form method="post" action="{{ route('admin.report.transactions.filter') }}">
+                        <form method="post" action="{{ route('admin.report.transaction.filter') }}">
                             @csrf
                             <div class="row">
                                 <div class="col-md-7">
@@ -18,7 +18,7 @@
                                             <div class="form-group row">
                                                 <label for="date" class="col-sm-4 col-form-label">Tanggal</label>
                                                 <div class="col-sm-8">
-                                                    <input type="date" class="form-control" name="date" id="date">
+                                                    <input type="date" class="form-control" name="date" id="date" >
                                                 </div>
                                             </div>
                                         </div>
@@ -28,8 +28,8 @@
                                                 <div class="col-sm-9">
                                                     <select name="month" id="month" class="form-control">
                                                         <option value="">-- Semua --</option>
-                                                        @foreach ($months as $item)
-                                                        <option value="{{ $item['no'] }}">{{ $item['nama'] }}</option>
+                                                        @foreach  ($months as $item)
+                                                        <option @if($item['no'] == $month) selected @endif value="{{ $item['no'] }}">{{ $item['nama'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-12">
-                        <a href="" class="btn btn-info"><i class="fas fa-print"></i> Cetak</a>
+                        <a href="{{ route('admin.report.transaction.print') }}?date={{ $date }}&&month={{ $month }}" class="btn btn-info" target="_blank"><i class="fas fa-print"></i> Cetak</a>
                         <a href="" class="btn btn-primary"><i class="fas fa-file-excel"></i> Export</a>
                     </div>
                 </div>
@@ -107,7 +107,7 @@ $(function(){
     $('button[type=reset]').on('click', function(){
         $('#date').attr('value','');
         $('#month').val('');
-    })
+    });
 })
 </script>
 @endpush

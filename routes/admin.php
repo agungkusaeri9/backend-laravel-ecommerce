@@ -21,5 +21,6 @@ Route::post('/store', 'StoreController@store')->name('store.store');
 Route::get('/store/province/{id}/city', 'StoreController@getCity')->name('store.get-city');
 
 // report
-Route::get('report/transaction','ReportController@transaction')->name('report.transactions');
-Route::post('report/transaction','ReportController@transaction')->name('report.transactions.filter');
+Route::get('report/transaction','ReportController@transaction')->name('report.transaction');
+Route::get('report/transaction/print','ReportController@transactionPrint')->name('report.transaction.print');
+Route::post('report/transaction','ReportController@transaction')->name('report.transaction.filter');
