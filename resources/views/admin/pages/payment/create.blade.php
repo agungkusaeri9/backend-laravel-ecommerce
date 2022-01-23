@@ -7,8 +7,17 @@
                 <h6 class="text-dark text-center font-weight-bold">Tambah Metode Pembayaran</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.payments.store') }}" method="post">
+                <form action="{{ route('admin.payments.store') }}" method="post"  enctype="multipart/form-data">
                     @csrf
+                    <div class="form-group">
+                        <label for="icon">Ikon</label>
+                        <input type="file" name="icon" class="form-control @error('icon') is-invalid @enderror" value="{{ old('icon') }}">
+                        @error('icon')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">

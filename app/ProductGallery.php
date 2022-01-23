@@ -22,4 +22,5 @@ class ProductGallery extends Model
             return asset('storage/' . $this->photo);
         }
     }
+
 }

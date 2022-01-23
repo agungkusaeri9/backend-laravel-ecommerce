@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public $store;
-    public function __construct(Store $store)
+    public function __construct()
     {
         $this->store = Store::first();
     }
-    public function index(ProductCategory $category)
+    public function index()
     {
         $latest = Product::with('category','gallery')->orderBy('created_at', 'desc')->limit(16)->get();
-        $categories = ProductCategory::orderBy('name','asc')->limit(6)->get();
+        $categories = ProductCategory::orderBy('name','asc')->get();
         $banner = Product::with('category','gallery')->inRandomOrder()->limit(5)->get();
         $teraliris = Product::with('category','gallery')->inRandomOrder()->limit(5)->get();
         return view('user.pages.home',[

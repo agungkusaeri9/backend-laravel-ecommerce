@@ -34,7 +34,7 @@
                 <table style="width:300px">
                     <tr>
                         <td>Tanggal Cetak</td>
-                        <td>: {{ Carbon\Carbon::now()->translatedFormat('d F Y h:i:s') }}</td>
+                        <td>: {{ Carbon\Carbon::now()->translatedFormat('d/m/Y H:i:s') }}</td>
                     </tr>
                     @if ($date != NULL)
                     <tr>
@@ -53,7 +53,7 @@
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-sm table-bordered">
-                    <thead class="align-self-center">
+                    <thead class="align-self-center thead-dark">
                         <tr>
                             <th style="min-width: 20px;text-align:center">No</th>
                             <th>Tanggal</th>

@@ -50,7 +50,7 @@
                 <div class="row mt-2">
                     <div class="col-md-12">
                         <a href="{{ route('admin.report.transaction.print') }}?date={{ $date }}&&month={{ $month }}" class="btn btn-info" target="_blank"><i class="fas fa-print"></i> Cetak</a>
-                        <a href="" class="btn btn-primary"><i class="fas fa-file-excel"></i> Export</a>
+                        <a href="{{ route('admin.report.transaction.export') }}" class="btn btn-primary"><i class="fas fa-file-excel"></i> Export</a>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     <table class="table table-bordered table-striped" id="data">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th class="text-center">#</th>
                                 <th>Tanggal</th>
                                 <th>Nama</th>
                                 <th>Email</th>
@@ -78,7 +78,7 @@
                         <tbody>
                             @foreach ($transactions as $transaction)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $transaction->created_at->translatedFormat('d/m/Y') }}</td>
                                     <td>{{ $transaction->name }}</td>
                                     <td>{{ $transaction->email }}</td>
@@ -103,10 +103,14 @@
 <script src="{{ asset('assets/sbadmin2/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script>
 $(function(){
-    var oTable = $('#data').DataTable();
+    var oTable = $('#data').DataTable({
+        columnDefs: [
+            { orderable: false, targets: 0 }
+        ],
+    });
     $('button[type=reset]').on('click', function(){
         $('#date').attr('value','');
-        $('#month').val('');
+        var month = $('#month option[value=0]').attr('selected','selected');
     });
 })
 </script>

@@ -12,6 +12,6 @@ class ProductGalleryTableSeeder extends Seeder
      */
     public function run()
     {
-        // factory(ProductGallery::class, 1000)->create();
+        factory(ProductGallery::class, 1000)->create();
     }
 }

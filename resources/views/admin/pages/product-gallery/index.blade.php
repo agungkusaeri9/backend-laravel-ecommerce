@@ -1,16 +1,15 @@
 @extends('admin.templates.default')
 @section('content')
 @include('admin.templates.partials.alert')
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card shadow">
-            <div class="card-header d-flex justify-content-between">
-                <h6 class="text-dark font-weight-bold">Galeri Produk</h6>
-                <a href="{{ route('admin.product-galleries.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
+<div class="row mb-2">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="text-weight-bold">Filter</h6>
             </div>
             <div class="card-body">
-                <div class="row mb-4">
-                    <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-6">
                         <form action="{{ route('admin.product-galleries.search') }}" method="post" class="d-inline">
                             @csrf
                             <div class="d-flex justify-content-between">
@@ -25,44 +24,24 @@
                         </form>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped" id="data">
-                        <thead>
-                            <tr>
-                                <th width=10>#</th>
-                                <th>Foto</th>
-                                <th>Nama Produk</th>
-                                <th>Default</th>
-                                <th class="text-center" style="min-width: 80px">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($productGalleries as $item)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>
-                                        <img src="{{ $item->photo() }}" alt="" class="img-fluid" style="max-height: 100px; max-width:100px;" id="img" data-src="{{ $item->photo() }}" data-name="{{ $item->product->name }}">
-                                    </td>
-                                    <td>{{ $item->product->name }}</td>
-                                    <td>
-                                        @if ($item->is_default == 1)
-                                            Ya
-                                        @else
-                                            Tidak
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.product-galleries.edit',$item->id) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
-                                        <form action="{{ route('admin.product-galleries.destroy',$item->id) }}" method="post" class="d-inline">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow">
+            <div class="card-header d-flex justify-content-between">
+                <h6 class="text-dark font-weight-bold">Galeri Produk</h6>
+                <a href="{{ route('admin.product-galleries.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    @foreach ($productGalleries as $item)
+                    <div class="col-md-2">
+                        <img src="{{ $item->photo() }}" alt="" class="img-fluid" style="max-height: 100px; max-width:100px;" id="img" data-src="{{ $item->photo() }}" data-name="{{ $item->product->name }}" data-id="{{ $item->id }}">
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -79,6 +58,13 @@
         </div>
         <div class="modal-body">
           <img src="" alt="" class="img-fluid w-100" id="imgModal">
+        </div>
+        <div class="modal-footer">
+            <form action="" method="post" id="formDelete">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger">Hapus</button>
+            </form>
         </div>
       </div>
     </div>
@@ -110,8 +96,10 @@
         $('body').on('click','#img', function(){
             let src = $(this).data('src');
             let name = $(this).data('name');
+            var id = $(this).data('id');
             $('#imgModal').attr('src',src);
             $('.modal-title').text(name);
+            $('#formDelete').attr('action',"{{ url('admin/product-galleries') }}" + '/' + id);
             $('#myModal').modal('show');
         })
     })

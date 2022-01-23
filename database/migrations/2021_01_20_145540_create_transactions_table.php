@@ -21,12 +21,14 @@ class CreateTransactionsTable extends Migration
             $table->string('phone_number');
             $table->text('address');
             $table->bigInteger('transaction_total');
+            $table->bigInteger('shipping_cost');
             $table->string('transaction_status');
             $table->string('courier');
             $table->string('payment');
             $table->string('receipt_number')->nullable();
-            $table->string('bukti_pembayaran')->nullable();
+            $table->string('proof_of_payment')->nullable();
             $table->integer('user_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

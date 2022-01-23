@@ -20,10 +20,34 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::with('details.product.category')->orderBy('id','desc')->get();
+        $status = request('status');
+        $date  = request('date');
+        if($status && $status != NULL)
+        {
+            // cek jika ada date
+            if($date)
+            {
+                $transactions = Transaction::with('details.product.category')->where('transaction_status',$status)->whereDate('created_at', '=',$date)->orderBy('id','desc')->get();
+            }else{
+                $transactions = Transaction::with('details.product.category')->where('transaction_status',$status)->orderBy('id','desc')->get();
+                $date = NULL;
+            }
+            
+        }else{
+            if($date)
+            {
+                $transactions = Transaction::with('details.product.category')->whereDate('created_at', '=',$date)->orderBy('id','desc')->get();
+            }else{
+                $transactions = Transaction::with('details.product.category')->orderBy('id','desc')->get();
+                $date = NULL;
+            }
+            $status = NULL;
+        }
         return view('admin.pages.transaction.index',[
             'title' => 'Data Transaksi',
-            'transactions' => $transactions
+            'transactions' => $transactions,
+            'status' => $status,
+            'date' => $date
         ]);
     }
 
@@ -89,17 +113,9 @@ class TransactionController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-        $request->validate([
-            'name' => ['required'],
-            'phone_number' => ['required'],
-            'address' => ['required'],
-            'courier' => ['required'],
-            'payment' => ['required'],
+        $transaction->update([
+            'receipt_number' => request('receipt_number')
         ]);
-
-        $data = $request->all();
-
-        $transaction->update($data);
 
         return redirect()->route('admin.transactions.index')->with('success','Transaksi berhasil diubah!');
     }

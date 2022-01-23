@@ -20,10 +20,13 @@ class CekOngkirController extends Controller
     {
         $carts = Cart::with('product.gallery')->where('user_id', auth()->id())->get();
         $weight = 0;
+
         foreach($carts as $cart)
         {
+            $product = $cart->product;
             $amount = $cart->amount;
-            $weight = $weight + ($amount * $cart->product->weight);
+            $product_weight = $product->weight * $amount;
+            $weight = $product_weight + $weight;
         }
 
         $ongkir = RajaOngkir::ongkosKirim([

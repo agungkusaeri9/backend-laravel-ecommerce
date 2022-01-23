@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ReportTransactionExport;
 use App\Http\Controllers\Controller;
 use App\Transaction;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
@@ -88,5 +90,11 @@ class ReportController extends Controller
             'month' => $month
         ]);
         return $pdf->stream('Laporan Transaksi' . '.pdf');
+    }
+
+    public function transactionExport()
+    {
+        $date = Carbon::now();
+        return Excel::download(new ReportTransactionExport($date),'laporan transaksi.xlsx');
     }
 }

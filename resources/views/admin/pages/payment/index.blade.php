@@ -14,6 +14,7 @@
                         <thead>
                             <tr>
                                 <th width="20" class="text-center">#</th>
+                                <th>Ikon</th>
                                 <th>Nama</th>
                                 <th>Nomor</th>
                                 <th>Deskripsi</th>
@@ -24,6 +25,9 @@
                             @foreach ($payments as $pay)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td>
+                                        <img src="{{ $pay->icon() }}" alt="{{ $pay->name }}" class="img-fluid" style="max-width: 80px">
+                                    </td>
                                     <td>{{ $pay->name }}</td>
                                     <td>{{ $pay->number }}</td>
                                     <td>{{ $pay->desc }}</td>

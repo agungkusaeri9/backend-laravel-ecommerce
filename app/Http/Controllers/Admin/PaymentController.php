@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentController extends Controller
 {
@@ -45,9 +46,14 @@ class PaymentController extends Controller
         $request->validate([
             'name' => ['required'],
             'number' => ['required','numeric'],
-            'desc' => ['required']
+            'desc' => ['required'],
+            'icon' => ['image','mimes:jpg,png,jpeg']
         ]);
         $data = $request->all();
+        if(request()->file('icon'))
+        {
+            $data['icon'] = request()->file('icon')->store('payment','public');
+        }
         Payment::create($data);
 
         return redirect()->route('admin.payments.index')->with('success','Metode Pembayaran berhasil ditambahkan!');
@@ -90,9 +96,17 @@ class PaymentController extends Controller
         $request->validate([
             'name' => ['required'],
             'number' => ['required','numeric'],
-            'desc' => ['required']
+            'desc' => ['required'],
+            'icon' => ['image','mimes:jpg,jpeg,png']
         ]);
         $data = $request->all();
+        if(request()->file('icon'))
+        {
+            Storage::disk('public')->delete($payment->icon);
+            $data['icon'] = request()->file('icon')->store('payment','public');
+        }else{
+            $data['icon'] = $payment->icon;
+        }
         $payment->update($data);
 
         return redirect()->route('admin.payments.index')->with('success','Metode Pembayaran berhasil diubah!');
@@ -106,6 +120,7 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
+        Storage::disk('public')->delete($payment->icon);
         $payment->delete();
         return redirect()->route('admin.payments.index')->with('success','Metode Pembayaran berhasil dihapus!');
     }

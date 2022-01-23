@@ -1,6 +1,60 @@
 @extends('admin.templates.default')
 @section('content')
 @include('admin.templates.partials.alert')
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="font-weight-bold">Filter Data</h6>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('admin.products.filter') }}" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="from_price" class="col-sm-3 col-form-label">Mulai</label>
+                                        <div class="col-sm-9">
+                                            <input type="number" name="from_price" class="form-control" placeholder="Harga Awal">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="to_price" class="col-sm-3 col-form-label">Sampai</label>
+                                        <div class="col-sm-9">
+                                            <input type="number" name="to_price" class="form-control" placeholder="Harga Akhir">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label for="kategori" class="col-sm-3 col-form-label">Kategori</label>
+                                <div class="col-sm-9">
+                                    <select name="category" id="category" name="category" class="form-control">
+                                        <option value="">--Semua--</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <button class="btn btn-secondary btn-block">Cari</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12">
         <div class="card shadow">
@@ -9,53 +63,6 @@
                 <a href="{{ route('admin.products.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <form action="{{ route('admin.products.filter') }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label for="from_price" class="col-sm-3 col-form-label">Mulai</label>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="from_price" class="form-control" placeholder="Harga Awal">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label for="to_price" class="col-sm-3 col-form-label">Sampai</label>
-                                                <div class="col-sm-9">
-                                                    <input type="number" name="to_price" class="form-control" placeholder="Harga Akhir">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group row">
-                                        <label for="kategori" class="col-sm-3 col-form-label">Kategori</label>
-                                        <div class="col-sm-9">
-                                            <select name="category" id="category" name="category" class="form-control">
-                                                <option value="">--Semua--</option>
-                                                @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <button class="btn btn-primary">Cari</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped wrap" id="data">
                         <thead>

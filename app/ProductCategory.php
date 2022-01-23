@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class ProductCategory extends Model
 {
@@ -12,7 +13,9 @@ class ProductCategory extends Model
     public function icon()
     {
         if($this->icon !== NULL){
-            return  asset('storage/' . $this->icon);
+            if($this->slug === Str::before($this->icon, '.png')){
+                return  asset('assets/img/' . $this->icon);
+            }
         }else{
             return "https://picsum.photos/150";
         }

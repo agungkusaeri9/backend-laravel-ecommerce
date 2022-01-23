@@ -18,12 +18,9 @@
             <span>Dashboard</span></a>
     </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#masterData"
+        <a class="nav-link pt-0 collapsed" href="#" data-toggle="collapse" data-target="#masterData"
             aria-expanded="true" aria-controls="masterData">
             <i class="fas fa-fw fa-file"></i>
             <span>Maser Data</span>
@@ -57,7 +54,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed pt-0" href="#" data-toggle="collapse" data-target="#transaction"
             aria-expanded="true" aria-controls="transaction">
-            <i class="fas fa-fw fa-file"></i>
+            <i class="fas fa-fw fa-exchange-alt"></i>
             <span>Transaksi</span>
         </a>
         <div id="transaction" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -77,6 +74,20 @@
         <div id="report" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('admin.report.transaction') }}">Transaksi</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link pt-0 collapsed" href="#" data-toggle="collapse" data-target="#trash"
+            aria-expanded="true" aria-controls="trash">
+            <i class="fas fa-fw fa-trash"></i>
+            <span>Tempat Sampah</span>
+        </a>
+        <div id="trash" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('admin.trash.user.index') }}">User</a>
+                <a class="collapse-item" href="{{ route('admin.trash.product.index') }}">Produk</a>
+                <a class="collapse-item" href="{{ route('admin.trash.transaction.index') }}">Transaksi</a>
             </div>
         </div>
     </li>

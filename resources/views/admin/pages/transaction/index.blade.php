@@ -8,6 +8,43 @@
     </button>
   </div>
 @endif
+<div class="row mb-2">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="text-weight-bold">Filter</h6>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('admin.transactions.filter') }}" method="post" class="d-inline">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group row">
+                                <label for="date" class="col-sm-3 col-form-label">Tanggal</label>
+                                <div class="col-sm-9">
+                                    <input type="date" name="date" class="form-control" @if($date) value="{{ $date }}" @endif>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                                @csrf
+                                <div class="d-flex justify-content-between">
+                                    <select name="status" id="status" class="form-control d-inline status">
+                                        <option selected value="" disabled >-- Berdasarkan Status --</option>
+                                        <option @if($status === "") selected @endif value="">Semua</option>
+                                        <option @if($status === 'SUCCESS') selected @endif value="SUCCESS">Sukses</option>
+                                        <option @if($status === 'PENDING') selected @endif value="PENDING">Pending</option>
+                                        <option @if($status === 'DELIVERY') selected @endif value="DELIVERY">Dalam Pengiriman</option>
+                                        <option @if($status === 'FAILED') selected @endif value="FAILED">Gagal</option>
+                                    </select>
+                                    <button class="btn btn-sm btn-primary d-inline ml-2 px-3">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12">
         <div class="card shadow">
@@ -26,6 +63,7 @@
                                 <th>Alamat</th>
                                 <th>Total</th>
                                 <th>Status</th>
+                                <th>Tanggal</th>
                                 <th width=200>Aksi</th>
                             </tr>
                         </thead>
@@ -48,6 +86,9 @@
                                         @elseif ($item->transaction_status == 'FAILED')
                                         <span class="badge badge-danger">FAILED</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                        {{ $item->created_at->translatedFormat('d/m/Y H:i:s') }}
                                     </td>
                                     <td>
                                         @if ($item->transaction_status === 'SUCCESS')

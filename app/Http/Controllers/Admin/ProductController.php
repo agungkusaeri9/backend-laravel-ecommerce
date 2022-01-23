@@ -173,11 +173,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        
-        $gallery = ProductGallery::where('product_id', $product->id)->get();
-        foreach($gallery as $gal){
-            Storage::disk('public')->delete($gal->photo);
-        }
         $product->delete();
         return redirect()->route('admin.products.index')->with('success','Produk berhasil diubah!');
     }

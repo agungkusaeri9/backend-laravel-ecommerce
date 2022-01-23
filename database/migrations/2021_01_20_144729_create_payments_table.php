@@ -18,6 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->string('name');
             $table->string('number');
             $table->string('desc');
+            $table->string('icon')->nullable();
             $table->timestamps();
         });
     }

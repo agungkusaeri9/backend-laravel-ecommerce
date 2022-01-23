@@ -24,16 +24,16 @@
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-12">
-                <h2 class="text-center section-title">Pilih Kategori</h2>
+                <h6 class="text-center mb-3 section-title">Kategori</h6>
             </div>
         </div>
         <div class="row text-center">
             @foreach ($categories as $category)
-            <div class="col-4 col-md-2">
+            <div class="col-3 col-lg-2 col-md-2">
                 <a href="{{ route('product.category', $category->slug) }}">
                     <div class="category-item mb-2">
                         <img src="{{ $category->icon() }}" alt="{{ $category->name }}" id="category-img">
-                        <h5 class="text-uppercase mt-2">{{ $category->name }}</h5>
+                        <h5 class="text-uppercase mt-2 category-title">{{ $category->name }}</h5>
                     </div>
                 </a>
             </div>
@@ -87,7 +87,7 @@
 <!-- terlaris -->
 <!-- terlaris -->
 
-<section id="section-title">
+{{-- <section id="section-title">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -126,20 +126,18 @@
             @endforeach
         </div>
     </div>
-</section>
+</section> --}}
 
 @endsection
 @push('afterStyles')
-{{-- <style>
-    .category-item{
-        overflow: hidden;
-        position: relative;
+<style>
+    .category-title{
+        font-size: 12px !important;
     }
-    #category-img{
-        min-width: 100%;
-        height: 350px;
+    .section-title{
+        font-size: 18px;
     }
-</style> --}}
+</style>
 @endpush
 @push('afterScripts')
 <script>

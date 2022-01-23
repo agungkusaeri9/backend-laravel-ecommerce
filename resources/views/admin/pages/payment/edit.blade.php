@@ -7,9 +7,23 @@
                 <h6 class="text-dark text-center font-weight-bold">Edit Metode Pembayaran</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.payments.update', $payment->id) }}" method="post">
+                <form action="{{ route('admin.payments.update', $payment->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label for="icon">Ikon</label>
+                            <img src="{{ $payment->icon() }}" alt="" class="img-fluid">
+                        </div>
+                        <div class="col-10 align-self-center">
+                            <input type="file" name="icon" class="form-control @error('icon') is-invalid @enderror" value="{{ old('icon') }}">
+                            @error('icon')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $payment->name ?? old('name') }}">

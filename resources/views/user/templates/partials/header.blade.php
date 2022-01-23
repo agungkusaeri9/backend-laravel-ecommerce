@@ -1,7 +1,7 @@
 <header class="header-section pb-0">
     <div class="header-top">
         <div class="container">
-            <div class="ht-left">
+            <div class="ht-left mt-1">
                 <div class="mail-service pt-2">
                     <i class=" fa fa-envelope"></i> {{ $store->email }}
                 </div>
@@ -9,20 +9,19 @@
                     <i class=" fa fa-phone"></i> {{ $store->phone_number }}
                 </div>
             </div>
-            {{-- <div class="ht-right">
-                <a href="{{ route('product.index') }}" class="nav-link align-self-center d-inline text-dark font-weight-bold">Product</a>
-                <a href="{{ route('contact') }}" class="nav-link align-self-center d-inline text-dark font-weight-bold">Contact Us</a>
-                <a href="{{ route('about') }}" class="nav-link align-self-center d-inline text-dark font-weight-bold">About Us</a>
-                @auth
-                <a href="{{ route('logout') }}" class="nav-link align-self-center d-inline text-dark font-weight-bold" onclick="event.preventDefault(); confirm('Apakah yakin ingin keluar?');
-                document.getElementById('logout-form').submit();">Logout</a>
-                <form method="post" action="{{ route('logout') }}" class="d-none" id="logout-form">
-                    @csrf
-                </form>
-                @else
-                <a href="{{ route('login') }}" class="nav-link align-self-center d-inline text-dark font-weight-bold">Login</a>
-                @endauth
-            </div> --}}
+            <div class="float-right mt-1">
+                <ul class="list-inline">
+                    <li class="list-inline-item mr-0">
+                        <a href="" class="btn btn-link text-decoration-none text-dark">Home</a>
+                    </li>
+                    <li class="list-inline-item mr-0">
+                        <a href="" class="btn btn-link text-decoration-none text-dark">Contact</a>
+                    </li>
+                    <li class="list-inline-item mr-0">
+                        <a href="" class="btn btn-link text-decoration-none text-dark">About</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="container">
@@ -35,14 +34,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-7 col-md-7">
-                    <form action="{{ route('products.search') }}" method="get" class=" align-self-center">
-                        <div class="form-group">
-                            <input type="text" placeholder="Cari Barang Kesukaan Anda" class="form-control search d-block" style="height: 40px;" name="name" value="{{ request('name') ?? '' }}">
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-3 text-right col-md-3">
+                <div class="col-lg-10 text-right col-md-3">
                     <ul class="nav-right">
                         <li class="cart-icon">
                             <a href="{{ route('account.show') }}">{{ auth()->user()->name ?? 'Akun Saya' }}</a>

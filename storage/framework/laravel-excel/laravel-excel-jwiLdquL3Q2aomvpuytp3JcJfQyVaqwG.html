@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>E-Commerce 2021</title>
+
+<!-- Custom fonts for this template-->
+<link href="http://webshop.test/assets/sbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="http://webshop.test/assets/sbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="http://webshop.test/assets/sbadmin2/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://webshop.test">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">My Storef</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link" href="http://webshop.test/admin">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#masterData"
+            aria-expanded="true" aria-controls="masterData">
+            <i class="fas fa-fw fa-file"></i>
+            <span>Maser Data</span>
+        </a>
+        <div id="masterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="http://webshop.test/admin/users">Data User</a>
+                <a class="collapse-item" href="http://webshop.test/admin/store">Profil Toko</a>
+                <a class="collapse-item" href="http://webshop.test/admin/payments">Metode Pembayaran</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed pt-0" href="#" data-toggle="collapse" data-target="#product"
+            aria-expanded="true" aria-controls="product">
+            <i class="fas fa-fw fa-file"></i>
+            <span>Produk</span>
+        </a>
+        <div id="product" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="http://webshop.test/admin/product-categories">Kategori Produk</a>
+                <a class="collapse-item" href="http://webshop.test/admin/products">Data Produk</a>
+                <a class="collapse-item" href="http://webshop.test/admin/product-galleries">Foto Produk</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed pt-0" href="#" data-toggle="collapse" data-target="#transaction"
+            aria-expanded="true" aria-controls="transaction">
+            <i class="fas fa-fw fa-file"></i>
+            <span>Transaksi</span>
+        </a>
+        <div id="transaction" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="http://webshop.test/admin/transactions">Transaksi Masuk</a>
+            </div>
+        </div>
+    </li>
+
+     <!-- Nav Item - Pages Collapse Menu -->
+     <li class="nav-item">
+        <a class="nav-link collapsed pt-0" href="#" data-toggle="collapse" data-target="#report"
+            aria-expanded="true" aria-controls="report">
+            <i class="fas fa-fw fa-file"></i>
+            <span>Laporan</span>
+        </a>
+        <div id="report" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="http://webshop.test/admin/report/transaction">Transaksi</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+
+        <div class="topbar-divider d-none d-sm-block"></div>
+
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Agung Kusaeri</span>
+                <img class="img-profile rounded-circle"
+                    src="http://webshop.test/assets/img/profile-user.png">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="http://webshop.test/admin/profile">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profil
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="http://webshop.test/logout" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+                <form id="logout-form" action="http://webshop.test/logout" method="POST" style="display: none;">
+                    <input type="hidden" name="_token" value="43al11QRFKnJlfUfz70CpH3C6sWoIL0kSoz2oI8g">                </form>
+            </div>
+        </li>
+
+    </ul>
+
+</nav>                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped" id="data">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th>Tanggal</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Sub Total</th>
+                    <th>Ongkos Kirim</th>
+                    <th>Total Transaksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                                    <tr>
+                        <td class="text-center">1</td>
+                        <td>07/08/2020</td>
+                        <td>tedi</td>
+                        <td>tedi@gmail.com</td>
+                        <td>150,000</td>
+                        <td>47,000</td>
+                        <td>197,000</td>
+                    </tr>
+                                    <tr>
+                        <td class="text-center">2</td>
+                        <td>08/08/2020</td>
+                        <td>tedi</td>
+                        <td>tedi@gmail.com</td>
+                        <td>150,000</td>
+                        <td>73,000</td>
+                        <td>223,000</td>
+                    </tr>
+                                    <tr>
+                        <td class="text-center">3</td>
+                        <td>09/07/2021</td>
+                        <td>tedi</td>
+                        <td>tedi@gmail.com</td>
+                        <td>120,000</td>
+                        <td>73,000</td>
+                        <td>193,000</td>
+                    </tr>
+                                    <tr>
+                        <td class="text-center">4</td>
+                        <td>10/08/2021</td>
+                        <td>Acep Sutisna</td>
+                        <td>acep@gmal.com</td>
+                        <td>450,000</td>
+                        <td>73,000</td>
+                        <td>523,000</td>
+                    </tr>
+                                    <tr>
+                        <td class="text-center">5</td>
+                        <td>10/08/2021</td>
+                        <td>Acep Sutisna</td>
+                        <td>acep@gmal.com</td>
+                        <td>120,000</td>
+                        <td>32,000</td>
+                        <td>152,000</td>
+                    </tr>
+                                    <tr>
+                        <td class="text-center">6</td>
+                        <td>10/08/2021</td>
+                        <td>Agus Salim</td>
+                        <td>agus@gmaill.com</td>
+                        <td>150,000</td>
+                        <td>46,000</td>
+                        <td>196,000</td>
+                    </tr>
+                                    <tr>
+                        <td class="text-center">7</td>
+                        <td>11/08/2021</td>
+                        <td>Agus Salim</td>
+                        <td>agus@gmaill.com</td>
+                        <td>150,000</td>
+                        <td>73,000</td>
+                        <td>223,000</td>
+                    </tr>
+                                    <tr>
+                        <td class="text-center">8</td>
+                        <td>11/08/2021</td>
+                        <td>Maisa</td>
+                        <td>maisa@gmail.com</td>
+                        <td>150,000</td>
+                        <td>18,000</td>
+                        <td>168,000</td>
+                    </tr>
+                            </tbody>
+        </table>
+    </div>
+</div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>Copyright &copy; By. Agung Kusaeri 2021</span>
+        </div>
+    </div>
+</footer>            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    <!-- Bootstrap core JavaScript-->
+<script src="http://webshop.test/assets/sbadmin2/vendor/jquery/jquery.min.js"></script>
+<script src="http://webshop.test/assets/sbadmin2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="http://webshop.test/assets/sbadmin2/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="http://webshop.test/assets/sbadmin2/js/sb-admin-2.min.js"></script>
+<script>
+    let w = window.matchMedia("(max-width: 500px)");
+        if(w.matches){
+            $('#page-top').addClass('sidebar-toggled');
+            $('.sidebar').addClass('toggled');
+        }
+</script>
+<script src="http://webshop.test/assets/sbadmin2/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="http://webshop.test/assets/sbadmin2/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+$(function(){
+    var oTable = $('#data').DataTable({
+        columnDefs: [
+            { orderable: false, targets: 0 }
+        ],
+    });
+    $('button[type=reset]').on('click', function(){
+        $('#date').attr('value','');
+        var month = $('#month option[value=0]').attr('selected','selected');
+    });
+})
+</script>
+
+</body>
+
+</html>

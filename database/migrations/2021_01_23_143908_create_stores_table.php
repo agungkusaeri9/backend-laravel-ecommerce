@@ -19,13 +19,14 @@ class CreateStoresTable extends Migration
             $table->string('email');
             $table->string('phone_number');
             $table->longText('desc');
-            $table->integer('province');
             $table->integer('city');
             $table->text('address');
             $table->string('facebook_link');
             $table->string('instagram_link');
             $table->string('tele_token')->nullable();
             $table->string('group_chatId')->nullable();
+            $table->string('meta_keyword')->nullable();
+            $table->text('meta_description')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
         });

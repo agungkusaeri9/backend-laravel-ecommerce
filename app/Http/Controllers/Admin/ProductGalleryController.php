@@ -74,7 +74,7 @@ class ProductGalleryController extends Controller
             $gallery->save();
         }
 
-        return redirect()->route('admin.product-galleries.index')->with('success','Foto Produk berhasil ditambahkan!');
+        return redirect()->back()->with('success','Foto Produk berhasil ditambahkan!');
     }
 
     /**
@@ -141,6 +141,19 @@ class ProductGalleryController extends Controller
     public function destroy(ProductGallery $productGallery)
     {
         $productGallery->delete();
-        return redirect()->route('admin.product-galleries.index')->with('success','Foto Produk berhasil dihapus!');
+        return redirect()->back()->with('success','Foto Produk berhasil dihapus!');
+    }
+
+    public function setActive($product_id,$id)
+    {
+        ProductGallery::where('product_id',$product_id)->update([
+            'is_default' => 0
+        ]);
+
+        ProductGallery::where('id',$id)->update([
+            'is_default' => 1
+        ]);
+
+        return redirect()->back()->with('success','Foto berhasil di set sebagai aktif');
     }
 }
