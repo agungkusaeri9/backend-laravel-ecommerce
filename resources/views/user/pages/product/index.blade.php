@@ -44,7 +44,7 @@
             @empty
             <div class="col-md-12">
                 <div class="alert alert-danger">
-                    <p class="text-center">Produk "{{ request('name') }}" tidak ada</p>
+                    <p class="text-center">Produk tidak ada.</p>
                 </div>
             </div>
             @endforelse
@@ -56,6 +56,48 @@
         </div>
     </div>
 </section>
+@if ($title !== 'Semua Produk')
+<div class="related-products spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-title">Produk Lainnya</h2>
+            </div>
+        </div>
+        <div class="row">
+            @foreach ($product_lainnya  as $pl)
+            <div class="col-lg-3 col-6">
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <img src="{{ $pl->gallery[0]->photo() }}" alt="" />
+                        <ul>
+                            <li class="w-icon active" onclick="addToCart()">
+                                <a href="javascript:void(0)"><i class="icon_bag_alt"></i></a>
+                                <form action="{{ route('cart.store') }}" method="post" class="d-none" id="form-add-to-cart">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $pl->id }}">
+                                    <input type="hidden" name="price" value="{{ $pl->price }}">
+                                </form>
+                            </li>
+                            <li class="quick-view"><a href="{{ route('product.show', $pl->slug) }}">+ Quick View</a></li>
+                        </ul>
+                    </div>
+                    <div class="pi-text">
+                        <div class="catagory-name">{{ $pl->category->name }}</div>
+                        <a href="#">
+                            <h5>{{ $pl->name }}</h5>
+                        </a>
+                        <div class="product-price">
+                            Rp. {{ number_format($pl->price) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+@endif
 @endsection
 @push('afterScripts')
 <script>

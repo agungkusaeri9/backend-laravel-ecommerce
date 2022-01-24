@@ -3,19 +3,18 @@
 <div class="container">
     @include('user.templates.partials.alert')
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             @include('user.templates.partials.sidebar-user')
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-borderless table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>ID</th>
                                     <th>Nama</th>
-                                    <th>Nomor Hp</th>
                                     <th>Alamat</th>
                                     <th>Jumlah</th>
                                     <th>Status</th>
@@ -25,10 +24,9 @@
                                 @forelse ($transactions as $transaction)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('transactions.show', $transaction->id) }}" class="uuid text-dark" >{{ $transaction->uuid }}</a>
+                                            <a href="{{ route('transactions.show', $transaction->uuid) }}" class="uuid text-dark" >{{ $transaction->uuid }}</a>
                                         </td>
                                         <td>{{ $transaction->name }}</td>
-                                        <td>{{ $transaction->phone_number }}</td>
                                         <td>{{ $transaction->address }}</td>
                                         <td>Rp. {{ number_format($transaction->transaction_total) }}</td>
                                         <td>

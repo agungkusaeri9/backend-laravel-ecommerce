@@ -87,11 +87,11 @@
 <!-- terlaris -->
 <!-- terlaris -->
 
-{{-- <section id="section-title">
+<section id="section-title">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="text-center section-title">Terbaru</h2>
+                <h2 class="text-center section-title text-left">Terbaru</h2>
             </div>
         </div>
         <div class="row">
@@ -125,24 +125,44 @@
                 </div>
             @endforeach
         </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                {{ $products_latest->links('vendor.pagination.bootstrap-4') }}
+            </div>
+        </div>
     </div>
-</section> --}}
+</section>
+
+<section id="section-title pembayaran" class="mt-5">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title text-white text-muted">Pembayaran</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            @foreach ($payments as $payment)
+                <div class="col-3">
+                    <div style="height:150px;width:cover;background-image: url('{{ $payment->icon() }}');background-size:100%;opacity:.9;background-repeat:no-repeat">
+                </div>
+
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
 
 @endsection
 @push('afterStyles')
-<style>
-    .category-title{
-        font-size: 12px !important;
-    }
-    .section-title{
-        font-size: 18px;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('assets/toastr/toastr.min.css') }}">
 @endpush
 @push('afterScripts')
+<!-- Toastr -->
+<script src="{{ asset('assets/toastr/toastr.min.js') }}"></script>
 <script>
     function addToCart(){
         $('#form-add-to-cart').submit();
     }
 </script>
+@include('user.templates.partials.alert')
 @endpush

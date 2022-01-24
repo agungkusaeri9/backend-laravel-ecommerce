@@ -16,16 +16,16 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::where('user_id', auth()->id())->orderBy('id', 'DESC')->get();
         return view('user.pages.transaction.index',[
-            'title' => 'My Order',
+            'title' => 'Pesanan Saya',
             'store' => Store::first(),
             'cart_count' => Cart::where('user_id', auth()->id())->count(),
             'transactions' => $transactions
         ]);
     }
 
-    public function show($id)
+    public function show($uuid)
     {
-        $transaction = auth()->user()->transactions->where('id', $id)->first();
+        $transaction = auth()->user()->transactions->where('uuid', $uuid)->first();
         if(!$transaction){ abort(404); }
         $price_total = 0;
         foreach($transaction->details as $details){

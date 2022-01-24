@@ -21,11 +21,12 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/contact', 'ContactController')->name('contact');
 Route::get('/about', 'AboutController')->name('about');
+Route::post('/send-message','InboxController@store')->name('inbox.store');
 Route::prefix('products')->group(function () {
     Route::get('', 'ProductController@index')->name('product.index');
     Route::get('/search', 'ProductController@search')->name('products.search');
     Route::get('{slug}', 'ProductController@show')->name('product.show');
-    Route::get('category/{slug}', 'ProductController@index')->name('product.category');
+    Route::get('category/{slug}', 'ProductController@category')->name('product.category');
 });
 Route::middleware(['auth'])->group(function () {
 
@@ -50,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cekongkir', 'CekOngkirController@cekOngkir')->name('cekOngkir'); 
     Route::post('/checkout', 'CheckoutController')->name('checkout'); 
     Route::get('/success', function(){
-        if(session('transaction_id')){
+        if(session('transaction_uuid')){
             return view('user.pages.success');
         }else{
             return redirect()->route('home');

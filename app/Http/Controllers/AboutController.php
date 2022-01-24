@@ -19,7 +19,8 @@ class AboutController extends Controller
         return view('user.pages.about',[
             'title' => 'About Us',
             'store' => Store::first(),
-            'cart_count' => Cart::where('user_id', auth()->id())->count()
+            'cart_count' => Cart::where('user_id', auth()->id())->count(),
+            'item' => Store::first()
         ]);
     }
 }

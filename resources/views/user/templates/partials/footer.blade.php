@@ -12,6 +12,7 @@
                         <li>{{ $store->email }}</li>
                     </ul>
                     <div class="footer-social">
+                        <a href="https://wa.me/{{ $store->phone_number }}?text=Halo {{ $store->name }}" target="_blank"><i class="fa fa-whatsapp"></i></a>
                         <a href="{{ $store->facebook_link }}" target="_blank"><i class="fa fa-facebook"></i></a>
                         <a href="{{ $store->instagram_link }}" target="_blank"><i class="fa fa-instagram"></i></a>
                     </div>

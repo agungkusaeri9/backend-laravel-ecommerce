@@ -44,3 +44,7 @@ Route::delete('trash/product/{id}/delete','TrashController@productDelete')->name
 Route::get('trash/transaction','TrashController@transaction')->name('trash.transaction.index');
 Route::post('trash/transaction/{id}/restore','TrashController@transactionRestore')->name('trash.transaction.restore');
 Route::delete('trash/transaction/{id}/delete','TrashController@transactionDelete')->name('trash.transaction.delete');
+
+// inboxes
+Route::get('inboxes','InboxController@index')->name('inboxes.index');
+Route::delete('inboxes/{id}/delete','InboxController@destroy')->name('inboxes.destroy');

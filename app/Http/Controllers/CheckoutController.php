@@ -6,6 +6,7 @@ use App\Cart;
 use App\Notifications\Admin\NewCheckout;
 use App\Product;
 use App\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notification;
 
@@ -31,9 +32,9 @@ class CheckoutController extends Controller
         $carts = Cart::where('user_id', auth()->id())->get();
         $transaction_latest = Transaction::orderBy('id','DESC')->limit(1)->first();
         if($transaction_latest){
-            $trx = 'TRX' . str_pad($transaction_latest->id + 1,5,"0", STR_PAD_LEFT);
+            $trx = Carbon::now()->translatedFormat('Y') . Carbon::now()->translatedFormat('m') . Carbon::now()->translatedFormat('d') . str_pad($transaction_latest->id + 1,3,"0", STR_PAD_LEFT);
         }else{
-            $trx = 'TRX' . str_pad(1,5,"0", STR_PAD_LEFT);
+            $trx = Carbon::now()->translatedFormat('Y') . Carbon::now()->translatedFormat('m') . Carbon::now()->translatedFormat('d') . str_pad(1,3,"0", STR_PAD_LEFT);
         }
         $transaction = auth()->user()->transactions()->create([
             'uuid' => $trx,
@@ -61,6 +62,6 @@ class CheckoutController extends Controller
 
         auth()->user()->carts()->delete();
 
-        return redirect()->route('transactions.success')->with('transaction_id', $transaction->id);
+        return redirect()->route('transactions.success')->with('transaction_uuid', $transaction->uuid);
     }
 }

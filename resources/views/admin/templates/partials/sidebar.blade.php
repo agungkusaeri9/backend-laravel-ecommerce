@@ -27,7 +27,8 @@
         </a>
         <div id="masterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('admin.users.index') }}">Data User</a>
+                <a class="collapse-item" href="{{ route('admin.users.index') }}">User</a>
+                <a class="collapse-item" href="{{ route('admin.inboxes.index') }}">Pesan Masuk</a>
                 <a class="collapse-item" href="{{ route('admin.store.index') }}">Profil Toko</a>
                 <a class="collapse-item" href="{{ route('admin.payments.index') }}">Metode Pembayaran</a>
             </div>
@@ -44,7 +45,7 @@
         <div id="product" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('admin.product-categories.index') }}">Kategori Produk</a>
-                <a class="collapse-item" href="{{ route('admin.products.index') }}">Data Produk</a>
+                <a class="collapse-item" href="{{ route('admin.products.index') }}">Produk</a>
                 <a class="collapse-item" href="{{ route('admin.product-galleries.index') }}">Foto Produk</a>
             </div>
         </div>

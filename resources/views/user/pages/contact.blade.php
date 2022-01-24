@@ -21,23 +21,23 @@
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form action="{{ route('inbox.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" class="form-control" placeholder="Full Name" name="name" id="name">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" class="form-control" placeholder="Nama Lengkap" name="name" id="name" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" placeholder="example@example.com" name="email" id="email">
+                            <input type="text" class="form-control" placeholder="example@example.com" name="email" id="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="website">Website (Optional)</label>
-                            <input type="text" class="form-control" placeholder="https://example.com" name="website" id="website">
+                            <label for="web">Web (Optional)</label>
+                            <input type="text" class="form-control" placeholder="https://example.com" name="web" id="web">
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea name="message" id="message" cols="30" rows="5" class="form-control"></textarea>
+                            <label for="text">Pesan</label>
+                            <textarea name="text" id="text" cols="30" rows="5" class="form-control" required></textarea>
                         </div>
                         <div class="form-group float-right">
                             <button class="btn btn-primary px-4 py-2">
@@ -51,3 +51,10 @@
     </div>
 </div>
 @endsection
+@push('afterStyles')
+<style>
+    .page-title{
+        font-size: 18px !important;
+    }
+</style>
+@endpush

@@ -15,7 +15,9 @@
     @include('user.templates.partials.header')
     <!-- Header End -->
 
-    @yield('content')
+    <div style="min-height:600px">
+        @yield('content')
+    </div>
 
     <!-- Footer Section Begin -->
     @include('user.templates.partials.footer')

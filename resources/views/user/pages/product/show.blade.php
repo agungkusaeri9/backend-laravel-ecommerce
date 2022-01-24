@@ -89,9 +89,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="section-title">
-                    <h2>Produk Lainnya</h2>
-                </div>
+                <h2 class="section-title">Produk Lainnya</h2>
             </div>
         </div>
         <div class="row">

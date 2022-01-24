@@ -10,9 +10,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-hover table-striped">
                             <tr>
-                                <th>#</th>
+                                <th>ID</th>
                                 <td>{{ $transaction->uuid }}</td>
                             </tr>
                             <tr>
@@ -77,7 +77,7 @@
                             </tr>
                             <tr>
                                 <th>Nomor Resi</th>
-                                <td>{{ $transaction->receipt_number }}</td>
+                                <td>{{ $transaction->receipt_number ?? ' Tidak Ada' }}</td>
                             </tr>
                             <tr>
                                 <th>Biaya Pengiriman</th>

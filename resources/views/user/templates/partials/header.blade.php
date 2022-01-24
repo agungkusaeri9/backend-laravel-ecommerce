@@ -12,13 +12,13 @@
             <div class="float-right mt-1">
                 <ul class="list-inline">
                     <li class="list-inline-item mr-0">
-                        <a href="" class="btn btn-link text-decoration-none text-dark">Home</a>
+                        <a href="{{ route('home') }}" class="btn btn-link text-decoration-none text-dark">Home</a>
                     </li>
                     <li class="list-inline-item mr-0">
-                        <a href="" class="btn btn-link text-decoration-none text-dark">Contact</a>
+                        <a href="{{ route('contact') }}" class="btn btn-link text-decoration-none text-dark">Contact</a>
                     </li>
                     <li class="list-inline-item mr-0">
-                        <a href="" class="btn btn-link text-decoration-none text-dark">About</a>
+                        <a href="{{ route('about') }}" class="btn btn-link text-decoration-none text-dark">About</a>
                     </li>
                 </ul>
             </div>

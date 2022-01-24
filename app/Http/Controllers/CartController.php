@@ -63,13 +63,26 @@ class CartController extends Controller
             $amount = 1;
             $notes = 'random';
         }
-        $price = $amount * request('price');
-        auth()->user()->carts()->create([
-            'product_id' => request('product_id'),
-            'amount' => $amount,
-            'price' => $price,
-            'notes' => $notes
-        ]);
+        $cart = Cart::where('user_id',auth()->id())->where('product_id',$product->id)->first();
+
+        if($cart)
+        {
+            $amount = $cart->amount + request('amount');
+            $price = $amount * request('price');
+            $cart->update([
+                'amount' => $amount,
+                'price' => $price
+            ]);
+        }else{
+            $price = $amount * request('price');
+            auth()->user()->carts()->create([
+                'product_id' => request('product_id'),
+                'amount' => $amount,
+                'price' => $price,
+                'notes' => $notes
+            ]);
+        }
+        
         return redirect()->route('cart.index');
     }
 

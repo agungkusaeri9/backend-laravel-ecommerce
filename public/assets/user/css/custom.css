@@ -1,0 +1,23 @@
+.section-title{
+    font-size:16px !important;
+}
+.header-top .list-inline li a{
+    font-size:13px;
+    padding: 8px 2px;
+}
+h2.section-title{
+    font-size: 16px !important;
+}
+.category-title{
+    font-size: 11px !important;
+}
+.product-big-img{
+    height:auto !important;
+}
+@media only screen and (max-width: 500px){
+    .header-top .list-inline li a{
+        font-size:12px;
+        padding: 3px 2px 3px 2px;
+    }
+    
+}

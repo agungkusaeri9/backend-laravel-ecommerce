@@ -15,150 +15,141 @@
 </div>
 <!-- Breadcrumb Section Begin -->
 <!-- Shopping Cart Section Begin -->
-<section class="shopping-cart spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="cart-table">
-                            <div class="table-responsive">
-                                <table class="table table-sm table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th>Gambar</th>
-                                            <th class="p-name text-center">Nama</th>
-                                            <th>Harga</th>
-                                            <th>Jumlah</th>
-                                            <th>Total</th>
-                                            <th>Keterangan</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($carts as $cart)
-                                        <tr>
-                                            <td class="cart-pic first-row">
-                                                <img src="{{ $cart->product->gallery[0]->photo() }}" />
-                                            </td>
-                                            <td class="cart-title first-row text-center">
-                                                <h5>{{ $cart->product->name }}</h5>
-                                            </td>
-                                            <td>Rp. {{ number_format($cart->product->price) }}</td>
-                                            <td>{{ $cart->amount }}</td>
-                                            <td class="p-price first-row">
-                                                Rp. {{ number_format($cart->price) }}
-                                            </td>
-                                            <td>
-                                                {{ $cart->notes }}
-                                            </td>
-                                            <td class="delete-item">
-                                                <form action="{{ route('cart.destroy', $cart->id) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin ingin menghapus item ini dari keranjang?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center">
-                                                Keranjang Kosong
-                                            </td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8">
-                        <h4 class="mb-4">
-                            Informasi Pembeli:
-                        </h4>
-                        <div class="user-checkout">
-                            <form method="post" id="formInformation">
-                                @csrf
-                                <input type="number" id="inp_sub_total" value="{{ $carts->sum('price') }}" class="d-none">
-                                <input type="hidden" id="inp_payment" name="payment" class="d-none">
-                                <input type="hidden" id="inp_total_biaya" name="transaction_total">
-                                <input type="hidden" id="inp_ongkir" name="shipping_cost">
-                                <div class="form-group">
-                                    <label for="namaLengkap">Nama lengkap</label>
-                                    <input type="text" class="form-control" id="namaLengkap" aria-describedby="namaHelp" placeholder="Masukan Nama" value="{{ auth()->user()->name }}" name="name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="namaLengkap">Email Address</label>
-                                    <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Masukan Email" value="{{ auth()->user()->email }}" name="email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="namaLengkap">Nomor HP</label>
-                                    <input type="text" class="form-control" id="noHP" aria-describedby="noHPHelp" placeholder="Masukan No. HP" value="{{ auth()->user()->phone_number }}" name="phone_number">
-                                </div>
-                                <div class="form-group">
-                                    <label for="cityprovince_destination">Provinsi Tujuan</label>
-                                    <select name="province_destination" id="province_destination" class="form-control">
-                                        <option value="">--Provinsi Tujuan--</option>
-                                        @foreach ($provinces as $province)
-                                            <option value="{{ $province->province_id }}">{{ $province->province_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="city_destination">Kota Tujuan</label>
-                                    <select name="city_destination" id="city_destination" class="form-control">
-                                        <option value="">--Kota Tujuan--</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="alamatLengkap">Alamat Lengkap</label>
-                                    <textarea class="form-control" id="alamatLengkap" rows="3" name="address">{{ auth()->user()->address }}</textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="payment">Metode Pembayaran</label>
-                                    <select name="payment" id="payment" class="form-control">
-                                        <option value="">--Metode Pembayaran--</option>
-                                        @foreach ($payments as $payment)
-                                            <option value="{{ $payment->name }}">{{ $payment->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="courier">Jasa Pengiriman</label>
-                                    <select name="courier" id="courier" class="form-control">
-                                        @foreach ($couriers as $courier)
-                                            <option value="{{ $courier->code }}">{{ $courier->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="proceed-checkout">
-                            <ul>
-                                <li class="subtotal">ID Transaksi <span>{{ $trx }}</span></li>
-                                <li class="subtotal mt-3">Subtotal <span id="sub_total">{{ number_format($carts->sum('price')) }}</span></li>
-                                <li class="subtotal mt-3">Ongkos Kirim <span id="ongkir"></span></li>
-                                <li class="subtotal mt-3">Total Biaya <span id="total_biaya"></span></li>
-                                <li class="subtotal mt-3">Pembayaran <span id="pembayaran"></span></li>
-                                <li class="subtotal mt-3">Nomor <span id="nomor"></span></li>
-                                <li class="subtotal mt-3">Nama Penerima <span id="desc"></span></li>
-                            </ul>
-                            <button href="{{ route('checkout') }}" class="btn-dark w-100 proceed-btn checkout">Checkout</button>
-                        </div>
-                    </div>
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Gambar</th>
+                            <th class="p-name text-center">Nama</th>
+                            <th class="text-center">Harga</th>
+                            <th class="text-center">Jumlah</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-center">Keterangan</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($carts as $cart)
+                        <tr>
+                            <td class="cart-pic first-row">
+                                @foreach ($cart->product->gallery->where('is_default',1)->take(1) as $active)
+                                <img src="{{ $active->photo() }}" style="height: 80px"/>
+                                @endforeach
+                            </td>
+                            <td class="cart-title first-row text-center">
+                                <h5>{{ $cart->product->name }}</h5>
+                            </td>
+                            <td>Rp. {{ number_format($cart->product->price) }}</td>
+                            <td class="text-center">{{ $cart->amount }}</td>
+                            <td class="p-price first-row">
+                                Rp. {{ number_format($cart->price) }}
+                            </td>
+                            <td>
+                                {{ $cart->notes }}
+                            </td>
+                            <td class="delete-item text-center">
+                                <form action="{{ route('cart.destroy', $cart->id) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin ingin menghapus item ini dari keranjang?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                Keranjang Kosong
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</section>
+    <div class="row mt-4">
+        <div class="col-lg-5">
+            <h4 class="mb-4">
+                Informasi Pembeli:
+            </h4>
+            <div class="user-checkout">
+                <form method="post" id="formInformation">
+                    @csrf
+                    <input type="number" id="inp_sub_total" value="{{ $carts->sum('price') }}" class="d-none">
+                    <input type="hidden" id="inp_payment" name="payment" class="d-none">
+                    <input type="hidden" id="inp_total_biaya" name="transaction_total">
+                    <input type="hidden" id="inp_ongkir" name="shipping_cost">
+                    <input type="hidden" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Masukan Email" value="{{ auth()->user()->email }}" name="email">
+                    <div class="form-group">
+                        <label for="namaLengkap">Nama lengkap</label>
+                        <input type="text" class="form-control" id="namaLengkap" aria-describedby="namaHelp" placeholder="Masukan Nama" value="{{ auth()->user()->name }}" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="namaLengkap">Nomor HP</label>
+                        <input type="text" class="form-control" id="noHP" aria-describedby="noHPHelp" placeholder="Masukan No. HP" value="{{ auth()->user()->phone_number }}" name="phone_number">
+                    </div>
+                    <div class="form-group">
+                        <label for="cityprovince_destination">Provinsi Tujuan</label>
+                        <select name="province_destination" id="province_destination" class="form-control">
+                            <option value="">-- Pilih Provinsi --</option>
+                            @foreach ($provinces as $province)
+                                <option value="{{ $province->province_id }}">{{ $province->province_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="city_destination">Kota Tujuan</label>
+                        <select name="city_destination" id="city_destination" class="form-control">
+                            <option value="">-- Pilih Kota  --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="alamatLengkap">Alamat Lengkap</label>
+                        <textarea class="form-control" id="alamatLengkap" rows="3" name="address">{{ auth()->user()->address }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment">Metode Pembayaran</label>
+                        <select name="payment" id="payment" class="form-control">
+                            <option value="">-- Pilih Pembayaran --</option>
+                            @foreach ($payments as $payment)
+                                <option value="{{ $payment->name }}">{{ $payment->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="courier">Jasa Pengiriman</label>
+                        <select name="courier" id="courier" class="form-control">
+                            @foreach ($couriers as $courier)
+                                <option value="{{ $courier->code }}">{{ $courier->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-5 offset-2">
+            <h4 class="mb-4">
+                Detail:
+            </h4>
+            <div class="proceed-checkout">
+                <ul>
+                    <li class="subtotal mt-3">Subtotal <span id="sub_total">{{ number_format($carts->sum('price')) }}</span></li>
+                    <li class="subtotal mt-3">Ongkos Kirim <span id="ongkir"></span></li>
+                    <li class="subtotal mt-3">Total Biaya <span id="total_biaya"></span></li>
+                    <li class="subtotal mt-3">Pembayaran <span id="pembayaran"></span></li>
+                    <li class="subtotal mt-3">Nomor <span id="nomor"></span></li>
+                    <li class="subtotal mt-3">Nama Penerima <span id="desc"></span></li>
+                </ul>
+                <button href="{{ route('checkout') }}" class="btn-dark w-100 proceed-btn checkout">Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Shopping Cart Section End -->
 @endsection
 @push('afterScripts')

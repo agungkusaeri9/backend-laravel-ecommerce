@@ -1,4 +1,4 @@
-@if (session('transaction_id'))
+@if (session('transaction_uuid'))
 <!DOCTYPE html>
 <html lang="id">
 
@@ -21,7 +21,7 @@
             <p class="mt-2">
                 Silahkan lakukan pembayaran dan jangan lupa upload bukti pembayarannya agar cepat diproses.
             </p>
-            <a href="{{ route('transactions.show', session('transaction_id')) }}" class="primary-btn pd-cart mt-3">Kembali Ke Pesanan</a>
+            <a href="{{ route('transactions.show', session('transaction_uuid')) }}" class="primary-btn pd-cart mt-3">Kembali Ke Pesanan</a>
         </div>
     </div>
     
@@ -29,4 +29,6 @@
 </body>
 
 </html>
+@else 
+tidak ada
 @endif

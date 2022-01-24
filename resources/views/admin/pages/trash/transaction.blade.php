@@ -15,6 +15,7 @@
                 <h6 class="text-dark font-weight-bold">Sampah Transaksi</h6>
             </div>
             <div class="card-body">
+               <div class="table-responsive">
                 <table class="table table-bordered table-striped nowrap" id="data">
                     <thead>
                         <tr>
@@ -71,6 +72,7 @@
                         @endforeach
                     </tbody>
                 </table>
+               </div>
             </div>
         </div>
     </div>
