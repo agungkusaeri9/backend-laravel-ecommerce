@@ -22,15 +22,16 @@
     <li class="nav-item">
         <a class="nav-link pt-0 collapsed" href="#" data-toggle="collapse" data-target="#masterData"
             aria-expanded="true" aria-controls="masterData">
-            <i class="fas fa-fw fa-file"></i>
+            <i class="fas fa-fw fa-database"></i>
             <span>Maser Data</span>
         </a>
         <div id="masterData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('admin.users.index') }}">User</a>
+                <a class="collapse-item" href="{{ route('admin.payments.index') }}">Pembayaran</a>
+                <a class="collapse-item" href="{{ route('admin.couriers.index') }}">Kurir</a>
                 <a class="collapse-item" href="{{ route('admin.inboxes.index') }}">Pesan Masuk</a>
-                <a class="collapse-item" href="{{ route('admin.store.index') }}">Profil Toko</a>
-                <a class="collapse-item" href="{{ route('admin.payments.index') }}">Metode Pembayaran</a>
+                <a class="collapse-item" href="{{ route('admin.store.index') }}">Pengaturan Web</a>
             </div>
         </div>
     </li>
@@ -39,7 +40,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed pt-0" href="#" data-toggle="collapse" data-target="#product"
             aria-expanded="true" aria-controls="product">
-            <i class="fas fa-fw fa-file"></i>
+            <i class="fab fa-fw fa-shopify"></i>
             <span>Produk</span>
         </a>
         <div id="product" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -69,7 +70,7 @@
      <li class="nav-item">
         <a class="nav-link collapsed pt-0" href="#" data-toggle="collapse" data-target="#report"
             aria-expanded="true" aria-controls="report">
-            <i class="fas fa-fw fa-file"></i>
+            <i class="fas fa-fw fa-book"></i>
             <span>Laporan</span>
         </a>
         <div id="report" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">

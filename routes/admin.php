@@ -24,6 +24,10 @@ Route::get('/store', 'StoreController@index')->name('store.index');
 Route::post('/store', 'StoreController@store')->name('store.store');
 Route::get('/store/province/{id}/city', 'StoreController@getCity')->name('store.get-city');
 
+
+// courier
+Route::resource('couriers', CourierController::class);
+
 // report
 Route::get('report/transaction','ReportController@transaction')->name('report.transaction');
 Route::get('report/transaction/print','ReportController@transactionPrint')->name('report.transaction.print');
@@ -48,3 +52,6 @@ Route::delete('trash/transaction/{id}/delete','TrashController@transactionDelete
 // inboxes
 Route::get('inboxes','InboxController@index')->name('inboxes.index');
 Route::delete('inboxes/{id}/delete','InboxController@destroy')->name('inboxes.destroy');
+
+// notificaiton
+Route::post('notification/read','NotificationController@update')->name('notifications.update');

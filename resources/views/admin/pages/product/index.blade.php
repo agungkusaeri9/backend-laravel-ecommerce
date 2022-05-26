@@ -73,6 +73,7 @@
                                 <th>Berat (g)</th>
                                 <th>Stok</th>
                                 <th>Harga</th>
+                                <th>Terjual</th>
                                 <th class="text-center" style="min-width:110px">Aksi</th>
                             </tr>
                         </thead>
@@ -85,6 +86,7 @@
                                     <td>{{ $item->weight }}</td>
                                     <td>{{ $item->qty }}</td>
                                     <td>Rp. {{ number_format($item->price) }}</td>
+                                    <td>{{ $item->sold }}</td>
                                     <td>
                                         <a href="{{ route('admin.products.show',$item->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-eye"></i></a>
                                         <a href="{{ route('admin.products.edit',$item->id) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>

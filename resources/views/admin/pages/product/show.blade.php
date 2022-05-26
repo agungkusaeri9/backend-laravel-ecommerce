@@ -80,6 +80,10 @@
                             <td>Rp. {{ number_format($product->price) }}</td>
                         </tr>
                         <tr>
+                            <td>Terjual</th>
+                            <td>{{ $product->sold }}</td>
+                        </tr>
+                        <tr>
                             <th>Dibuat</th>
                             <td>{{ $product->created_at->translatedFormat('l, d F Y') }}</td>
                         </tr>

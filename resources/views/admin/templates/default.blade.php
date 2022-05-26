@@ -23,7 +23,8 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('admin.templates.partials.topbar')
+                {{-- @include('admin.templates.partials.topbar') --}}
+                <x-Topbar></x-Topbar>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->

@@ -14,7 +14,7 @@ class Payment extends Model
         if($this->icon){
             return asset('storage/' . $this->icon);
         }else{
-            return "https://picsum.photos/150";
+            return asset('assets/sbadmin2/img/undraw_rocket.svg');
         }
     }
 }

@@ -143,6 +143,26 @@ class TransactionController extends Controller
         $transaction->transaction_status = request('status');
         $transaction->save();
 
+
+        // kembalikan qty ketika transaksi gagal
+        if(request('status') === 'FAILED')
+        {
+            foreach($transaction->details as $detail)
+            {
+                $detail->product->increment('qty',$detail->amount);
+                $detail->product->decrement('sold',$detail->amount);
+            }
+        }else if(request('status') === 'SUCCESS' || request('status') === 'DELIVERY')
+        {
+            foreach($transaction->details as $detail)
+            {
+                $detail->product->increment('sold',$detail->amount);
+                $detail->product->decrement('qty',$detail->amount);
+            }
+        }
+
+        $transaction->save();
+
         return redirect()->back()->with('success','Status berhasil diupdate');
     }
 }

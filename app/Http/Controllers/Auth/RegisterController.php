@@ -74,7 +74,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password'])
         ]);
-        $user->notify(new NewUser);
+        // $user->notify(new NewUser);
         return $user->assignRole('user');
     }
 }

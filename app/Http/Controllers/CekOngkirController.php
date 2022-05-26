@@ -20,6 +20,13 @@ class CekOngkirController extends Controller
     {
         $carts = Cart::with('product.gallery')->where('user_id', auth()->id())->get();
         $weight = 0;
+        $store = Store::first();
+        if($store)
+        {
+            $city = $store->city;
+        }else{
+            $city = 376;
+        }
 
         foreach($carts as $cart)
         {
@@ -30,10 +37,10 @@ class CekOngkirController extends Controller
         }
 
         $ongkir = RajaOngkir::ongkosKirim([
-            'origin'        => 376,
+            'origin'        => $city,
             'destination'   => request('city_destination'),
             'weight'        => $weight,
-            'courier'       => 'jne', 
+            'courier'       => request('courier'), 
         ])->get();
         return response()->json($ongkir);
     }

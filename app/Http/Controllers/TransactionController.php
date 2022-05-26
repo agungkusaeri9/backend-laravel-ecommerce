@@ -60,7 +60,7 @@ class TransactionController extends Controller
         $transaction->proof_of_payment = $name;
         $transaction->save();
 
-        $transaction->notify(new ProofUpload);
+        // $transaction->notify(new ProofUpload);
 
         return redirect()->back()->with('success', 'Proof Of Payment has been uploaded');
     }

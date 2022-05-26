@@ -32,7 +32,7 @@ class CartController extends Controller
         }else{
             $trx = 'TRX' . str_pad(1,5,"0", STR_PAD_LEFT);
         }
-        $couriers = Courier::all();
+        $couriers = Courier::active()->get();
         $payments = Payment::orderBy('name','ASC')->get();
         return view('user.pages.cart.index',[
             'title' => 'Keranjang anda',
@@ -56,7 +56,7 @@ class CartController extends Controller
         {
             return redirect()->back()->with('failed', 'Jumlah pesanan idak boleh melebihi stok yang tersedia');
         }
-        if(request('amount') && request('notes')){
+        if(request('amount') || request('notes')){
             $amount = request('amount');
             $notes = request('notes');
         }else{
