@@ -16,7 +16,7 @@ class ProfileController extends Controller
 
         return view('admin.pages.profile.index',[
             'title' => 'My Profil',
-            'user' => $user 
+            'user' => $user
         ]);
     }
 
@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
         return view('admin.pages.profile.edit',[
             'title' => 'Edit Profil',
-            'user' => $user 
+            'user' => $user
         ]);
     }
 

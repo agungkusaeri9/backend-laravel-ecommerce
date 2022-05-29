@@ -2,7 +2,7 @@ Penambahan fitur
 ---- Admin ----
 - CRUD kurir di admin sesuai status rajaongkir (sudah)
 - produk terjual (sudah)
-- Export Excel Laporan Transaksi 
+- Export Excel Laporan Transaksi
 - Grafik penjualan dashboard (on going)
 - icon sidebar (sudah)
 - Kirim Email ketika ada pesanan

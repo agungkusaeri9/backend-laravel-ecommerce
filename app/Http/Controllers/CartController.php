@@ -82,7 +82,7 @@ class CartController extends Controller
                 'notes' => $notes
             ]);
         }
-        
+
         return redirect()->route('cart.index');
     }
 

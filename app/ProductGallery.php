@@ -23,4 +23,9 @@ class ProductGallery extends Model
         }
     }
 
+    public function getPhotoAttribute($value)
+    {
+        return asset('storage/' . $value);
+    }
+
 }

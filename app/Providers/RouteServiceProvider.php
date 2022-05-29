@@ -66,7 +66,7 @@ class RouteServiceProvider extends ServiceProvider
         ->prefix('admin')
         ->name('admin.')
         ->group(base_path('routes/admin.php'));
-          
+
     }
     /**
      * Define the "web" routes for the application.
@@ -93,7 +93,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('api')
              ->middleware('api')
-             ->namespace($this->namespace)
+             ->namespace($this->namespace . '\Api')
              ->group(base_path('routes/api.php'));
     }
 }
