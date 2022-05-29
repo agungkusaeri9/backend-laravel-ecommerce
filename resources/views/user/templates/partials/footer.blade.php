@@ -47,7 +47,7 @@
                     <div class="copyright-text">
                         Copyright &copy;
                         {{ \Carbon\Carbon::now()->format('Y') }}
-                        All rights reserved | Putri Store
+                        All rights reserved | {{ $store->name }}
                     </div>
                 </div>
             </div>

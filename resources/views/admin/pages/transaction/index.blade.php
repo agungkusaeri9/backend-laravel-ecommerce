@@ -1,13 +1,6 @@
 @extends('admin.templates.default')
 @section('content')
-@if (session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Sukses!</strong> {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-@endif
+@include('admin.templates.partials.alert')
 <div class="row mb-2">
     <div class="col-12">
         <div class="card">
@@ -138,7 +131,7 @@
           </button>
         </div>
         <div class="modal-body">
-            
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

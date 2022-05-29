@@ -20,9 +20,9 @@
     </div>
 
     <!-- Footer Section Begin -->
-    @include('user.templates.partials.footer')
+    <x-User.Footer></x-User.Footer>
     <!-- Footer Section End -->
-    
+
     @include('user.templates.partials.scripts')
 </body>
 

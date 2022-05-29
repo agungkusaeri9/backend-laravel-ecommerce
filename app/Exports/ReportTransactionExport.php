@@ -8,16 +8,15 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class ReportTransactionExport implements FromView
 {
-    public function __construct($date)
+    public function __construct($data)
     {
-        $this->date = $date;
+        $this->data = $data;
     }
 
     public function view(): View
     {
-        $transactions = Transaction::whereDate('');
         return view('admin.pages.report.transaction.export', [
-            'transactions' => Transaction::all()
+            'data' => $this->data
         ]);
     }
 }

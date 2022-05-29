@@ -2,21 +2,22 @@ Penambahan fitur
 ---- Admin ----
 - CRUD kurir di admin sesuai status rajaongkir (sudah)
 - produk terjual (sudah)
-- Export Excel Laporan Transaksi 
-- Grafik penjualan dashboard (on going)
+- Export Excel Laporan Transaksi (sudah)
+- Grafik penjualan dashboard (sudah)
 - icon sidebar (sudah)
 - Kirim Email ketika ada pesanan
 - notifikasi web (sudah)
-- keranjang sampah
+- keranjang sampah (sudah)
 - ganti alert ke toast (sudah)
 - Hapus Notif telegram (sudah)
 - Kirim email user ketika Transaksi di update
 
 ---- User ----
 - produk terjual
-- login
-- register
-- Verifikasi Email
+- login (sudah)
+- register (sudah)
+- Verifikasi Email (on going)
+- Lupa Password (on going)
 - Rating produk
 - produk komentar
 - Notifikasi web
@@ -26,3 +27,4 @@ Penambahan fitur
 - hapus butki tf yang sudah di upload
 - Download Invoice
 - ganti alert ke sweetalert
+- Lupa Password

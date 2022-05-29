@@ -1,13 +1,6 @@
 @extends('admin.templates.default')
 @section('content')
-@if (session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Sukses!</strong> {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-@endif
+@include('admin.templates.partials.alert')
 <div class="row">
     <div class="col-lg-12">
         <div class="card shadow">
@@ -20,7 +13,7 @@
                         <thead>
                             <tr>
                                 <th width="20" class="text-center">
-                                    <input type="checkbox" name="all_id">
+                                    No.
                                 </th>
                                 <th>Nama</th>
                                 <th>Kategori</th>
@@ -33,9 +26,7 @@
                         <tbody>
                             @foreach ($items as $item)
                                 <tr>
-                                    <td class="text-center">
-                                        <input type="checkbox" name="product_id" value="{{ $item->id }}">
-                                    </td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->category->name }}</td>
                                     <td>{{ $item->weight }}</td>

@@ -39,7 +39,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('admin.templates.partials.footer')
+            <x-Admin.Footer></x-Admin.Footer>
             <!-- End of Footer -->
 
         </div>

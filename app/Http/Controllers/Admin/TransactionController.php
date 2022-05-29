@@ -32,7 +32,7 @@ class TransactionController extends Controller
                 $transactions = Transaction::with('details.product.category')->where('transaction_status',$status)->orderBy('id','desc')->get();
                 $date = NULL;
             }
-            
+
         }else{
             if($date)
             {
@@ -72,7 +72,7 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Transaction $transaction)
-    {   
+    {
         $price_total = 0;
         foreach($transaction->details as $details){
             $product_price = $details->product->price;

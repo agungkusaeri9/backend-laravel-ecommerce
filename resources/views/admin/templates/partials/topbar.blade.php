@@ -29,7 +29,7 @@
                     Pemberitahuan
                 </h6>
                 @forelse ($notifications as $notification)
-                <a class="dropdown-item d-flex align-items-center itemNotif" data-id="{{ $notification->id }}" href="javascript:void(0)">
+                <a class="dropdown-item py-3 d-flex align-items-center itemNotif" data-id="{{ $notification->id }}" href="javascript:void(0)">
                     <div class="mr-3">
                         <div class="icon-circle">
                             <img src="{{ $notification->user->avatar() }}"  alt="" class="img-fluid rounded-circle" style="max-height: 45px;max-width:45px">
@@ -43,9 +43,9 @@
                     </div>
                 </a>
                 @empty
-                <div class="text-center small mt-3">Tidak Ada Pemberitahuan Terbaru</div>
+                <div class="text-center small mt-3 py-3">Tidak Ada Pemberitahuan Terbaru</div>
                 @endforelse
-                <a class="dropdown-item text-center small text-gray-500" href="#">Lihat Semua Pemberitahuan</a>
+                {{-- <a class="dropdown-item text-center small text-gray-500" href="#">Lihat Semua Pemberitahuan</a> --}}
             </div>
         </li>
 

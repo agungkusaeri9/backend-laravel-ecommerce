@@ -50,7 +50,7 @@
                 <div class="row mt-2">
                     <div class="col-md-12">
                         <a href="{{ route('admin.report.transaction.print') }}?date={{ $date }}&&month={{ $month }}" class="btn btn-info" target="_blank"><i class="fas fa-print"></i> Cetak</a>
-                        <a href="{{ route('admin.report.transaction.export') }}" class="btn btn-primary"><i class="fas fa-file-excel"></i> Export</a>
+                        <a href="{{ route('admin.report.transaction.export') }}?date={{ $date }}&&month={{ $month }}" class="btn btn-primary"><i class="fas fa-file-excel"></i> Export</a>
                     </div>
                 </div>
             </div>

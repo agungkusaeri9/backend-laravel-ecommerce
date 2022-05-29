@@ -94,7 +94,46 @@ class ReportController extends Controller
 
     public function transactionExport()
     {
-        $date = Carbon::now();
-        return Excel::download(new ReportTransactionExport($date),'laporan transaksi.xlsx');
+        $date = request('date');
+        $month = request('month');
+        $currentYear = Carbon::now()->translatedFormat('Y');
+        if(request('date')){
+            $transactions = Transaction::with('details','user')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->whereDate('created_at',$date)->get();
+            $date = Carbon::parse($date);
+        }else{
+            if($month){
+                $transactions = Transaction::with('details','user')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->whereYear('created_at',$currentYear)->whereMonth('created_at',$month)->orderBy('created_at','DESC')->get();
+            }else{
+                $transactions = Transaction::with('details','user')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->orderBy('created_at','DESC')->get();
+            }
+        }
+        $count_total = $transactions->sum('transaction_total');
+        $months = [
+            ["no" => '01',"nama" => 'Januari'],
+            ["no" => '02',"nama" => 'Februari'],
+            ["no" => '03',"nama" => 'Maret'],
+            ["no" => '04',"nama" => 'April'],
+            ["no" => '05',"nama" => 'Mei'],
+            ["no" => '06',"nama" => 'Juni'],
+            ["no" => '07',"nama" => 'Juli'],
+            ["no" => '08',"nama" => 'Agustus'],
+            ["no" => '09',"nama" => 'September'],
+            ["no" => '10',"nama" => 'Oktober'],
+            ["no" => '11',"nama" => 'November'],
+            ["no" => '12',"nama" => 'Desember'],
+        ];
+        foreach($months as $item){
+            if($month === $item['no']){
+                $month = $item['nama'];
+            }
+        }
+        $data = [
+            'transactions' => $transactions,
+            'count_total' => $count_total,
+            'date' => $date,
+            'month' => $month
+        ];
+        $fileName = 'Laporan-transaksi-' . Carbon::now()->format('d-m-Y') . '.xlsx';
+        return Excel::download(new ReportTransactionExport($data),$fileName);
     }
 }

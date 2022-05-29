@@ -30,9 +30,9 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Pendapatan Bersih</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. {{ number_format($income['total']) }}
-                            </div>
+                                Total Pendapatan Bersih</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.
+                                {{ number_format($income['total']) }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fa fa-money-bill-alt fa-2x text-gray-300"></i>
@@ -68,7 +68,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Transaksi Total</div>
+                                Total Transaksi</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.
                                 {{ number_format($transaction_total) }}</div>
                         </div>
@@ -141,10 +141,10 @@
     <div class="row">
 
         <!-- Area Chart -->
-        <div class="col-xl-8 col-lg-7">
+        <div class="col-xl-9 col-lg-8">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Grafik Penjualan</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Grafik Pendapatan ({{ \Carbon\Carbon::now()->format('Y') }})</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-bar">
@@ -155,7 +155,7 @@
         </div>
 
         <!-- Pie Chart -->
-        <div class="col-xl-4 col-lg-5">
+        <div class="col-xl-3 col-lg-4">
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -198,7 +198,7 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>#UUID</th>
+                                <th style="width: 360px">#UUID</th>
                                 <th>Nama</th>
                                 <th>No. HP</th>
                                 <th>Total</th>
@@ -211,7 +211,7 @@
                                     <td>{{ $item->uuid }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->phone_number }}</td>
-                                    <td>{{ number_format($item->transaction_total) }}</td>
+                                    <td>Rp. {{ number_format($item->transaction_total) }}</td>
                                     <td class="text-center">
                                         @if ($item->transaction_status == 'SUCCESS')
                                         <span class="badge badge-success">SUCCESS</span>
@@ -276,11 +276,6 @@
             },
         });
 
-        // grafik penjualan bar chart
-        // Set new default font family and font color to mimic Bootstrap's default styling
-        Chart.defaults.global.defaultFontFamily = 'Nunito',
-            '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-        Chart.defaults.global.defaultFontColor = '#858796';
 
         function number_format(number, decimals, dec_point, thousands_sep) {
             // *     example: number_format(1234.56, 2, ',', ' ');
@@ -307,18 +302,19 @@
             return s.join(dec);
         }
 
+        var pendapatan = {{ json_encode($pendapatan) }};
         // Bar Chart Example
         var ctx = document.getElementById("myBarChart");
         var myBarChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Januari", "Februari", "Maret", "April", "Mei", "Juni"],
+                labels: ["Januari", "Februari", "Maret", "April", "Mei", "Juni","Juli","Agustus","September","Oktober","November","Desember"],
                 datasets: [{
-                    label: "Revenue",
+                    label: "Pendapatan",
                     backgroundColor: "#4e73df",
                     hoverBackgroundColor: "#2e59d9",
                     borderColor: "#4e73df",
-                    data: [4215, 5312, 6251, 7841, 9821, 14984],
+                    data: pendapatan,
                 }],
             },
             options: {
@@ -340,20 +336,15 @@
                             display: false,
                             drawBorder: false
                         },
-                        ticks: {
-                            maxTicksLimit: 6
-                        },
-                        maxBarThickness: 25,
                     }],
                     yAxes: [{
                         ticks: {
                             min: 0,
-                            max: 15000,
-                            maxTicksLimit: 5,
+                            maxTicksLimit: 10,
                             padding: 10,
                             // Include a dollar sign in the ticks
                             callback: function(value, index, values) {
-                                return '$' + number_format(value);
+                                return 'Rp. ' + number_format(value);
                             }
                         },
                         gridLines: {
@@ -383,7 +374,7 @@
                     callbacks: {
                         label: function(tooltipItem, chart) {
                             var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                            return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                            return datasetLabel + ': Rp. ' + number_format(tooltipItem.yLabel);
                         }
                     }
                 },

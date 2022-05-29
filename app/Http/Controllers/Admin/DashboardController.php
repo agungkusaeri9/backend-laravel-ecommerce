@@ -17,7 +17,6 @@ class DashboardController extends Controller
         $products = Product::count();
         $transactions = Transaction::count();
         $shipping_costs = Transaction::where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('shipping_cost');
-        $income = 
         $transaction_total = Transaction::where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('transaction_total');
         $pie = [
             'success' => Transaction::where('transaction_status', 'SUCCESS')->count(),
@@ -29,10 +28,28 @@ class DashboardController extends Controller
         $today = Carbon::today();
         $yesterday = Carbon::yesterday();
         $income = [
-            'today' => DB::table('transactions')->whereDate('created_at',$today)->where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('transaction_total'),
+            'today' => Transaction::whereDate('created_at',$today)->where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('transaction_total'),
             'total' => Transaction::where('transaction_status', 'SUCCESS')->orWhere('transaction_status', 'DELIVERY')->sum('transaction_total') - $shipping_costs
         ];
-        // dd($today);
+
+        // $trx[
+        //     Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','01')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')
+        // ]
+        $pendapatan = [
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','01')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','02')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','03')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','04')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','05')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','06')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','07')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','08')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','09')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','10')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','11')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total')),
+            intval(Transaction::whereyear('created_at',Carbon::now()->format('Y'))->whereMonth('created_at','12')->whereIn('transaction_status',['SUCCESS','DELIVERY'])->sum('transaction_total'))
+        ];
+
         return view('admin.pages.dashboard',[
             'title' => 'Dashboard',
             'users' => $users,
@@ -42,7 +59,8 @@ class DashboardController extends Controller
             'pie' => $pie,
             'transaction_latest' => $transaction_latest,
             'shipping_costs' => $shipping_costs,
-            'transaction_total' => $transaction_total
+            'transaction_total' => $transaction_total,
+            'pendapatan' => $pendapatan
         ]);
     }
 }

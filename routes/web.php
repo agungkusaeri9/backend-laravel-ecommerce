@@ -40,21 +40,21 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('order')->group(function () {
         Route::get('/', 'TransactionController@index')->name('transactions.index');
         Route::get('/{id}', 'TransactionController@show')->name('transactions.show');
-        Route::post('/upload', 'TransactionController@upload_proof')->name('transactions.upload-proof'); 
+        Route::post('/upload', 'TransactionController@upload_proof')->name('transactions.upload-proof');
     });
-    
+
     Route::get('/cart', 'CartController@index')->name('cart.index');
     Route::post('/cart', 'CartController@store')->name('cart.store');
     Route::delete('/cart/{id}', 'CartController@destroy')->name('cart.destroy');
     Route::get('province/{id}/city', 'CekOngkirController@getCity')->name('getCity');
     Route::get('get-payments/{id}', 'HomeController@getPayment')->name('getPayment');
-    Route::post('/cekongkir', 'CekOngkirController@cekOngkir')->name('cekOngkir'); 
-    Route::post('/checkout', 'CheckoutController')->name('checkout'); 
+    Route::post('/cekongkir', 'CekOngkirController@cekOngkir')->name('cekOngkir');
+    Route::post('/checkout', 'CheckoutController')->name('checkout');
     Route::get('/success', function(){
         if(session('transaction_uuid')){
             return view('user.pages.success');
         }else{
             return redirect()->route('home');
         }
-    })->name('transactions.success'); 
+    })->name('transactions.success');
 });

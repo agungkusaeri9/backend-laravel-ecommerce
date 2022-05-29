@@ -25,7 +25,7 @@ class StoreController extends Controller
             'store' => $store,
             'cities' => $cities
         ]);
-        
+
     }
 
     /**
@@ -41,7 +41,7 @@ class StoreController extends Controller
             'desc' => ['required'],
             'city' => ['required'],
             'address' => ['required'],
-            'logo' => ['image','mimes:jpg,jpeg,png'],
+            'logo' => ['image','mimes:jpg,jpeg,png,svg'],
         ]);
         $store = Store::first();
         $data = $request->all();

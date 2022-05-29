@@ -3,23 +3,41 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'DashboardController@index')->name('dashboard');
+
+// profile
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::get('/edit-profile', 'ProfileController@edit')->name('profile.edit');
 Route::patch('/edit-profile', 'ProfileController@update')->name('profile.update');
+
+// users
 Route::resource('users', 'UserController')->except('show');
+
+// payments
 Route::resource('payments', 'PaymentController')->except('show');
+
+// product-category
 Route::resource('product-categories', 'ProductCategoryController')->except('show');;
+
+// products
 Route::resource('products', 'ProductController')->except('store');
 Route::post('/products', 'ProductController@index')->name('products.filter');
 Route::post('/products/create', 'ProductController@store')->name('products.store');
+
+// product gallery
 Route::resource('product-galleries', 'ProductGalleryController')->except('store');
 Route::post('/product-galleries/create', 'ProductGalleryController@store')->name('product-galleries.store');
 Route::post('product-galleries/', 'ProductGalleryController@index')->name('product-galleries.search');
 Route::post('product-galleries/{product_id}/{id}/set-active', 'ProductGalleryController@setActive')->name('product-galleries.setActive');
+
+
+// transactions
 Route::resource('transactions', 'TransactionController')->except('store','create');
 Route::post('transactions','TransactionController@index')->name('transactions.filter');
 Route::get('/transactions/{id}/set', 'TransactionController@set')->name('transactions.set');
 Route::get('/transactions/{id}/download', 'TransactionController@download')->name('transactions.download');
+
+
+// store
 Route::get('/store', 'StoreController@index')->name('store.index');
 Route::post('/store', 'StoreController@store')->name('store.store');
 Route::get('/store/province/{id}/city', 'StoreController@getCity')->name('store.get-city');

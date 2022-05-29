@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Notifications\Admin\NewUser;
 use App\Providers\RouteServiceProvider;
+use App\Store;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -26,6 +27,14 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+
+    public function showRegistrationForm()
+    {
+        $store = Store::first();
+        return view('auth.register',[
+            'store' => $store
+        ]);
+    }
 
     // /**
     //  * Where to redirect users after registration.

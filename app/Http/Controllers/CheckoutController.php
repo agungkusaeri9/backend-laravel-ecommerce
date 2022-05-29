@@ -10,6 +10,7 @@ use App\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notification;
+Use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
@@ -32,13 +33,13 @@ class CheckoutController extends Controller
 
         $carts = Cart::where('user_id', auth()->id())->get();
         $transaction_latest = Transaction::orderBy('id','DESC')->limit(1)->first();
-        if($transaction_latest){
-            $trx = Carbon::now()->translatedFormat('Y') . Carbon::now()->translatedFormat('m') . Carbon::now()->translatedFormat('d') . str_pad($transaction_latest->id + 1,3,"0", STR_PAD_LEFT);
-        }else{
-            $trx = Carbon::now()->translatedFormat('Y') . Carbon::now()->translatedFormat('m') . Carbon::now()->translatedFormat('d') . str_pad(1,3,"0", STR_PAD_LEFT);
-        }
+        // if($transaction_latest){
+        //     $trx = Carbon::now()->translatedFormat('Y') . Carbon::now()->translatedFormat('m') . Carbon::now()->translatedFormat('d') . str_pad($transaction_latest->id + 1,3,"0", STR_PAD_LEFT);
+        // }else{
+        //     $trx = Carbon::now()->translatedFormat('Y') . Carbon::now()->translatedFormat('m') . Carbon::now()->translatedFormat('d') . str_pad(1,3,"0", STR_PAD_LEFT);
+        // }
         $transaction = auth()->user()->transactions()->create([
-            'uuid' => $trx,
+            'uuid' => Str::uuid(),
             'name' => request('name'),
             'email' => request('email'),
             'phone_number' => request('phone_number'),
@@ -60,7 +61,7 @@ class CheckoutController extends Controller
         }
 
         // $transaction->notify(new NewCheckout);
-        
+
         AppNotification::create([
             'user_id' => auth()->id(),
             'name' => 'checkout'

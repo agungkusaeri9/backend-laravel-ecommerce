@@ -19,6 +19,11 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/sbadmin2/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <style>
+        .logo a:hover{
+            text-decoration: none;
+        }
+    </style>
 
 </head>
 
