@@ -13,11 +13,14 @@ class ProductCategory extends Model
     public function icon()
     {
         if($this->icon !== NULL){
-            if($this->slug === Str::before($this->icon, '.png')){
-                return  asset('assets/img/' . $this->icon);
-            }
+            return $this->icon;
         }else{
             return "https://picsum.photos/150";
         }
+    }
+
+    public function getIconAttribute($value)
+    {
+        return asset('storage/' . $value);
     }
 }

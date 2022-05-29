@@ -4,6 +4,8 @@ Penambahan fitur
 - produk terjual (sudah)
 - Export Excel Laporan Transaksi (sudah)
 - Grafik penjualan dashboard (sudah)
+- Export Excel Laporan Transaksi (sudah)
+- Grafik penjualan dashboard (on going)
 - icon sidebar (sudah)
 - Kirim Email ketika ada pesanan
 - notifikasi web (sudah)
