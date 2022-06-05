@@ -1,8 +1,16 @@
 <?php
 
+use App\Mail\Admin\NewTransaction;
+use App\Transaction;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'DashboardController@index')->name('dashboard');
+
+Route::get('/kirim',function(){
+    $data = Transaction::first();
+    Mail::to("admin@gmail.com")->send(new NewTransaction($data));
+});
 
 // profile
 Route::get('/profile', 'ProfileController@index')->name('profile');

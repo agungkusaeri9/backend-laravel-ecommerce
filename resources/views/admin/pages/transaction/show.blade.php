@@ -41,7 +41,13 @@
         </tr>
         <tr>
             <th>Pembayaran</th>
-            <td>{{ $transaction->payment }}</td>
+            <td>
+                @if (!$transaction->payment)
+                    -
+                @else
+                {{ $transaction->payment->name . ' - ' . $transaction->payment->number . ' ('.$transaction->payment->desc .')' }}
+                @endif
+            </td>
         </tr>
         <tr>
             <th>Kurir</th>
@@ -68,7 +74,7 @@
             <td>
                 @if ($transaction->proof_of_payment !== NULL)
                 <a href="{{ route('admin.transactions.download', $transaction->id) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Download</a>
-                @else 
+                @else
                 Not Uploaded
                 @endif
             </td>

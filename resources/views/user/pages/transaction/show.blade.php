@@ -58,15 +58,15 @@
                                     <table class="table table-borderless">
                                         <tr>
                                             <th>Nama</th>
-                                            <td>{{ $payment->name }}</td>
+                                            <td>{{ $transaction->payment->name ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th>Nomor</th>
-                                            <td>{{ $payment->number }}</td>
+                                            <td>{{ $transaction->payment->number ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th>Penerima</th>
-                                            <td>{{ $payment->desc }}</td>
+                                            <td>{{ $transaction->payment->desc ?? ''}}</td>
                                         </tr>
                                     </table>
                                 </td>
@@ -92,7 +92,7 @@
                                 <td>
                                     @if ($transaction->proof_of_payment !== NULL)
                                     <span class="badge badge-success">Berhasil Diupload</span>
-                                    @else 
+                                    @else
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUpload" id="btnUpload">
                                        <i class="fas fa-upload"></i> Upload
                                     </button>

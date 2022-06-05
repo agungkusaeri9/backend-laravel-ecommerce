@@ -86,4 +86,9 @@ class RegisterController extends Controller
         // $user->notify(new NewUser);
         return $user->assignRole('user');
     }
+
+    public function registered()
+    {
+        return redirect()->route('home');
+    }
 }

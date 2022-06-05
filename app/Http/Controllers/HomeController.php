@@ -35,9 +35,9 @@ class HomeController extends Controller
         ]);
     }
 
-    public function getPayment($name)
+    public function getPayment($id)
     {
-        $payment = Payment::where('name', $name)->first();
+        $payment = Payment::where('id', $id)->first();
 
         return response()->json($payment);
     }

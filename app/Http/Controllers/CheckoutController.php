@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\Mail\Admin\NewTransaction;
 use App\Notification as AppNotification;
 use App\Notifications\Admin\NewCheckout;
 use App\Product;
 use App\Transaction;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Mail;
 Use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
@@ -32,12 +35,6 @@ class CheckoutController extends Controller
         ]);
 
         $carts = Cart::where('user_id', auth()->id())->get();
-        $transaction_latest = Transaction::orderBy('id','DESC')->limit(1)->first();
-        // if($transaction_latest){
-        //     $trx = Carbon::now()->translatedFormat('Y') . Carbon::now()->translatedFormat('m') . Carbon::now()->translatedFormat('d') . str_pad($transaction_latest->id + 1,3,"0", STR_PAD_LEFT);
-        // }else{
-        //     $trx = Carbon::now()->translatedFormat('Y') . Carbon::now()->translatedFormat('m') . Carbon::now()->translatedFormat('d') . str_pad(1,3,"0", STR_PAD_LEFT);
-        // }
         $transaction = auth()->user()->transactions()->create([
             'uuid' => Str::uuid(),
             'name' => request('name'),
@@ -48,7 +45,7 @@ class CheckoutController extends Controller
             'transaction_status' => 'PENDING',
             'courier' => request('courier'),
             'shipping_cost' => request('shipping_cost'),
-            'payment' => request('payment')
+            'payment_id' => request('payment')
         ]);
 
         foreach($carts as $cart){
@@ -61,13 +58,17 @@ class CheckoutController extends Controller
         }
 
         // $transaction->notify(new NewCheckout);
+        auth()->user()->carts()->delete();
 
         AppNotification::create([
             'user_id' => auth()->id(),
             'name' => 'checkout'
         ]);
 
-        auth()->user()->carts()->delete();
+        // notifikasi email ke admin
+        $admin = User::first();
+        Mail::to($admin->email)->send(new NewTransaction($transaction));
+
 
         return redirect()->route('transactions.success')->with('transaction_uuid', $transaction->uuid);
     }

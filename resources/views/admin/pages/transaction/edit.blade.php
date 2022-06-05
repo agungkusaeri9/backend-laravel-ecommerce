@@ -74,6 +74,20 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="transaction_status">Status</label>
+                        <select name="transaction_status" id="transaction_status" class="form-control">
+                            <option @if($transaction->transaction_status === 'SUCCESS') selected @endif value="SUCCESS">SUCCESS</option>
+                            <option @if($transaction->transaction_status === 'PENDING') selected @endif value="PENDING">PENDING</option>
+                            <option @if($transaction->transaction_status === 'DELIVERY') selected @endif value="DELIVERY">DELIVERY</option>
+                            <option @if($transaction->transaction_status === 'FAILED') selected @endif value="FAILED">FAILED</option>
+                        </select>
+                        @error('transaction_status')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="receipt_number">No Resi</label>
                         <input type="text" name="receipt_number" class="form-control @error('receipt_number') is-invalid @enderror" value="{{ $transaction->receipt_number ?? old('receipt_number') }}">
                         @error('receipt_number')

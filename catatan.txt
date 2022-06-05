@@ -5,14 +5,14 @@ Penambahan fitur
 - Export Excel Laporan Transaksi (sudah)
 - Grafik penjualan dashboard (sudah)
 - Export Excel Laporan Transaksi (sudah)
-- Grafik penjualan dashboard (on going)
+- Grafik penjualan dashboard (sudah)
 - icon sidebar (sudah)
-- Kirim Email ketika ada pesanan
+- Kirim Email ketika ada pesanan (sudah)
 - notifikasi web (sudah)
 - keranjang sampah (sudah)
 - ganti alert ke toast (sudah)
 - Hapus Notif telegram (sudah)
-- Kirim email user ketika Transaksi di update
+- Kirim email user ketika Transaksi di update (sudah)
 
 ---- User ----
 - produk terjual

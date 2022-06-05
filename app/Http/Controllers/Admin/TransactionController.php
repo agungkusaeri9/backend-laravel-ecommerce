@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Courier;
 use App\Http\Controllers\Controller;
+use App\Mail\Admin\UpdateTransaction;
 use App\Payment;
 use App\Shipment;
 use App\Transaction;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -114,8 +117,12 @@ class TransactionController extends Controller
     public function update(Request $request, Transaction $transaction)
     {
         $transaction->update([
-            'receipt_number' => request('receipt_number')
+            'receipt_number' => request('receipt_number'),
+            'transaction_status' => request('transaction_status')
         ]);
+
+        // notifikasi email ke user
+        Mail::to($transaction->user->email)->send(new UpdateTransaction($transaction));
 
         return redirect()->route('admin.transactions.index')->with('success','Transaksi berhasil diubah!');
     }

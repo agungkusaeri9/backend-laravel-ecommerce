@@ -123,7 +123,7 @@
                             <select name="payment" id="payment" class="form-control">
                                 <option value="">-- Pilih Pembayaran --</option>
                                 @foreach ($payments as $payment)
-                                    <option value="{{ $payment->name }}">{{ $payment->name }}</option>
+                                    <option value="{{ $payment->id }}">{{ $payment->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -220,9 +220,9 @@
             })
 
             $('#payment').on('change', function() {
-                let paymentName = $(this).val();
+                let paymentId = $(this).val();
                 $.ajax({
-                    url: '/get-payments/' + paymentName,
+                    url: '/get-payments/' + paymentId,
                     type: "GET",
                     dateType: 'JSON',
                     success: function(data) {

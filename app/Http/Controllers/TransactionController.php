@@ -33,14 +33,12 @@ class TransactionController extends Controller
             $product_amount = $details->amount;
             $price_total = $price_total + ($product_price * $product_amount);
         }
-        $payment = Payment::where('name', $transaction->payment)->first();
         return view('user.pages.transaction.show',[
             'title' => 'Detail transaksi ' . Str::lower($transaction->uuid),
             'store' => Store::first(),
             'cart_count' => Cart::where('user_id', auth()->id())->count(),
             'transaction' => $transaction,
-            'price_total' => $price_total,
-            'payment' => $payment
+            'price_total' => $price_total
         ]);
     }
 
