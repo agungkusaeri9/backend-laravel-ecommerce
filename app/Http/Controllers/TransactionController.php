@@ -8,6 +8,7 @@ use App\Payment;
 use App\Store;
 use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class TransactionController extends Controller
@@ -42,6 +43,16 @@ class TransactionController extends Controller
         ]);
     }
 
+    public function proofDelete()
+    {
+        $transaction_id = request('transaction_id');
+        $transaction = Transaction::findOrFail($transaction_id);
+        Storage::disk('public')->delete($transaction->proof_of_payment);
+        $transaction->proof_of_payment = NULL;
+        $transaction->save();
+        return redirect()->back()->with('success', 'Bukti Pembayaran berhasil dihapus.');
+    }
+
     public function upload_proof()
     {
         request()->validate([
@@ -60,6 +71,6 @@ class TransactionController extends Controller
 
         // $transaction->notify(new ProofUpload);
 
-        return redirect()->back()->with('success', 'Proof Of Payment has been uploaded');
+        return redirect()->back()->with('success', 'Bukti Pembayaran berhasil diupload.');
     }
 }

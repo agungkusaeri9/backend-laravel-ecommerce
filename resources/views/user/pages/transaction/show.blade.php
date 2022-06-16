@@ -92,6 +92,12 @@
                                 <td>
                                     @if ($transaction->proof_of_payment !== NULL)
                                     <span class="badge badge-success">Berhasil Diupload</span>
+                                    <span class="badge badge-warning badgeLihat" data-link="{{ asset('storage/'.$transaction->proof_of_payment) }}">lihat</span>
+                                    <span class="badge badge-danger badgeDelete">hapus</span>
+                                    <form action="{{ route('transactions.delete-proof') }}" method="post" class="d-inline" id="formDeleteBukti">
+                                        <input type="number" name="transaction_id" value="{{ $transaction->id }}" hidden>
+                                        @csrf
+                                    </form>
                                     @else
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalUpload" id="btnUpload">
                                        <i class="fas fa-upload"></i> Upload
@@ -152,4 +158,48 @@
       </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalLihatBukti" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <img src="" class="img-fluid w-100 imgModalBukti" alt="">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
 @endsection
+
+@push('afterStyles')
+<style>
+    .badgeLihat:hover{
+        cursor: pointer;
+    }
+    .badgeDelete:hover{
+        cursor: pointer;
+    }
+</style>
+@endpush
+@push('afterScripts')
+<script>
+    $(function(){
+        $('.badgeLihat').on('click', function(){
+            var link = $(this).data('link');
+            $('#modalLihatBukti .imgModalBukti').attr('src',link);
+            $('#modalLihatBukti').modal('show');
+        })
+        $('.badgeDelete').on('click', function(){
+            $('#formDeleteBukti').submit();
+        })
+    })
+</script>
+@endpush

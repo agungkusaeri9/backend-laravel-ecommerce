@@ -18,15 +18,14 @@ Penambahan fitur
 - produk terjual
 - login (sudah)
 - register (sudah)
-- Verifikasi Email (on going)
-- Lupa Password (on going)
+- Verifikasi Email (sudah)
+- Lupa Password (sudah)
 - Rating produk
 - produk komentar
 - Notifikasi web
-- Perbaiki bagian footer
-- perbaiki cek ongkir
+- Perbaiki bagian footer (sudah)
+- perbaiki cek ongkir (sudah)
 - lihat/download bukti tf yang sudah di upload
 - hapus butki tf yang sudah di upload
 - Download Invoice
 - ganti alert ke sweetalert
-- Lupa Password

@@ -1,9 +1,6 @@
 <?php
 
-use App\Notifications\Admin\NewCheckout;
-use App\Notifications\RegisterNewUser;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
+Auth::routes(['verify' => true]);
+
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/contact', 'ContactController')->name('contact');
@@ -28,7 +26,7 @@ Route::prefix('products')->group(function () {
     Route::get('{slug}', 'ProductController@show')->name('product.show');
     Route::get('category/{slug}', 'ProductController@category')->name('product.category');
 });
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
 
     // account
     Route::prefix('account')->group(function () {
@@ -41,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', 'TransactionController@index')->name('transactions.index');
         Route::get('/{id}', 'TransactionController@show')->name('transactions.show');
         Route::post('/upload', 'TransactionController@upload_proof')->name('transactions.upload-proof');
+        Route::post('/proof/delete', 'TransactionController@proofDelete')->name('transactions.delete-proof');
     });
 
     Route::get('/cart', 'CartController@index')->name('cart.index');
