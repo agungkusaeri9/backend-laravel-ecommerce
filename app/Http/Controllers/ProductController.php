@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cart;
 use App\Product;
 use App\ProductCategory;
+use App\ProductRating;
 use App\Store;
 use Illuminate\Http\Request;
 
@@ -69,9 +70,37 @@ class ProductController extends Controller
         ]);
     }
 
+    public function getRating()
+    {
+        $product_id = request('product_id');
+        $productRating = ProductRating::with('user')->where('product_id',$product_id)->latest()->get();
+        $productRating->map(function($data){
+            $data['created'] = $data->created_at->translatedFormat('d/m/Y');
+            $data['user_avatar'] = $data->user->avatar();
+        });
+        if($productRating)
+        {
+            $data = [
+                'code' => 200,
+                'status' => true,
+                'message' => 'Produk ada',
+                'data' => $productRating
+            ];
+        }else{
+            $data = [
+                'code' => 404,
+                'status' => false,
+                'message' => 'Produk tidak ada',
+                'data' => NULL
+            ];
+        }
+
+        return response()->json($data);
+    }
+
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)->first();
+        $product = Product::with('ratings')->where('slug', $slug)->first();
         $related = Product::where('product_category', $product->product_category)->limit(12)->get();
         return view('user.pages.product.show',[
             'title' => $product->name,

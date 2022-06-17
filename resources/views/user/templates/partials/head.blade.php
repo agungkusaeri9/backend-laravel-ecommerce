@@ -26,4 +26,5 @@
 <link rel="stylesheet" href="{{ asset('assets/user/css/slicknav.min.css') }}" type="text/css" />
 <link rel="stylesheet" href="{{ asset('assets/user/css/style.css') }}" type="text/css" />
 <link rel="stylesheet" href="{{ asset('assets/user/css/custom.css') }}" type="text/css" />
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 @stack('afterStyles')

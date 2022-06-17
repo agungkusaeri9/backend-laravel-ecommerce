@@ -37,6 +37,36 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div class="product-rating mt-4">
+                            <div class="d-flex justify-content-between">
+                                <h5>Produk Review</h5>
+                                <span>4,5/5 (100)</span>
+                            </div>
+                            {{-- <div class="row"> --}}
+                                {{-- <div class="col-md-1 col-1">
+                                    <img src="{{ asset('assets/user/img/mickey1.jpg') }}" alt="" class="img-fluid rounded-circle" style="height:40px;width:40px">
+                                </div>
+                                <div class="col-md-11 col-1">
+                                    <div style="font-weight: 600">
+                                        Agung Kusaeri
+                                    </div>
+                                </div> --}}
+                            {{-- </div> --}}
+                            <div class="pr-rating">
+
+                            </div>
+                            <div class="d-flex justify-content-end mt-2">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination p-0">
+                                      <li class="page-item"><a class="page-link text-dark" href="#" style="font-size: 12px;padding:5px 10px"><</a></li>
+                                      <li class="page-item active"><a class="page-link text-dark" href="#" style="font-size: 12px;padding:5px 10px">1</a></li>
+                                      <li class="page-item"><a class="page-link text-dark" href="#" style="font-size: 12px;padding:5px 10px">2</a></li>
+                                      <li class="page-item"><a class="page-link text-dark" href="#" style="font-size: 12px;padding:5px 10px">3</a></li>
+                                      <li class="page-item"><a class="page-link text-dark" href="#" style="font-size: 12px;padding:5px 10px">></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="product-details">
@@ -121,3 +151,67 @@
     </div>
 </div>
 @endsection
+@push('afterStyles')
+<style>
+    .product-rating .des{
+        font-size: 10px;
+    }
+</style>
+@endpush
+@push('afterScripts')
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    </script>
+    <script>
+        $(function(){
+            var product_id = '{{ $product->id }}';
+            $.ajax({
+                url:'{{ route('products.rating-get') }}',
+                type:'POST',
+                data: {
+                    product_id
+                },
+                dataType:'JSON',
+                success: function(response){
+                    console.log(response);
+                    var xhtml = ``;
+                    response.data.forEach(data => {
+                        xhtml += '<div class="d-flex mt-4">';
+                        xhtml += '<div class="img-profile">';
+                        xhtml += '<img src="'+data.user_avatar+'" alt="" class="img-fluid rounded-circle" style="height:40px;width:40px">';
+                        xhtml += '</div>';
+                        xhtml += '<div class="des ml-3">';
+                        xhtml += '<h6 style="font-size: 12px">'+data.user.name+'</h6>';
+                        xhtml += '<div class="start-icon">';
+                        for(i = 0; i < data.value;i++)
+                        {
+                            xhtml += '<img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:11px">';
+                        };
+                        var sisa = 5-data.value;
+                        for(i = 0; i < sisa;i++)
+                        {
+                            xhtml += '<img src="{{ asset('assets/img/star-black.svg') }}" alt="" class="img-fluid" style="height:11px">';
+                        };
+                        xhtml += '</div>';
+                        xhtml += '<div class="date-rating">';
+                        xhtml += '<span>'+data.created+'</span>';
+                        xhtml += '</div>';
+                        xhtml += '<div class="comment">';
+                        xhtml += '<p style="font-size: 13px">';
+                        xhtml += data.comment;
+                        xhtml += '</p>';
+                        xhtml += '</div>';
+                        xhtml += '</div>';
+                        xhtml += '</div>';
+                        xhtml += '<hr class="p-0 m-0">';
+                    });
+                    $('.pr-rating').html(xhtml);
+                }
+            })
+        })
+    </script>
+@endpush

@@ -25,7 +25,7 @@ Penambahan fitur
 - Notifikasi web
 - Perbaiki bagian footer (sudah)
 - perbaiki cek ongkir (sudah)
-- lihat/download bukti tf yang sudah di upload
-- hapus butki tf yang sudah di upload
+- lihat/download bukti tf yang sudah di upload (sudah)
+- hapus butki tf yang sudah di upload (sudah)
 - Download Invoice
 - ganti alert ke sweetalert

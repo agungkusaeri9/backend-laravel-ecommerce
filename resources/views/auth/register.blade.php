@@ -68,7 +68,7 @@
                     </form>
                     <hr>
                     <div class="text-center">
-                        <a class="small" href="#">Lupa Password?</a>
+                        <a class="small" href="{{ route('password.request') }}">Lupa Password?</a>
                     </div>
                     <div class="text-center">
                         <a class="small" href="{{ route('login') }}">Sudah Punya Akun? Login!</a>
