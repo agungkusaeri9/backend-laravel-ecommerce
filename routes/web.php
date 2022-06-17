@@ -24,6 +24,7 @@ Route::prefix('products')->group(function () {
     Route::get('/', 'ProductController@index')->name('product.index');
     Route::get('/search', 'ProductController@search')->name('products.search');
     Route::post('/ratings','ProductController@getRating')->name('products.rating-get');
+    Route::post('/ratings/store','ProductController@ratingStore')->name('products.rating-store');
     Route::get('{slug}', 'ProductController@show')->name('product.show');
     Route::get('category/{slug}', 'ProductController@category')->name('product.category');
 });

@@ -15,17 +15,17 @@ Penambahan fitur
 - Kirim email user ketika Transaksi di update (sudah)
 
 ---- User ----
-- produk terjual
+- produk terjual (sudah)
 - login (sudah)
 - register (sudah)
 - Verifikasi Email (sudah)
 - Lupa Password (sudah)
-- Rating produk
-- produk komentar
-- Notifikasi web
+- Rating produk (sudah)
+- produk komentar (sudah)
+- Notifikasi web email (sudah)
 - Perbaiki bagian footer (sudah)
 - perbaiki cek ongkir (sudah)
 - lihat/download bukti tf yang sudah di upload (sudah)
 - hapus butki tf yang sudah di upload (sudah)
 - Download Invoice
-- ganti alert ke sweetalert
+- ganti alert ke toast (sudah)

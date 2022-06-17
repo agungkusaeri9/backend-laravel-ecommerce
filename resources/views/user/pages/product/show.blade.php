@@ -40,22 +40,12 @@
                         <div class="product-rating mt-4">
                             <div class="d-flex justify-content-between">
                                 <h5>Produk Review</h5>
-                                <span>4,5/5 (100)</span>
+                                <span class="total_riview"></span>
                             </div>
-                            {{-- <div class="row"> --}}
-                                {{-- <div class="col-md-1 col-1">
-                                    <img src="{{ asset('assets/user/img/mickey1.jpg') }}" alt="" class="img-fluid rounded-circle" style="height:40px;width:40px">
-                                </div>
-                                <div class="col-md-11 col-1">
-                                    <div style="font-weight: 600">
-                                        Agung Kusaeri
-                                    </div>
-                                </div> --}}
-                            {{-- </div> --}}
                             <div class="pr-rating">
 
                             </div>
-                            <div class="d-flex justify-content-end mt-2">
+                            {{-- <div class="d-flex justify-content-end mt-2">
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination p-0">
                                       <li class="page-item"><a class="page-link text-dark" href="#" style="font-size: 12px;padding:5px 10px"><</a></li>
@@ -65,7 +55,7 @@
                                       <li class="page-item"><a class="page-link text-dark" href="#" style="font-size: 12px;padding:5px 10px">></a></li>
                                     </ul>
                                 </nav>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -78,6 +68,7 @@
                                 <p>
                                     {!! $product->desc !!}
                                 </p>
+                                <p class="font-weight-bold mb-0 pb-0">Terjual : {{ $product->sold }}</p>
                                 <p class="font-weight-bold">Stok : {{ $product->qty }}</p>
                                 <h4>Rp. {{ number_format($product->price) }}</h4>
                             </div>
@@ -177,8 +168,15 @@
                 },
                 dataType:'JSON',
                 success: function(response){
-                    console.log(response);
                     var xhtml = ``;
+                    var tr = ``;
+                    if(response.data.length > 0)
+                    {
+                        tr += response.data[0].total+''+'/5'+' ('+response.data[0].total_user+')';
+                    }else{
+                        tr += '0/5 (0)';
+                    }
+                    $('.total_riview').html(tr);
                     response.data.forEach(data => {
                         xhtml += '<div class="d-flex mt-4">';
                         xhtml += '<div class="img-profile">';

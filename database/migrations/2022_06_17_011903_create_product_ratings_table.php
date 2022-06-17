@@ -16,7 +16,7 @@ class CreateProductRatingsTable extends Migration
         Schema::create('product_ratings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
-            $table->integer('user_id');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('comment')->nullable();
             $table->integer('value');
             $table->timestamps();

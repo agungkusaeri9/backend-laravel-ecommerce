@@ -36,6 +36,7 @@
                                             <th>Jumlah</th>
                                             <th>Harga</th>
                                             <th>Harga Total</th>
+                                            <th class="text-center">Aksi</th>
                                         </tr>
                                         @foreach ($transaction->details as $detail)
                                         <tr>
@@ -43,12 +44,24 @@
                                             <td>{{ $detail->amount }}</td>
                                             <td>{{ number_format($detail->product->price) }}</td>
                                             <td>{{ number_format($detail->product->price * $detail->amount) }}</td>
+                                            <td>
+                                                @if ($transaction->transaction_status === 'SUCCESS')
+                                                    @if ($detail->isRating())
+                                                    <span class="badge badge-success">Anda Memberikan Rating</span>
+                                                    @else
+                                                    <a href="javascript:void(0)" class="btn btnAddRating btn-sm btn-warning" data-productid="{{ $detail->product_id }}">Beri Rating</a>
+                                                    @endif
+                                                @else
+                                                <span>-</span>
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                         <tr>
-                                            <td class="text-center font-weight-bold" colspan="2">Total</td>
-                                            <td colspan="2" class="text-center font-weight-bold">Rp. {{ number_format($price_total) }}</td>
+                                            <td class="text-center font-weight-bold" colspan="3">Total</td>
+                                            <td colspan="3" class="text-center font-weight-bold">Rp. {{ number_format($price_total) }}</td>
                                         </tr>
+                                        
                                     </table>
                                 </td>
                             </tr>
@@ -177,6 +190,76 @@
       </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalAddRating" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Beri Rating Produk</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{{ route('products.rating-store') }}" method="post">
+            @csrf
+            <input type="number" id="product_id_rating" name="product_id" hidden>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="comment">Komentar Anda</label>
+                    <textarea name="comment" id="comment" cols="30" rows="3" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="value">Rating</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="value" id="value1" value="1">
+                        <label class="form-check-label" for="value1">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="value" id="value2" value="2">
+                        <label class="form-check-label" for="value2">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="value" id="value3" value="3">
+                        <label class="form-check-label" for="value3">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="value" id="value4" value="4">
+                        <label class="form-check-label" for="value4">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="value" id="value5" value="5">
+                        <label class="form-check-label" for="value5">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                            <img src="{{ asset('assets/img/star-yellow.svg') }}" alt="" class="img-fluid" style="height:18px">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
 @endsection
 
 @push('afterStyles')
@@ -199,6 +282,11 @@
         })
         $('.badgeDelete').on('click', function(){
             $('#formDeleteBukti').submit();
+        })
+        $('body').on('click','.btnAddRating', function(){
+            var product_id = $(this).data('productid');
+            $('#product_id_rating').val(product_id);
+            $('#modalAddRating').modal('show');
         })
     })
 </script>

@@ -77,6 +77,9 @@ class ProductController extends Controller
         $productRating->map(function($data){
             $data['created'] = $data->created_at->translatedFormat('d/m/Y');
             $data['user_avatar'] = $data->user->avatar();
+            $data['total_value'] = $data->sum('value');
+            $data['total_user'] = $data->count();
+            $data['total'] = number_format(($data['total_value']/$data['total_user']),1,',','');
         });
         if($productRating)
         {
@@ -96,6 +99,28 @@ class ProductController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function ratingStore()
+    {
+        request()->validate([
+            'product_id' => ['required'],
+            'value' => ['required','numeric']
+        ]);
+
+        $rating = ProductRating::where('user_id',auth()->id())->where('product_id',request('product_id'))->first();
+        if($rating)
+        {
+            return redirect()->back()->with('error','Anda sudah memberikan rating untuk produk ini.');
+        }
+        ProductRating::create([
+            'user_id' => auth()->id(),
+            'comment' => request('comment'),
+            'product_id' => request('product_id'),
+            'value' => request('value')
+        ]);
+
+        return redirect()->back()->with('success','Anda berhasil memberikan rating untuk produk ini.');
     }
 
     public function show($slug)
