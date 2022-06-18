@@ -61,7 +61,7 @@
                                             <td class="text-center font-weight-bold" colspan="3">Total</td>
                                             <td colspan="3" class="text-center font-weight-bold">Rp. {{ number_format($price_total) }}</td>
                                         </tr>
-                                        
+
                                     </table>
                                 </td>
                             </tr>
@@ -91,6 +91,12 @@
                             <tr>
                                 <th>Nomor Resi</th>
                                 <td>{{ $transaction->receipt_number ?? ' Tidak Ada' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Invoice</th>
+                                <td>
+                                    <a href="{{ route('transactions.invoice',$transaction->uuid) }}" target="_blank" class="btn btn-sm btn-secondary">Download</a>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Biaya Pengiriman</th>

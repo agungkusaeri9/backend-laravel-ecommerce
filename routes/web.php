@@ -39,6 +39,7 @@ Route::middleware(['auth','verified'])->group(function () {
     // order/transaction
     Route::prefix('order')->group(function () {
         Route::get('/', 'TransactionController@index')->name('transactions.index');
+        Route::get('/invoice/{uuid}', 'TransactionController@getInvoice')->name('transactions.invoice');
         Route::get('/{id}', 'TransactionController@show')->name('transactions.show');
         Route::post('/upload', 'TransactionController@upload_proof')->name('transactions.upload-proof');
         Route::post('/proof/delete', 'TransactionController@proofDelete')->name('transactions.delete-proof');

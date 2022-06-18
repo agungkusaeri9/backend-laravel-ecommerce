@@ -73,4 +73,12 @@ class TransactionController extends Controller
 
         return redirect()->back()->with('success', 'Bukti Pembayaran berhasil diupload.');
     }
+
+    public function getInvoice($uuid)
+    {
+        $item = Transaction::where('uuid',$uuid)->firstOrFail();
+        $title = 'Invoice ' . $item->uuid;
+        $store = Store::first();
+        return view('user.pages.transaction.invoice',compact('item','title','store'));
+    }
 }
