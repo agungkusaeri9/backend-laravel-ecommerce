@@ -74,11 +74,11 @@ class ProductController extends Controller
     {
         $product_id = request('product_id');
         $productRating = ProductRating::with('user')->where('product_id',$product_id)->latest()->get();
-        $productRating->map(function($data){
+        $productRating->map(function($data)  use ($product_id){
             $data['created'] = $data->created_at->translatedFormat('d/m/Y');
             $data['user_avatar'] = $data->user->avatar();
-            $data['total_value'] = $data->sum('value');
-            $data['total_user'] = $data->count();
+            $data['total_value'] = $data->where('product_id',$product_id)->sum('value');
+            $data['total_user'] = $data->where('product_id',$product_id)->count();
             $data['total'] = number_format(($data['total_value']/$data['total_user']),1,',','');
         });
         if($productRating)

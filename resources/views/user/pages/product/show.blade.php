@@ -168,6 +168,7 @@
                 },
                 dataType:'JSON',
                 success: function(response){
+                    console.log(response);
                     var xhtml = ``;
                     var tr = ``;
                     if(response.data.length > 0)
