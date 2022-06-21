@@ -8,13 +8,11 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h6 class="text-dark">Gambar Aktif</h6>
+                            <h6 class="text-dark">Foto Utama</h6>
                         </div>
                     </div>
                     <div class="card-body">
-                        @foreach ($product->gallery->where('is_default',1)->take(1) as $item)
-                        <img src="{{ $item->photo() }}" alt="{{ $product->name }}" data-id="{{ $item->id }}" data-title="Gambar Aktif" data-src="{{ $item->photo() }}" class="img-fluid mb-1 foto">
-                        @endforeach
+                        <img src="{{ $product->img() }}" alt="{{ $product->name }}" data-id="{{ $product->id }}" data-title="Gambar Produk" data-src="{{ $product->img() }}" class="img-thumbnail img-fluid mb-1 foto">
                     </div>
                 </div>
             </div>

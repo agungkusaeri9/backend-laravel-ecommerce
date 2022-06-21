@@ -3,14 +3,21 @@
 <section class="products my-0 py-0">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-9">
                 @if ($category)
-                <h2 class="section-title">Kategori {{ $category ->name}}</h2>
+                <h2 class="section-title text-left">Kategori {{ $category ->name}}</h2>
                 @else
-                <h2 class="section-title">Semua Produk</h2>
+                <h2 class="section-title text-left">Semua Produk</h2>
                 @endif
-                <hr>
+               </div>
+               <div class="col-md-3">
+                   <form action="{{ route('products.search') }}" method="get">
+                    <div class="form-group">
+                        <input type="text" name="q" class="form-control" placeholder="Cari produk kesukaan anda..." value="{{ $q ?? '' }}">
+                    </div>
+                </form>
             </div>
+            <hr>
         </div>
         <div class="row">
             @forelse ($products as $product)

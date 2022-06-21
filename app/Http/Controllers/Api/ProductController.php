@@ -10,11 +10,38 @@ class ProductController extends Controller
 {
     public function all()
     {
-        $products = Product::with('category','gallery')->latest()->get();
+        $limit =  request('limit');
+        $type = request('type');
+        $prod = Product::with('category','gallery');
+        if($limit)
+        {
+            if($type === 'best')
+            {
+                $products = $prod->orderBy('sold','DESC')->limit($limit)->get();
+            }else if($type === 'random'){
+                $products = $prod->inRandomOrder()->limit($limit)->get();
+            }else{
+                $products = $prod->limit($limit)->latest()->get();
+            }
+        }else{
+            if($type === 'best')
+            {
+                $products = $prod->orderBy('sold','DESC')->get();
+            }else if($type === 'random'){
+                $products = $prod->inRandomOrder()->get();
+            }else{
+                $products = $prod->latest()->get();
+            }
+        }
         if(!$products)
         {
             return ResponseFormatter::error(NULL,'Produk gagal diambil.');
         }
+        $products->map(function($data){
+            return [
+                'image'            => $data->name,
+            ];
+        });
 
         return ResponseFormatter::success($products,'Produk berhasil diambil.');
     }

@@ -84,7 +84,7 @@ class ProductController extends Controller
             'price' => ['required','numeric'],
             'qty' => ['required','numeric'],
             'weight' => ['required','numeric'],
-            'photo' => ['required']
+            'image' => ['required','image','mimes:jpg,jpeg,png']
         ]);
         $data = $request->all();
         $prod = Product::where('name', request('name'))->first();
@@ -93,18 +93,22 @@ class ProductController extends Controller
         }else{
             $data['slug'] = Str::slug($request->name);
         }
+        $data['image'] = request()->file('image')->store('products','public');
 
         $product = Product::create($data);
 
         $photo = request()->file('photo');
-        foreach($photo as $ph)
+        if($photo)
         {
-            $name = $ph->store('product','public');
-            $gallery = new ProductGallery;
-            $gallery->product_id = $product->id;
-            $gallery->photo = $name;
-            $gallery->is_default = 0;
-            $gallery->save();
+            foreach($photo as $ph)
+            {
+                $name = $ph->store('product','public');
+                $gallery = new ProductGallery;
+                $gallery->product_id = $product->id;
+                $gallery->photo = $name;
+                $gallery->is_default = 0;
+                $gallery->save();
+            }
         }
 
         return redirect()->route('admin.products.index')->with('success','Produk berhasil ditambahkan!');
@@ -156,10 +160,18 @@ class ProductController extends Controller
             'price' => ['required','numeric'],
             'weight' => ['required','numeric'],
             'qty' => ['required','numeric'],
+            'image' => ['image','mimes:jpg,jpeg,png']
         ]);
         $data = $request->all();
 
         $data['slug'] = Str::slug($request->name);
+        if(request()->file('image'))
+        {
+            Storage::disk('public')->delete($product->image);
+            $data['image'] = request()->file('image')->store('products','public');
+        }else{
+            $product->image;
+        }
         $product->update($data);
 
         return redirect()->route('admin.products.index')->with('success','Produk berhasil diubah!');

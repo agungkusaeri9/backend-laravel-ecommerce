@@ -37,7 +37,8 @@ class ProductController extends Controller
             'store' => $this->store,
             'cart_count' => Cart::where('user_id', auth()->id())->count(),
             'category' => $category,
-            'product_lainnya' => $product_lainnya
+            'product_lainnya' => $product_lainnya,
+            'q' => NULL
         ]);
     }
 
@@ -52,21 +53,25 @@ class ProductController extends Controller
             'store' => $this->store,
             'cart_count' => Cart::where('user_id', auth()->id())->count(),
             'category' => $category,
-            'product_lainnya' => $product_lainnya
+            'product_lainnya' => $product_lainnya,
+            'q' => NULL
         ]);
     }
 
     public function search()
     {
         $category = NULL;
-        $products = Product::with('category','gallery')->orWhere('name', 'like', '%' . request('name') . '%')->paginate(15);
-        $title = 'Semua Produk';
+        $products = Product::with('category','gallery')->where('name', 'like', '%' . request('q') . '%')->paginate(15);
+        $title = 'Produk ' . request('q');
+        $product_lainnya = Product::inRandomOrder()->limit(8)->get();
         return view('user.pages.product.index',[
             'title' => $title,
             'products' => $products,
             'store' => $this->store,
             'cart_count' => Cart::where('user_id', auth()->id())->count(),
-            'category' => $category
+            'category' => $category,
+            'product_lainnya' => $product_lainnya,
+            'q' => request('q')
         ]);
     }
 

@@ -7,9 +7,23 @@
                 <h6 class="text-dark text-center font-weight-bold">Edit Produk</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.products.update', $product->id) }}" method="post">
+                <form action="{{ route('admin.products.update', $product->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                            <label for="image">Foto Utama</label>
+                            <img src="{{ $product->img() }}" alt="" class="img-fluid" style="max-height: 80px;max-width:80px">
+                        </div>
+                        <div class="col-md-10">
+                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
+                            @error('image')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $product->name ?? old('name') }}">

@@ -31,5 +31,15 @@ class Product extends Model
         return $this->hasMany(ProductRating::class);
     }
 
+    public function img()
+    {
+        return $this->image;
+    }
+
+    public function getImageAttribute($value)
+    {
+        return asset('storage/' . $value);
+    }
+
 
 }

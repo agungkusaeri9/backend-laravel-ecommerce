@@ -9,9 +9,18 @@
             <div class="card-body">
                 <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
+                    <div class="form-group row">
+                        <label for="image">Foto Utama</label>
+                        <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
+                        @error('image')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                     <div class="form-group">
-                        <label for="photo">Foto Produk</label>
-                        <input type="file" name="photo[]" class="form-control @error('name') is-invalid @enderror" multiple>
+                        <label for="photo">Galeri Produk</label>
+                        <input type="file" name="photo[]" class="form-control @error('photo') is-invalid @enderror" multiple>
                         @error('photo')
                             <div class="invalid-feedback">
                                 {{ $message }}
