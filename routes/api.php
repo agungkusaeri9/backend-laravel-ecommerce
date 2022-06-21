@@ -32,6 +32,7 @@ Route::get('city/{province_id}/province','CityController@getByProvince');
 
 // courier
 Route::get('couriers',CourierController::class);
+Route::get('payments',PaymentController::class);
 
 Route::middleware('auth:api')->group(function(){
     // cart
