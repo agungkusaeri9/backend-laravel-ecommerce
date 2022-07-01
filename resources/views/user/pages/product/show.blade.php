@@ -106,7 +106,7 @@
     </div>
 </section>
 <!-- Product Shop Section End -->
-<div class="related-products spad">
+<!-- <div class="related-products spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -140,7 +140,7 @@
             @endforeach
         </div>
     </div>
-</div>
+</div> -->
 @endsection
 @push('afterStyles')
 <style>

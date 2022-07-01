@@ -50,5 +50,8 @@ Route::middleware('auth:api')->group(function(){
 
     // update password
     Route::patch('change-password',PasswordController::class);
+
+    //checkout
+    Route::post('checkout','CheckoutController');
 });
 
