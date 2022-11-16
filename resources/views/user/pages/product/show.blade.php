@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="product-pic-zoom">
-                            <img class="product-big-img" src="{{ $product->gallery[0]->photo() }}" alt="{{ $product->name }}" />
+                            <img class="product-big-img" src="{{ $product->img() }}" alt="{{ $product->name }}" />
                         </div>
                         <div class="product-thumbs">
                             <div class="product-thumbs-track ps-slider owl-carousel">
@@ -118,7 +118,7 @@
             <div class="col-lg-3 col-6">
                 <div class="product-item">
                     <div class="pi-pic">
-                        <img src="{{ $related->gallery[0]->photo() }}" alt="" />
+                        <img src="{{ $related->img() }}" alt="" />
                         <ul>
                             <li class="w-icon active">
                                 <a href="#"><i class="icon_bag_alt"></i></a>

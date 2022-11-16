@@ -11,11 +11,11 @@
                     @csrf
                     @method('patch')
                     <div class="form-group row">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="image">Foto Utama</label>
                             <img src="{{ $product->img() }}" alt="" class="img-fluid" style="max-height: 80px;max-width:80px">
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-md-9 align-self-center">
                             <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
                             @error('image')
                                 <div class="invalid-feedback">

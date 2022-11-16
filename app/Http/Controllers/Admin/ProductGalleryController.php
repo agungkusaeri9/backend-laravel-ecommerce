@@ -59,18 +59,13 @@ class ProductGalleryController extends Controller
             'photo' => ['required']
         ]);
         $photo = request()->file('photo');
-        if(count($photo) > 1){
-            $is_default = 0;
-        }else{
-            $is_default = request('is_default');
-        }
         foreach($photo as $ph)
         {
             $name = $ph->store('product','public');
             $gallery = new ProductGallery;
             $gallery->product_id = request('product_id');
             $gallery->photo = $name;
-            $gallery->is_default = $is_default;
+            $gallery->is_default = 0;
             $gallery->save();
         }
 

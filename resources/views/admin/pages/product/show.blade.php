@@ -138,10 +138,6 @@
           </div>
         </div>
         <div class="modal-footer">
-            <form action="" method="post" id="formActive">
-                @csrf
-                <button type="submit" class="btn btn-success">Set Aktif</button>
-            </form>
             <form action="" method="post" id="formDelete">
                 @csrf
                 @method('delete')

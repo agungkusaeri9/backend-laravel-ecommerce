@@ -24,7 +24,7 @@
             <div class="col-6 col-md-4">
                 <div class="product-item">
                     <div class="pi-pic">
-                        <img src="{{ $product->gallery[0]->photo() }}" alt="" />
+                        <img src="{{ $product->img() }}" alt="" />
                         <ul>
                             <li class="w-icon active" onclick="addToCart()">
                                 <a href="javascript:void(0)"><i class="icon_bag_alt"></i></a>
@@ -76,7 +76,7 @@
             <div class="col-lg-3 col-6">
                 <div class="product-item">
                     <div class="pi-pic">
-                        <img src="{{ $pl->gallery[0]->photo() }}" alt="" />
+                        <img src="{{ $pl->img() }}" alt="" />
                         <ul>
                             <li class="w-icon active" onclick="addToCart()">
                                 <a href="javascript:void(0)"><i class="icon_bag_alt"></i></a>

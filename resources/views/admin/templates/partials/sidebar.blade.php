@@ -47,7 +47,6 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('admin.product-categories.index') }}">Kategori Produk</a>
                 <a class="collapse-item" href="{{ route('admin.products.index') }}">Produk</a>
-                <a class="collapse-item" href="{{ route('admin.product-galleries.index') }}">Foto Produk</a>
             </div>
         </div>
     </li>

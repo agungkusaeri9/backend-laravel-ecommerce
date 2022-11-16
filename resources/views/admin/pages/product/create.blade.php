@@ -9,7 +9,7 @@
             <div class="card-body">
                 <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label for="image">Foto Utama</label>
                         <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
                         @error('image')

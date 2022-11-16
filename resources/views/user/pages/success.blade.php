@@ -14,7 +14,7 @@
 
     <div class="d-flex success-checkout align-items-center justify-content-center">
         <div class="col col-lg-4 text-center">
-            <img src="{{ asset('assets/user/img/success-buy.png') }}" alt="" width="294">
+            <img src="{{ asset('assets/user/img/success-buy.png') }}" alt="" style="max-height:250">
             <h3 class="mt-4">
                 Success!
             </h3>

@@ -32,7 +32,7 @@ Route::post('/products', 'ProductController@index')->name('products.filter');
 Route::post('/products/create', 'ProductController@store')->name('products.store');
 
 // product gallery
-Route::resource('product-galleries', 'ProductGalleryController')->except('store');
+Route::resource('product-galleries', 'ProductGalleryController')->except('store','index','update','edit');
 Route::post('/product-galleries/create', 'ProductGalleryController@store')->name('product-galleries.store');
 Route::post('product-galleries/', 'ProductGalleryController@index')->name('product-galleries.search');
 Route::post('product-galleries/{product_id}/{id}/set-active', 'ProductGalleryController@setActive')->name('product-galleries.setActive');

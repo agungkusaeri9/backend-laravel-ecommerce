@@ -4,7 +4,7 @@
 <section class="hero-section">
     <div class="hero-items owl-carousel">
         @foreach ($product_banner as $banner)
-        <div class="single-hero-items set-bg" data-setbg="{{ $banner->gallery[0]->photo() }}" style="background-size:100%">
+        <div class="single-hero-items set-bg" data-setbg="{{ $banner->img() }}" style="background-size:100%">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5">
@@ -55,7 +55,7 @@
                     @foreach ($product_terlaris as $terlaris)
                     <div class="product-item">
                         <div class="pi-pic">
-                            <img src="{{ $terlaris->gallery[0]->photo() }}" alt="" />
+                            <img src="{{ $terlaris->img() }}" alt="" />
                             <ul>
                                 <li class="w-icon active" onclick="addToCart()">
                                     <a href="javascript:void(0)"><i class="icon_bag_alt"></i></a>
@@ -99,7 +99,7 @@
                 <div class="col-6 col-md-3">
                     <div class="product-item">
                         <div class="pi-pic">
-                            <img src="{{ $product->gallery[0]->photo() }}" alt="" />
+                            <img src="{{ $product->img() }}" alt="" />
                             <ul>
                                 <li class="w-icon active" onclick="addToCart()">
                                     <a href="javascript:void(0)"><i class="icon_bag_alt"></i></a>
