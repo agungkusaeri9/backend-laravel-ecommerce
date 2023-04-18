@@ -9,7 +9,7 @@
     <ul class="navbar-nav ml-auto">
 
         <!-- Nav Item - Alerts -->
-        <li class="nav-item dropdown no-arrow mx-1">
+        {{-- <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
@@ -28,7 +28,7 @@
                 <h6 class="dropdown-header">
                     Pemberitahuan
                 </h6>
-                {{-- @forelse ($notifications as $notification)
+                @forelse ($notifications as $notification)
                 <a class="dropdown-item py-3 d-flex align-items-center itemNotif" data-id="{{ $notification->id }}" href="javascript:void(0)">
                     <div class="mr-3">
                         <div class="icon-circle">
@@ -44,10 +44,10 @@
                 </a>
                 @empty
                 <div class="text-center small mt-3 py-3">Tidak Ada Pemberitahuan Terbaru</div>
-                @endforelse --}}
-                {{-- <a class="dropdown-item text-center small text-gray-500" href="#">Lihat Semua Pemberitahuan</a> --}}
+                @endforelse
+                <a class="dropdown-item text-center small text-gray-500" href="#">Lihat Semua Pemberitahuan</a>
             </div>
-        </li>
+        </li> --}}
 
         <div class="topbar-divider d-none d-sm-block"></div>
 

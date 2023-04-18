@@ -1,4 +1,3 @@
-@if (session('transaction_uuid'))
 <!DOCTYPE html>
 <html lang="id">
 
@@ -14,7 +13,7 @@
 
     <div class="d-flex success-checkout align-items-center justify-content-center">
         <div class="col col-lg-4 text-center">
-            <img src="{{ asset('assets/user/img/success-buy.png') }}" alt="" style="max-height:250">
+            <img src="{{ asset('assets/user/img/shopping-cart.svg') }}" alt="" style="max-height:150px">
             <h3 class="mt-4">
                 Success!
             </h3>
@@ -24,11 +23,8 @@
             <a href="{{ route('transactions.show', session('transaction_uuid')) }}" class="primary-btn pd-cart mt-3">Kembali Ke Pesanan</a>
         </div>
     </div>
-    
+
     @include('user.templates.partials.scripts')
 </body>
 
 </html>
-@else 
-tidak ada
-@endif
