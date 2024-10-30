@@ -2,35 +2,41 @@
 
 namespace App\Http\Controllers\Api;
 
-class ResponseFormatter {
+class ResponseFormatter
+{
 
     protected static $response = [
         'meta' => [
             'code' => 200,
             'status' => 'success',
-            'message' => NULL,
-            'token' => NULL
+            'message' => NULL
         ],
-        'data' => NULL
+        'data' => NULL,
+        'errors' => NULL
     ];
 
-    public static function success($data = NULL,$message = NULL,$code = 200,$token = NULL)
+    public static function success($data = NULL, $message = NULL, $code = 200, $token = NULL)
     {
         self::$response['meta']['message'] = $message;
         self::$response['data'] = $data;
         self::$response['meta']['code'] = $code;
-        self::$response['meta']['token'] = $token;
+        self::$response['errors'] = NULL;
 
-        return response()->json(self::$response,self::$response['meta']['code']);
+        return response()->json(self::$response, self::$response['meta']['code']);
     }
 
-    public static function error($data = NULL,$message = NULL,$code = 400)
+    public static function error($errors = NULL, $message = NULL, $code = 400)
     {
         self::$response['meta']['code'] = $code;
         self::$response['meta']['status'] = 'error';
         self::$response['meta']['message'] = $message;
-        self::$response['data'] = $data;
-        return response()->json(self::$response,self::$response['meta']['code']);
+        self::$response['data'] = NULL;
+        self::$response['errors'] = $errors;
+        return response()->json(self::$response, self::$response['meta']['code']);
     }
 
+    public static function validationError($errors)
+    {
+        return self::error($errors, 'Validation error', 422);
+    }
 }

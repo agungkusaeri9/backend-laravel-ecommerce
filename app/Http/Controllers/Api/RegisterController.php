@@ -17,31 +17,29 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function register(Request $request)
     {
-        $validator = Validator::make(request()->all(),[
+        $validator = Validator::make(request()->all(), [
             'name' => ['required'],
-            'email' => ['required','email','unique:users,email'],
-            'password' => ['required','min:8','confirmed']
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:8', 'confirmed']
         ]);
 
-        if($validator->fails())
-        {
-            return response()->json($validator->errors(),422);
+        if ($validator->fails()) {
+            return ResponseFormatter::validationError($validator->errors());
         }
 
         $user = User::create([
             'name' => request('name'),
-            'username' => Str::lower(Str::snake(request('name'))) . rand(1,1000),
+            'username' => Str::lower(Str::snake(request('name'))) . rand(1, 1000),
             'email' => request('email'),
             'password' => bcrypt(request('password'))
         ]);
 
-        if($user)
-        {
-            return ResponseFormatter::success($user,'Anda berhasil Mendaftar.',201);
+        if ($user) {
+            return ResponseFormatter::success($user, 'Anda berhasil Mendaftar.', 201);
         }
 
-        return ResponseFormatter::error(NULL,'Anda gagal Mendaftar.');
+        return ResponseFormatter::error(NULL, 'Anda gagal Mendaftar.');
     }
 }

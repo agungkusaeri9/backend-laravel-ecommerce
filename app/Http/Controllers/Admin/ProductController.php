@@ -22,20 +22,20 @@ class ProductController extends Controller
         $from_price = request('from_price');
         $to_price = request('to_price');
         $category = request('category');
-        if($from_price && !$to_price){
-            $products = Product::with('category')->where('price',$from_price)->get();
-        }else{
-            if($from_price && $to_price){
-                if($category){
-                    $products = Product::with('category')->where('product_category', $category)->whereBetween('price',[$from_price,$to_price])->get();
-                }else{
-                    $products = Product::with('category')->whereBetween('price',[$from_price,$to_price])->get();
+        if ($from_price && !$to_price) {
+            $products = Product::with('category')->where('price', $from_price)->get();
+        } else {
+            if ($from_price && $to_price) {
+                if ($category) {
+                    $products = Product::with('category')->where('product_category', $category)->whereBetween('price', [$from_price, $to_price])->get();
+                } else {
+                    $products = Product::with('category')->whereBetween('price', [$from_price, $to_price])->get();
                 }
-            }else{
-                if($category){
-                    $products = Product::where('product_category', $category)->orderBy('created_at','desc')->get();
-                }else{
-                    $products = Product::with('category')->orderBy('created_at','desc')->get();
+            } else {
+                if ($category) {
+                    $products = Product::where('product_category', $category)->orderBy('created_at', 'desc')->get();
+                } else {
+                    $products = Product::with('category')->orderBy('created_at', 'desc')->get();
                 }
             }
         }
@@ -47,8 +47,8 @@ class ProductController extends Controller
         // if($category){
         //     $products = Product::where('category_id', $category)->get();
         // }
-        $categories = ProductCategory::orderby('name','ASC')->get();
-        return view('admin.pages.product.index',[
+        $categories = ProductCategory::orderby('name', 'ASC')->get();
+        return view('admin.pages.product.index', [
             'title' => 'Data Produk',
             'products' => $products,
             'categories' => $categories
@@ -62,8 +62,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $product_categories = ProductCategory::orderBy('name','asc')->get();
-        return view('admin.pages.product.create',[
+        $product_categories = ProductCategory::orderBy('name', 'asc')->get();
+        return view('admin.pages.product.create', [
             'title' => 'Tambah Produk',
             'categories' => $product_categories
         ]);
@@ -80,29 +80,27 @@ class ProductController extends Controller
         $request->validate([
             'name' => ['required'],
             'product_category' => ['required'],
-            'desc' => ['required','min:10'],
-            'price' => ['required','numeric'],
-            'qty' => ['required','numeric'],
-            'weight' => ['required','numeric'],
-            'image' => ['required','image','mimes:jpg,jpeg,png']
+            'desc' => ['required', 'min:10'],
+            'price' => ['required', 'numeric'],
+            'qty' => ['required', 'numeric'],
+            'weight' => ['required', 'numeric'],
+            'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp']
         ]);
         $data = $request->all();
         $prod = Product::where('name', request('name'))->first();
-        if($prod){
+        if ($prod) {
             $data['slug'] = request('slug') . '-' . Str::random(5);
-        }else{
+        } else {
             $data['slug'] = Str::slug($request->name);
         }
-        $data['image'] = request()->file('image')->store('products','public');
+        $data['image'] = request()->file('image')->store('products', 'public');
 
         $product = Product::create($data);
 
         $photo = request()->file('photo');
-        if($photo)
-        {
-            foreach($photo as $ph)
-            {
-                $name = $ph->store('product','public');
+        if ($photo) {
+            foreach ($photo as $ph) {
+                $name = $ph->store('product', 'public');
                 $gallery = new ProductGallery;
                 $gallery->product_id = $product->id;
                 $gallery->photo = $name;
@@ -111,7 +109,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->route('admin.products.index')->with('success','Produk berhasil ditambahkan!');
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
     /**
@@ -122,7 +120,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('admin.pages.product.show',[
+        return view('admin.pages.product.show', [
             'title' => 'Detail Produk ' . $product->name,
             'product' => $product
         ]);
@@ -136,8 +134,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $product_categories = ProductCategory::orderBy('name','asc')->get();
-        return view('admin.pages.product.edit',[
+        $product_categories = ProductCategory::orderBy('name', 'asc')->get();
+        return view('admin.pages.product.edit', [
             'title' => 'Edit Produk ' . $product->name,
             'categories' => $product_categories,
             'product' => $product
@@ -156,25 +154,24 @@ class ProductController extends Controller
         $request->validate([
             'name' => ['required'],
             'product_category' => ['required'],
-            'desc' => ['required','min:10'],
-            'price' => ['required','numeric'],
-            'weight' => ['required','numeric'],
-            'qty' => ['required','numeric'],
-            'image' => ['image','mimes:jpg,jpeg,png']
+            'desc' => ['required', 'min:10'],
+            'price' => ['required', 'numeric'],
+            'weight' => ['required', 'numeric'],
+            'qty' => ['required', 'numeric'],
+            'image' => ['image', 'mimes:jpg,jpeg,png']
         ]);
         $data = $request->all();
 
         $data['slug'] = Str::slug($request->name);
-        if(request()->file('image'))
-        {
+        if (request()->file('image')) {
             Storage::disk('public')->delete($product->image);
-            $data['image'] = request()->file('image')->store('products','public');
-        }else{
+            $data['image'] = request()->file('image')->store('products', 'public');
+        } else {
             $product->image;
         }
         $product->update($data);
 
-        return redirect()->route('admin.products.index')->with('success','Produk berhasil diubah!');
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diubah!');
     }
 
     /**
@@ -186,7 +183,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('admin.products.index')->with('success','Produk berhasil diubah!');
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diubah!');
     }
-
 }

@@ -14,55 +14,47 @@ class CartController extends Controller
 {
     public function get()
     {
-        $token = request()->header('Authorization');
-        $user = JWTAuth::parseToken($token)->authenticate();
-
-        $cart = Cart::with(['product.gallery','product.category'])->where('user_id',$user->id)->latest()->get();
-
-        if($cart->count() > 0)
-        {
-           return ResponseFormatter::success($cart,'Keranjang berhasil diambil.');
-        }else{
-            return ResponseFormatter::error(NULL,"Keranjang Kosong.",403);
+        $user =  auth()->user();
+        $cart = Cart::with(['product.gallery', 'product.category'])->where('user_id', $user->id)->latest()->paginate(10);
+        if ($cart->count() > 0) {
+            return ResponseFormatter::success($cart, 'Keranjang berhasil diambil.');
+        } else {
+            return ResponseFormatter::error(NULL, "Keranjang Kosong.", 403);
         }
     }
 
     public function addToCart()
     {
-        $validator = Validator::make(request()->all(),[
+        $validator = Validator::make(request()->all(), [
             'product_id' => ['required']
         ]);
 
-        if($validator->fails())
-        {
-            return response()->json($validator->errors(),422);
+        if ($validator->fails()) {
+            return ResponseFormatter::validationError($validator->errors(), 422);
         }
-
-        $token = request()->header('Authorization');
-        $user = JWTAuth::parseToken($token)->authenticate();
+        $user = auth()->user();
         $product = Product::find(request('product_id'));
-        if($product->qty == 0){
-            return ResponseFormatter::error(NULL,"Stok produk habis.",403);
-        }elseif($product->qty < request('amount'))
-        {
-            return ResponseFormatter::error(NULL,"Jumlah Pesanan tidak boleh melebihi stok yang ada.",400);
+        if ($product->qty == 0) {
+            return ResponseFormatter::error(NULL, "Stok produk habis.", 403);
+        } elseif ($product->qty < request('amount')) {
+            return ResponseFormatter::error(NULL, "Jumlah Pesanan tidak boleh melebihi stok yang ada.", 400);
         }
-        if(request('amount')){
+        if (request('amount')) {
             $amount = request('amount');
-        }else{
+        } else {
             $amount = 1;
         }
-        if(request('notes')){
+        if (request('notes')) {
             $notes = request('notes');
-        }else{
+        } else {
             $notes = 'random';
         }
-        $cart = Cart::where('user_id',$user->id)->where('product_id',$product->id)->first();
-        if($cart)
-        {
-            if(request('amount') < 1)
-            {
+        $cart = Cart::where('user_id', $user->id)->where('product_id', $product->id)->first();
+        if ($cart) {
+            if (request('amount') < 1) {
                 $amount2 = 1;
+            } else {
+                $amount2 = $cart->amount;
             }
             $amount = $cart->amount + $amount2;
             $price = $amount * $product->price;
@@ -70,7 +62,7 @@ class CartController extends Controller
                 'amount' => $amount,
                 'price' => $price
             ]);
-        }else{
+        } else {
             $price = $amount * $product->price;
             $cart = Cart::create([
                 'user_id' => $user->id,
@@ -80,20 +72,19 @@ class CartController extends Controller
                 'notes' => $notes
             ]);
         }
-        return ResponseFormatter::success($cart,'Produk berhasil ditambahkan ke keranjang.');
+        return ResponseFormatter::success($cart, 'Produk berhasil ditambahkan ke keranjang.');
     }
 
     public function destroy($id)
     {
         $token = request()->header('Authorization');
         $user = JWTAuth::parseToken($token)->authenticate();
-        $cart = Cart::where('user_id',$user->id)->where('id',$id);
-        if($cart->count() > 0)
-        {
+        $cart = Cart::where('user_id', $user->id)->where('id', $id);
+        if ($cart->count() > 0) {
             $cart->delete();
-            return ResponseFormatter::success(NULL,'Produk berhasil dihapus dari keranjang.');
-        }else{
-            return ResponseFormatter::error(NULL,'Produk tidak ada di keranjang.');
+            return ResponseFormatter::success(NULL, 'Produk berhasil dihapus dari keranjang.');
+        } else {
+            return ResponseFormatter::error(NULL, 'Produk tidak ada di keranjang.');
         }
     }
 }

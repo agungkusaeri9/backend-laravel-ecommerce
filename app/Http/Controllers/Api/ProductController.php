@@ -12,66 +12,59 @@ class ProductController extends Controller
     {
         $limit =  request('limit');
         $type = request('type');
-        $prod = Product::with('category','gallery');
-        if($limit)
-        {
-            if($type === 'best')
-            {
-                $products = $prod->orderBy('sold','DESC')->limit($limit)->get();
-            }else if($type === 'random'){
-                $products = $prod->inRandomOrder()->limit($limit)->get();
-            }else{
-                $products = $prod->limit($limit)->latest()->get();
+        $prod = Product::with('category', 'gallery');
+        if ($limit) {
+            if ($type === 'best') {
+                $products = $prod->orderBy('sold', 'DESC')->limit($limit)->paginate(12);
+            } else if ($type === 'random') {
+                $products = $prod->inRandomOrder()->limit($limit)->paginate(12);
+            } else {
+                $products = $prod->limit($limit)->latest()->paginate(12);
             }
-        }else{
-            if($type === 'best')
-            {
-                $products = $prod->orderBy('sold','DESC')->get();
-            }else if($type === 'random'){
-                $products = $prod->inRandomOrder()->get();
-            }else{
-                $products = $prod->latest()->get();
+        } else {
+            if ($type === 'best') {
+                $products = $prod->orderBy('sold', 'DESC')->paginate(12);
+            } else if ($type === 'random') {
+                $products = $prod->inRandomOrder()->paginate(12);
+            } else {
+                $products = $prod->latest()->paginate(12);
             }
         }
-        if(!$products)
-        {
-            return ResponseFormatter::error(NULL,'Produk gagal diambil.');
+        if (!$products) {
+            return ResponseFormatter::error(NULL, 'Produk gagal diambil.');
         }
-        $products->map(function($data){
+        $products->map(function ($data) {
             return [
                 'image'            => $data->name,
             ];
         });
 
-        return ResponseFormatter::success($products,'Produk berhasil diambil.');
+        return ResponseFormatter::success($products, 'Produk berhasil diambil.');
     }
 
     public function show($slug)
     {
-        $product = Product::with(['category','gallery'])->where('slug',$slug)->first();
-        if(!$product)
-        {
-            return ResponseFormatter::error(NULL,'Produk tidak ada.');
+        $product = Product::with(['category', 'gallery'])->where('slug', $slug)->first();
+        if (!$product) {
+            return ResponseFormatter::error(NULL, 'Produk tidak ada.');
         }
 
-        return ResponseFormatter::success($product,'Produk ada.');
+        return ResponseFormatter::success($product, 'Produk ada.');
     }
 
     public function search()
     {
         $q = request('q');
-        if($q)
-        {
-            $products = Product::with('category','gallery')->where('name','like','%' . $q . '%')->latest()->get();
-        }else{
-            $products = Product::with('category','gallery')->latest()->get();
+        if ($q) {
+            $products = Product::with('category', 'gallery')->where('name', 'like', '%' . $q . '%')->latest()->get();
+        } else {
+            $products = Product::with('category', 'gallery')->latest()->get();
         }
 
-        if($products->count() < 1)
-        {
-            return ResponseFormatter::error(NULL,'Produk tidak ada.',403);
+        if ($products->count() < 1) {
+            return ResponseFormatter::error(NULL, 'Produk tidak ada.', 403);
         }
 
-        return ResponseFormatter::success($products,'Produk berhasil diambil.');
+        return ResponseFormatter::success($products, 'Produk berhasil diambil.');
     }
 }

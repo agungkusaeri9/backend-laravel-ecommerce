@@ -20,10 +20,9 @@ class CheckoutController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $token = request()->header('Authorization');
-        $user = JWTAuth::parseToken($token)->authenticate();
+        $user = auth()->user();
 
-        $validator = Validator::make(request()->all(),[
+        $validator = Validator::make(request()->all(), [
             'name' => ['required'],
             'address' => ['required'],
             'phone_number' => ['required'],
@@ -32,16 +31,14 @@ class CheckoutController extends Controller
             'courier' => ['required'],
         ]);
 
-        if($validator->fails())
-        {
-            return response()->json($validator->errors(),422);
+        if ($validator->fails()) {
+            return ResponseFormatter::validationError($validator->errors());
         }
 
         $carts = Cart::where('user_id', $user->id)->get();
-        $transaction_total = Cart::where('user_id',$user->id)->sum('price');
-        if($transaction_total < 1)
-        {
-            return ResponseFormatter::error(NULL,'Tidak ada produk dikeranjang.');
+        $transaction_total = Cart::where('user_id', $user->id)->sum('price');
+        if ($transaction_total < 1) {
+            return ResponseFormatter::error(NULL, 'Tidak ada produk dikeranjang.');
         }
         $transaction = auth()->user()->transactions()->create([
             'uuid' => Str::uuid(),
@@ -56,7 +53,7 @@ class CheckoutController extends Controller
             'payment_id' => request('payment_id')
         ]);
 
-        foreach($carts as $cart){
+        foreach ($carts as $cart) {
             $transaction->details()->create([
                 'product_id' => $cart->product_id,
                 'amount' => $cart->amount,
@@ -65,11 +62,10 @@ class CheckoutController extends Controller
             $cart->product->decrement('qty', $cart->amount);
         }
 
-        if($transaction)
-        {
-            return ResponseFormatter::success($transaction,'Anda berhasil melakukan checkout.');
-        }else{
-            return ResponseFormatter::error(NULL,'Checkout gagal.');
+        if ($transaction) {
+            return ResponseFormatter::success($transaction, 'Anda berhasil melakukan checkout.');
+        } else {
+            return ResponseFormatter::error(NULL, 'Checkout gagal.');
         }
     }
 }

@@ -15,25 +15,34 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function login(Request $request)
     {
-        $validator = Validator::make(request()->all(),[
+        $validator = Validator::make(request()->all(), [
             'email' => ['required'],
             'password' => ['required']
         ]);
 
-        if($validator->fails())
-        {
-            return response()->json($validator->errors(),422);
+        if ($validator->fails()) {
+            return ResponseFormatter::validationError($validator->errors());
         }
 
-        $credentials = request()->only('email','password');
+        $credentials = request()->only('email', 'password');
 
-        if(!$token = JWTAuth::attempt($credentials))
-        {
-            return ResponseFormatter::error(NULL,'Email atau Password salah',401);
+        if (!$token = auth()->guard('api')->attempt($credentials)) {
+            return ResponseFormatter::error(NULL, 'Email atau password salah.', 401);
         }
 
-        return ResponseFormatter::success(auth()->user(),'Login berhasil',200,$token);
+        return $this->respondWithToken($token);
+    }
+
+    protected function respondWithToken($token)
+    {
+        $data = [
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->guard('api')->factory()->getTTL() * 60
+        ];
+
+        return ResponseFormatter::success($data, 'Login Berhasil.');
     }
 }

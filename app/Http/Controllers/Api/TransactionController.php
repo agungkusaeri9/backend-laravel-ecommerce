@@ -11,31 +11,24 @@ class TransactionController extends Controller
 {
     public function get()
     {
-        $token = request()->header('Authorization');
-        $user = JWTAuth::parseToken($token)->authenticate();
+        $user = auth()->user();
+        $transactions = Transaction::where('user_id', $user->id)->latest()->paginate(10);
 
-        $transactions = Transaction::where('user_id',$user->id)->latest()->get();
-
-        if($transactions->count() > 0)
-        {
-           return ResponseFormatter::success($transactions,'Transaksi berhasil diambil.');
-        }else{
-            return ResponseFormatter::error(NULL,"Transaksi Kosong.",403);
+        if ($transactions->count() > 0) {
+            return ResponseFormatter::success($transactions, 'Transaksi berhasil diambil.');
+        } else {
+            return ResponseFormatter::error(NULL, "Transaksi Kosong.", 403);
         }
     }
 
-    public function show($id)
+    public function show($uuid)
     {
-        $token = request()->header('Authorization');
-        $user = JWTAuth::parseToken($token)->authenticate();
-
-        $transactions = Transaction::with('details.product')->where('user_id',$user->id)->where('id',$id)->first();
-
-        if($transactions)
-        {
-           return ResponseFormatter::success($transactions,'Detail Transaksi berhasil diambil.');
-        }else{
-            return ResponseFormatter::error(NULL,"Transaksi tidak ditemukan.",403);
+        $user = auth()->user();
+        $transactions = Transaction::with('details.product')->where('user_id', $user->id)->where('uuid',  $uuid)->first();
+        if ($transactions) {
+            return ResponseFormatter::success($transactions, 'Detail Transaksi berhasil diambil.');
+        } else {
+            return ResponseFormatter::error(NULL, "Transaksi tidak ditemukan.", 403);
         }
     }
 }
