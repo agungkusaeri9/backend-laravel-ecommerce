@@ -32,6 +32,9 @@ Route::get('products', 'ProductController@all');
 Route::get('products/search', 'ProductController@search');
 Route::get('products/{slug}', 'ProductController@show');
 
+Route::get('product-categories', 'ProductCategoryController@getAll');
+
+
 // province
 Route::get('provinces', 'ProvinceController@all');
 
