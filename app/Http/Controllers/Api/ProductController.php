@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -10,36 +11,37 @@ class ProductController extends Controller
 {
     public function all()
     {
-        $limit =  request('limit');
+        $limit =  request('limit') ?? 10;
         $type = request('type');
-        $prod = Product::with('category', 'gallery');
-        if ($limit) {
-            if ($type === 'best') {
-                $products = $prod->orderBy('sold', 'DESC')->limit($limit)->paginate(12);
-            } else if ($type === 'random') {
-                $products = $prod->inRandomOrder()->limit($limit)->paginate(12);
-            } else {
-                $products = $prod->limit($limit)->latest()->paginate(12);
-            }
-        } else {
-            if ($type === 'best') {
-                $products = $prod->orderBy('sold', 'DESC')->paginate(12);
-            } else if ($type === 'random') {
-                $products = $prod->inRandomOrder()->paginate(12);
-            } else {
-                $products = $prod->latest()->paginate(12);
-            }
-        }
-        if (!$products) {
-            return ResponseFormatter::error(NULL, 'Produk gagal diambil.');
-        }
-        $products->map(function ($data) {
-            return [
-                'image'            => $data->name,
-            ];
-        });
+        $category = request('category');
 
-        return ResponseFormatter::success($products, 'Produk berhasil diambil.');
+        try {
+            $prod = Product::with('category', 'gallery');
+            if ($type) {
+                if ($type === 'best') {
+                    $prod->orderBy('sold', 'DESC');
+                }
+            }
+            if ($category) {
+                $prod->whereHas('category', function ($cat) use ($category) {
+                    $cat->where('slug', $category);
+                });
+            }
+            $products = $prod->paginate($limit);
+            // Menyusun pagination data
+            $pagination = [
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(),
+            ];
+
+            // Mengembalikan response dengan data dan pagination
+            return ResponseFormatter::success(ProductResource::collection($products), "Products Found.", 200, $pagination);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ResponseFormatter::error(null, 'Error Invalid.');
+        }
     }
 
     public function show($slug)
