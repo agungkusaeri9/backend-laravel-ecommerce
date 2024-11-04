@@ -47,6 +47,7 @@ Route::get('payments', PaymentController::class);
 
 Route::middleware('auth-jwt')->group(function () {
     // cart
+    Route::post('me', 'ProfileController@show');
     Route::get('cart', 'CartController@get');
     Route::delete('cart/{id}', 'CartController@destroy');
     Route::post('cart/add-to-cart', 'CartController@addToCart');
